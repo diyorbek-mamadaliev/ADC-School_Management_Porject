@@ -1,0 +1,33 @@
+<!-- archived_users.html -->
+
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>Archived Users</h1>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Username</th>
+        <th>Email</th>
+        <th>Date Archived</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for archived_user in archived_users %}
+        <tr>
+          <td>{{ archived_user.user.username }}</td>
+          <td>{{ archived_user.user.email }}</td>
+          <td>{{ archived_user.date_archived }}</td>
+          <td>
+            <form method="post" action="{% url 'unarchive_user' archived_user.pk %}">
+              {% csrf_token %}
+              <button type="submit">Unarchive</button>
+            </form>
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}
