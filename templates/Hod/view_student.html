@@ -23,14 +23,14 @@
                               <table class="table table-hover table-center mb-0 datatable">
                                  <thead>
                                     <tr>
-                                       <th style="color: #1d9bea">ID</th>
-                                       <th style="color: #1d9bea">Ism, Familiya</th>
-                                        <th style="color: #1d9bea">Username</th>
-                                       <th style="color: #1d9bea">Subject</th>
-                                       <th style="color: #1d9bea">Mobile Number</th>
-                                       <th style="color: #1d9bea">Address</th>
-                                        <th style="color: #1d9bea">Created</th>
-                                       <th class="text-right">Action</th>
+                                       <th style="color: #1d9bea">In</th>
+                                       <th style="color: #1d9bea">O'quvchi</th>
+                                        <th style="color: #1d9bea">ID</th>
+                                       <th style="color: #1d9bea">Kurs</th>
+                                       <th style="color: #1d9bea">Telefon Raqam</th>
+                                       <th style="color: #1d9bea">Manzil</th>
+                                        <th style="color: #1d9bea">Kiritilgan</th>
+                                       <th class="text-right"></th>
                                     </tr>
                                  </thead>
                                   {% for i in student %}
@@ -39,30 +39,22 @@
                                        <td>{{ i.id }}</td>
                                        <td>
                                           <h2 class="table-avatar">
-                                             <a href="student-details.html">{{ i.first_name }}&nbsp;{{ i.last_name }}</a>
+                                             <a href="student-details.html">{{ i.admin.first_name }}&nbsp;{{ i.admin.last_name }}</a>
                                           </h2>
                                        </td>
-                                        <td>{{ i.username }}</td>
-                                       <td>{{ i.student.course_id }}</td>
-                                       <td>{{ i.student.mobile }}</td>
-                                       <td>{{ i.student.address }}</td>
-                                        <td style="color: lightslategray">{{ i.student.created_at.date }}</td>
+                                        <td>{{ i.admin.username }}</td>
+                                       <td>{{ i.course_id }}</td>
+                                       <td>{{ i.mobile }}</td>
+                                       <td>{{ i.address }}</td>
+                                        <td style="color: lightslategray">{{ i.created_at.date }}</td>
                                        <td class="text-right">
                                           <div class="actions">
                                              <a href="{% url 'edit_student' i.id %}" class="btn btn-sm bg-success-light mr-2">
                                              <i class="fas fa-pen"></i>
                                              </a>
-
-        <form method="POST" action="{% url 'archive_student' admin=i.id %}" style="display: inline-block;">
-            {% csrf_token %}
-            <button type="submit" class="btn btn-sm bg-warning-light">
-                <i class="fas fa-archive"></i>
-            </button>
-        </form>
-{#                                             <a href="{% url 'delete_student' admin=i.id %}" methods="POST" class="btn btn-sm bg-danger-light">#}
+{#                                             <a href="{% url 'delete_student' admin=i.id %}" methods="post" class="btn btn-sm bg-danger-light">#}
 {#                                             <i class="fas fa-trash"></i>#}
 {#                                             </a>#}
-
                                           </div>
                                        </td>
                                     </tr>

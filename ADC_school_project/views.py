@@ -44,7 +44,7 @@ def doLogout(request):
 def PROFILE(request):
     user = customUser.objects.get(id=request.user.id)
     context = {
-        "user": user,
+        "user":user,
     }
     return render(request, 'profile.html', context)
 

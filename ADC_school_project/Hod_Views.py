@@ -1,8 +1,9 @@
 from django.shortcuts import render,redirect
 from django.contrib.auth.decorators import login_required
-from app.models import Course, customUser, Student, ArchivedUser
+from app.models import Course, customUser, Student
 from django.contrib import messages
-from django.shortcuts import redirect, get_object_or_404
+from django.shortcuts import redirect
+from django.db.models import Max
 
 @login_required(login_url='/')
 def HOME(request):
@@ -11,12 +12,17 @@ def HOME(request):
 @login_required(login_url='/')
 def ADD_STUDENT(request):
     course = Course.objects.all()
+    last_username_number = customUser.objects.aggregate(Max('username'))['username__max']
+    next_username_number = 1 if last_username_number is None or not last_username_number.split('_')[
+        -1].isdigit() else int(last_username_number.split('_')[-1]) + 1
+
+    # next_username_number = 2 if last_username_number is None else int(last_username_number.split('_')[-1]) + 1
 
     if request.method == "POST":
         profile_pic = request.FILES.get('profile_pic')
         first_name = request.POST.get('first_name')
         last_name = request.POST.get('last_name')
-        username = request.POST.get('username')
+        username = f"{first_name.lower()}_{next_username_number}"
         password = request.POST.get('password')
         address = request.POST.get('address')
         birth_date = request.POST.get('date_of_birth')
@@ -24,41 +30,85 @@ def ADD_STUDENT(request):
         mobiletwo = request.POST.get('mobile_two')
         course_id = request.POST.get('course_id')
 
-        if customUser.objects.filter(username=username).exists():
-            messages.warning(request, 'Username exists in a database')
-        else:
-            user = customUser(
-                first_name=first_name,
-                last_name=last_name,
-                username=username,
-                profile_pic=profile_pic,
-                user_type=3
-            )
-            user.set_password(password)
-            user.save()
+        user = customUser(
+            first_name=first_name,
+            last_name=last_name,
+            username=username,
+            profile_pic=profile_pic,
+            user_type=3
+        )
+        user.set_password(password)
+        user.save()
 
-            course = Course.objects.get(id = course_id)
+        course = Course.objects.get(id = course_id)
 
-            student = Student(
-                admin=user,
-                mobile=mobile,
-                mobiletwo=mobiletwo,
-                address=address,
-                birth_date=birth_date,
-                course_id=course,
-            )
-            student.save()
-            messages.success(request,  user.first_name + ' ' + user.last_name + ' Saved Successfully')
-            return redirect('add_student')
+        student = Student(
+            admin=user,
+            mobile=mobile,
+            mobiletwo=mobiletwo,
+            address=address,
+            birth_date=birth_date,
+            course_id=course,
+        )
+        student.save()
+
+        messages.success(request,  user.first_name + ' ' + user.last_name + ' Saved Successfully')
+        return redirect('add_student')
+
     context = {
         'course': course,
     }
     return render(request, 'Hod/add_student.html', context)
 
+# def ADD_STUDENT(request):
+#     course = Course.objects.all()
+#
+#     if request.method == "POST":
+#         profile_pic = request.FILES.get('profile_pic')
+#         first_name = request.POST.get('first_name')
+#         last_name = request.POST.get('last_name')
+#         username = request.POST.get('username')
+#         password = request.POST.get('password')
+#         address = request.POST.get('address')
+#         birth_date = request.POST.get('date_of_birth')
+#         mobile = request.POST.get('mobile')
+#         mobiletwo = request.POST.get('mobile_two')
+#         course_id = request.POST.get('course_id')
+#
+#         if customUser.objects.filter(username=username).exists():
+#             messages.warning(request, 'Username exists in a database')
+#         else:
+#             user = customUser(
+#                 first_name=first_name,
+#                 last_name=last_name,
+#                 username=username,
+#                 profile_pic=profile_pic,
+#                 user_type=3
+#             )
+#             user.set_password(password)
+#             user.save()
+#
+#             course = Course.objects.get(id = course_id)
+#
+#             student = Student(
+#                 admin=user,
+#                 mobile=mobile,
+#                 mobiletwo=mobiletwo,
+#                 address=address,
+#                 birth_date=birth_date,
+#                 course_id=course,
+#             )
+#             student.save()
+#             messages.success(request,  user.first_name + ' ' + user.last_name + ' Saved Successfully')
+#             return redirect('add_student')
+#     context = {
+#         'course': course,
+#     }
+#     return render(request, 'Hod/add_student.html', context)
+
 @login_required(login_url='/')
 def VIEW_STUDENT(request):
-    # student = Student.objects.all()
-    student = customUser.objects.filter(is_staff=False, is_superuser=False, is_archived=False)
+    student = Student.objects.exclude(course_id__level='Students')
 
     context = {
         'student': student,
@@ -118,19 +168,6 @@ def UPDATE_STUDENT(request):
 #     messages.success(request, "O'chrilidi")
 #     return redirect('view_student')
 
-def archive_student(request, admin):
-    student = customUser.objects.get(id=admin)
-    student.is_archived = True
-    student.save()
-    return redirect('view_student')
 
-
-def unarchive_user(request, pk):
-    archived_user = get_object_or_404(ArchivedUser, pk=pk)
-    user = archived_user.user
-    user.is_active = True
-    user.save()
-    archived_user.delete()
-    return redirect('archived_users')
 
 
