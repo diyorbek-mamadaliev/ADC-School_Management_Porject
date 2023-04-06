@@ -10,6 +10,7 @@ class UserModel(UserAdmin):
 admin.site.register(customUser, UserModel)
 admin.site.register(Course)
 admin.site.register(Student)
+admin.site.register(Staff)
 
 class ArchivedUserAdmin(admin.ModelAdmin):
     list_display = ('username', 'email', 'date_archived') # fields to display in the list

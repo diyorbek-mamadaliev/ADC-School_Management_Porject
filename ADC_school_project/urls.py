@@ -24,5 +24,14 @@ urlpatterns = [
     path('Hod/Student/Edit<str:id>', Hod_Views.EDIT_STUDENT, name="edit_student"),
     path('Hod/Student/Update', Hod_Views.UPDATE_STUDENT, name="update_student"),
 
+    path('Hod/Course/Add', Hod_Views.ADD_COURSE, name="add_course"),
+    path('Hod/Course/View', Hod_Views.VIEW_COURSE, name="view_course"),
+    path('Hod/Course/Gallery', Hod_Views.VIEW_COURSES, name='view_courses'),
+    path('Hod/Course/Edit/<str:id>', Hod_Views.EDIT_COURSE, name="edit_course"),
+    path('Hod/Course/Update', Hod_Views.UPDATE_COURSE, name="update_course"),
+
+    path('Hod/Staff/Add', Hod_Views.ADD_STAFF, name="add_staff"),
+    path('Hod/Staff/View', Hod_Views.VIEW_STAFF, name="view_staff"),
+
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

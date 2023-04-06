@@ -5,46 +5,37 @@
                   <div class="col-sm-12">
                      <div class="card">
                         <div class="card-body">
-                           <form method="post"action="{% url 'add_course' %}">
+                           <form method="post"action="{% url 'update_course' %}">
                                {% csrf_token %}
                               <div class="row">
                                  <div class="col-12">
-                                    <h5 class="form-title"><span>Guruh Qo'shish</span></h5>
+                                    <h5 class="form-title"><span>Guruhni Tahrirlash</span></h5>
                                  </div>
                                   <div class="col-12 col-sm-6">
                                     <div class="form-group">
                                        <label>Fan</label>
-                                       <select class="form-control" name="subject" required>
-                                          <option>Ingliz tili</option>
-                                          <option>Rus Tili</option>
-                                          <option>Koreys tili</option>
-                                           <option>Yapon tili</option>
-                                           <option>Matematika</option>
-                                       </select>
+                                       <input type="text" class="form-control" name="subject" value="{{ course.subject }}" required>
+                                        <input type="text" class="form-control" name="course_id" value="{{ course.id }}" hidden>
                                     </div>
                                   </div>
                                       <div class="col-12 col-sm-6">
                                     <div class="form-group">
                                        <label>Daraja</label>
-                                       <select class="form-control" name="level" required>
-                                          <option>Beginner</option>
-                                          <option>Elementary</option>
-                                          <option>Pre-Intermediate</option>
-                                           <option>Intermediate</option>
-                                           <option>Upper-Intermediate</option>
-                                           <option>Advanced</option>
-                                       </select>
+                                       <input type="text" class="form-control" name="level" value="{{ course.level }}" required>
+                                        <input type="text" class="form-control" name="course_id" value="{{ course.id }}" hidden>
                                     </div>
                                     </div>
                                   <div class="col-12 col-sm-6">
                                     <div class="form-group">
-                                       <label>Status</label>
-                                       <select class="form-control" name="status">
-                                          <option>Aktiv</option>
-                                          <option>Arxiv</option>
-                                       </select>
+                                        <label>Status</label>
+                                        <select class="form-control" name="status">
+                                            <option value="{{ course.status }}">{{ course.status }}</option>
+                                            <option value="Aktiv">Aktiv</option>
+                                            <option value="Arxiv">Arxiv</option>
+                                        </select>
                                     </div>
-                                 </div>
+                                </div>
+
 {#                                 <div class="col-12 col-sm-6">#}
 {#                                    <div class="form-group">#}
 {#                                       <label>Fan</label>#}
@@ -58,7 +49,7 @@
 {#                                    </div>#}
 {#                                 </div>#}
                                  <div class="col-12">
-                                    <button type="submit" class="btn btn-primary">Yangi Guruh Qo'shish</button>
+                                    <button type="submit" class="btn btn-primary">Guruhni Yangilash</button>
                                  </div>
                                   <br>
                                   <br>

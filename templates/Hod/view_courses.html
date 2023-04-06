@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="content container-fluid">
+               <div class="page-header">
+                  <div class="row align-items-center">
+                     <div class="col">
+                        <h3 class="page-title">Kurslar</h3>
+
+                     </div>
+                      {% include 'includes/messages.html' %}
+                     <div class="col-auto text-right float-right ml-auto">
+                        <a href="#" class="btn btn-outline-primary mr-2"> Yangi Guruh Qo'shish</a>
+                        <a href="{% url 'view_courses' %}" class="btn btn-primary"><i class="fas fa-plus"></i></a>
+                     </div>
+                  </div>
+               </div>
+               <div class="row">
+                   {% for i in courses %}
+                <div class="col-3">
+                        <div class="card" style="width: 17rem;">
+                            {{ i.course }}
+                            <img class="card-img-top" src="../elearning.png" width="200px" alt="Card image cap">
+                            <div class="card-body">
+                              <h3 class="text-dark text-center">{{ i.subject }}</h3>
+                              <p class="card-text text-center text-secondary">600 000 UZS</p>
+                            </div>
+                        </div>
+                </div>
+                    {% endfor %}
+                </div>
+
+<!--  -->
+<!--  -->
+<!--  -->
+               </div>
+            </div>
+{% endblock %}

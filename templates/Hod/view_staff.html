@@ -24,16 +24,17 @@
                                  <thead>
                                     <tr>
                                        <th style="color: #1d9bea">In</th>
-                                       <th style="color: #1d9bea">O'quvchi</th>
-                                        <th style="color: #1d9bea">ID</th>
-                                       <th style="color: #1d9bea">Kurs</th>
-                                       <th style="color: #1d9bea">Telefon Raqam</th>
-                                       <th style="color: #1d9bea">Manzil</th>
+                                       <th style="color: #1d9bea">Hodim</th>
+                                        <th style="color: #1d9bea">Login</th>
+                                       <th style="color: #1d9bea">Bo'lim</th>
+                                       <th style="color: #1d9bea">Yo'nalish</th>
+                                       <th style="color: #1d9bea">Ish Formati</th>
+                                        <th style="color: #1d9bea">Telefon</th>
                                         <th style="color: #1d9bea">Kiritilgan</th>
                                        <th class="text-right"></th>
                                     </tr>
                                  </thead>
-                                  {% for i in student %}
+                                  {% for i in staff %}
                                  <tbody>
                                     <tr>
                                        <td>{{ i.id }}</td>
@@ -43,10 +44,11 @@
                                           </h2>
                                        </td>
                                         <td>{{ i.admin.username }}</td>
-                                       <td>{{ i.course_id }}</td>
-                                       <td>{{ i.mobile }}</td>
-                                       <td>{{ i.address }}</td>
-                                        <td style="color: lightslategray">{{ i.created_at.date }}</td>
+                                       <td>{{ i.department }}</td>
+                                       <td>{{ i.role }}</td>
+                                       <td>{{ i.work_format }}</td>
+                                        <td>{{ i.mobile }}</td>
+                                        <td style="color: lightslategray">{{ i.created_date.date }}</td>
                                        <td class="text-right">
                                           <div class="actions">
                                              <a href="{% url 'edit_student' i.id %}" class="btn btn-sm bg-success-light mr-2">

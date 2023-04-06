@@ -5,46 +5,46 @@
                <div id="sidebar-menu" class="sidebar-menu">
                   <ul>
                      <li class="menu-title">
-                        <span>Main Menu</span>
+                        <span>Asosiy Bo'lim</span>
                      </li>
                      <li>
-                        <a href="{% url 'hod_home' %}"><i class="fas fa-holly-berry"></i> <span>Dashboard</span></a>
+                        <a href="{% url 'hod_home' %}"><i class="fas fa-holly-berry"></i> <span>Analitika</span></a>
                      </li>
                      <li class="submenu">
-                        <a href="#"><i class="fas fa-user-graduate"></i> <span> Students</span> <span class="menu-arrow"></span></a>
+                        <a href="#"><i class="fas fa-user-graduate"></i> <span> O'quvchilar</span> <span class="menu-arrow"></span></a>
                         <ul>
-                           <li><a href="students.html">Waitlist</a></li>
-                           <li><a href="{% url 'view_student' %}">Student List</a></li>
-                           <li><a href="{% url 'add_student' %}">Add Student</a></li>
+                           <li><a href="students.html">Kutayotkanlar</a></li>
+                           <li><a href="{% url 'view_student' %}">O'quvchilar</a></li>
+                        </ul>
+                     </li>
+                      <li class="submenu">
+                        <a href="#"><i class="fas fa-book-reader"></i> <span> Kurslar</span> <span class="menu-arrow"></span></a>
+                        <ul>
+                           <li><a href="{% url 'view_courses' %}">Kurslar</a></li>
+                           <li><a href="{% url 'view_course' %}">Guruhlar</a></li>
                         </ul>
                      </li>
                      <li class="submenu">
-                        <a href="#"><i class="fas fa-chalkboard-teacher"></i> <span> Staff</span> <span class="menu-arrow"></span></a>
+                        <a href="#"><i class="fas fa-chalkboard-teacher"></i> <span> Hodimlar</span> <span class="menu-arrow"></span></a>
                         <ul>
-                           <li><a href="teachers.html">Staff List</a></li>
-                           <li><a href="teacher-details.html">Staff View</a></li>
-                           <li><a href="add-teacher.html">Staff Add</a></li>
-                           <li><a href="edit-teacher.html">Staff Edit</a></li>
+                           <li><a href="{% url 'view_staff' %}">Barcha Hodimlar</a></li>
+                            <li><a href="{% url 'add_staff' %}">Hodim Qo'shish</a></li>
+                           <li><a href="teacher-details.html">O'qituvchilar</a></li>
+                           <li><a href="add-teacher.html">Ishga Topshirganlar</a></li>
+                           <li><a href="edit-teacher.html">Ishdan Ketayotkanlar</a></li>
                         </ul>
                      </li>
                      <li class="submenu">
-                        <a href="#"><i class="fas fa-building"></i> <span> Branches</span> <span class="menu-arrow"></span></a>
+                        <a href="#"><i class="fas fa-building"></i> <span> Filiallar</span> <span class="menu-arrow"></span></a>
                         <ul>
-                           <li><a href="departments.html">Branch View</a></li>
-                           <li><a href="add-department.html">Branch Add</a></li>
-                           <li><a href="edit-department.html">Branch Edit</a></li>
+                           <li><a href="departments.html">Barcha Filiallar</a></li>
+                           <li><a href="add-department.html">Filial 1</a></li>
+                           <li><a href="edit-department.html">Filial 2</a></li>
                         </ul>
                      </li>
-                     <li class="submenu">
-                        <a href="#"><i class="fas fa-book-reader"></i> <span> Courses</span> <span class="menu-arrow"></span></a>
-                        <ul>
-                           <li><a href="subjects.html">Subject List</a></li>
-                           <li><a href="add-subject.html">Subject Add</a></li>
-                           <li><a href="edit-subject.html">Subject Edit</a></li>
-                        </ul>
-                     </li>
+
                      <li class="menu-title">
-                        <span>Management</span>
+                        <span>Boshqaruv Bo'limi</span>
                      </li>
                      <li class="submenu">
                         <a href="#"><i class="fas fa-file-invoice-dollar"></i> <span> Finances</span> <span class="menu-arrow"></span></a>

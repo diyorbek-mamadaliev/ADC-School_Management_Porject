@@ -1,14 +1,15 @@
 {% extends 'base.html' %}
+
 {% block content %}
     <div class="row">
                   <div class="col-sm-12">
                      <div class="card">
                         <div class="card-body">
-                           <form method="post"action="{% url 'add_student' %}" enctype="multipart/form-data">
+                           <form method="post"action="{% url 'add_staff' %}" enctype="multipart/form-data">
                                {% csrf_token %}
                               <div class="row">
                                  <div class="col-12">
-                                    <h5 class="form-title"><span>O'quvchi Kiritish</span></h5>
+                                    <h5 class="form-title"><span>Hodim Kiritish</span></h5>
                                  </div>
                                  <div class="col-12 col-sm-6">
                                     <div class="form-group">
@@ -28,6 +29,47 @@
                                        <div>
                                           <input type="date" class="form-control" name="date_of_birth" required>
                                        </div>
+                                    </div>
+                                 </div>
+                              <div class="col-12 col-sm-6">
+                                    <div class="form-group">
+                                       <label>Bo'lim</label>
+                                       <select class="form-control" name="department">
+                                          <option>O'qituvchi</option>
+                                          <option>Administratsiya</option>
+                                           <option>Boshqa</option>
+                                       </select>
+                                    </div>
+                                 </div>
+                              <div class="col-12 col-sm-6">
+                                    <div class="form-group">
+                                       <label>Yo'nalishi</label>
+                                       <input type="text" class="form-control" name="role" required>
+                                    </div>
+                                 </div>
+                              <div class="col-12 col-sm-6">
+                                    <div class="form-group">
+                                       <label>Ish Xaqi Turi</label>
+                                       <select class="form-control" name="salary_type">
+                                          <option>Foyiz</option>
+                                          <option>Fixed</option>
+                                          <option>Summa</option>
+                                       </select>
+                                    </div>
+                                 </div>
+                              <div class="col-12 col-sm-6">
+                                    <div class="form-group">
+                                       <label>Ish xaqi</label>
+                                       <input type="text" class="form-control" name="salary_amount" required>
+                                    </div>
+                                 </div>
+                              <div class="col-12 col-sm-6">
+                                    <div class="form-group">
+                                       <label>Ish Formati</label>
+                                       <select class="form-control" name="work_format">
+                                          <option>Yarim kun</option>
+                                          <option>To'liq</option>
+                                       </select>
                                     </div>
                                  </div>
                               <div class="col-12 col-sm-6">
@@ -54,16 +96,6 @@
                                        <input type="text" class="form-control" name="mobile_two">
                                     </div>
                                  </div>
-                              <div class="col-12 col-sm-6">
-                                    <div class="form-group">
-                                       <label>Guruh</label>
-                                       <select class="form-control" name="course_id">
-                                           {% for i in course %}
-                                          <option value="{{ i.id }}">({{ i.id }}) {{ i.subject }} | {{ i.level }}</option>
-                                           {% endfor %}
-                                       </select>
-                                    </div>
-                                 </div>
 {#                                  <div class="col-12 col-sm-6">#}
 {#                                    <div class="form-group">#}
 {#                                       <label>ID</label>#}
@@ -76,17 +108,6 @@
                                        <input type="text" class="form-control" name="password" required>
                                     </div>
                                  </div>
-                              <div class="col-12 col-sm-6">
-                                    <div class="form-group">
-                                       <label>Status</label>
-                                       <select class="form-control" name="status">
-                                          <option>Kutayotkanlar</option>
-                                           <option>Aktiv</option>
-                                           <option>Arxiv</option>
-                                       </select>
-                                    </div>
-                                 </div>
-
                                  <div class="col-12">
                                     <button type="submit" class="btn btn-primary">Tasdiqlash</button>
                                  </div>

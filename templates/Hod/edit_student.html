@@ -77,8 +77,21 @@
                                        <input type="text" style="color: gray" class="form-control" name="password">
                                     </div>
                                  </div>
+                              <div class="col-12 col-sm-6">
+                                    <div class="form-group">
+                                        <label>Status</label>
+                                        <select class="form-control" name="status">
+                                            {% for i in student %}
+                                            <option value="{{ i.status }}">{{ i.status }}</option>
+                                            <option value="Kutayotkanlar">Kutayotkanlar</option>
+                                                <option value="Aktiv">Aktiv</option>
+                                            <option value="Arxiv">Arxiv</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
                                  <div class="col-12">
-                                    <button type="submit" class="btn btn-primary">Tasdiqlash</button>
+                                    <button type="submit" class="btn btn-primary" style="width: 100%">Tasdiqlash</button>
                                  </div>
 
                               {% include 'includes/messages.html' %}
