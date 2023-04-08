@@ -5,6 +5,8 @@ from django.contrib import messages
 from django.shortcuts import redirect
 from django.db.models import Max
 
+
+
 @login_required(login_url='/')
 def HOME(request):
     return render(request, 'Hod/home.html')
@@ -298,8 +300,60 @@ def ADD_STAFF(request):
 
 def VIEW_STAFF(request):
     staff = Staff.objects.all()
-
     context = {
         'staff': staff,
     }
     return render(request, 'Hod/view_staff.html', context)
+
+
+def EDIT_STAFF(request, id):
+    staff = Staff.objects.get(id=id)
+
+    context = {
+        'staff': staff,
+    }
+    return render(request, 'Hod/edit_staff.html', context)
+
+
+def UPDATE_STAFF(request):
+    if request.method == "POST":
+        staff_id = request.POST.get('staff_id')
+        first_name = request.POST.get('first_name')
+        last_name = request.POST.get('last_name')
+        username = request.POST.get('username')
+        department = request.POST.get('department')
+        role = request.POST.get('role')
+        salary_type = request.POST.get('salary_type')
+        salary_amount = request.POST.get('salary_amount')
+        work_format = request.POST.get('work_format')
+        birth_date = request.POST.get('birth_date')
+        address = request.POST.get('address')
+        mobile = request.POST.get('mobile')
+        mobiletwo = request.POST.get('mobiletwo')
+        password = request.POST.get('password')
+
+        user = customUser.objects.get(id = staff_id)
+        user.username = username
+        user.first_name = first_name
+        user.last_name = last_name
+
+        if password != None and password != "":
+            user.set_password(password)
+        user.save()
+
+        staff = Staff.objects.get(admin=staff_id)
+        staff.department = department
+        staff.role = role
+        staff.salary_type = salary_type
+        staff.salary_amount = salary_amount
+        staff.work_format = work_format
+        staff.birth_date = birth_date
+        staff.address = address
+        staff.mobile = mobile
+        staff.mobiletwo = mobiletwo
+
+        staff.save()
+        messages.success(request, "Ma'lumot O'zgartirildi")
+        return redirect('view_staff')
+
+    return render(request, 'Hod/edit_staff.html')

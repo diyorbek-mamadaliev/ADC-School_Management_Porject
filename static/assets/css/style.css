@@ -3463,3 +3463,13 @@ table.table-inbox tbody tr.checked {
 		height: 355px;
 	}
 }
+/* Ensure that the demo table scrolls */
+    th, td { white-space: nowrap; }
+    div.dataTables_wrapper {
+        width: 100%;
+        margin: 0 auto;
+    }
+
+    th input {
+        width: 50%;
+    }
