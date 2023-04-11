@@ -18,14 +18,12 @@ def ADD_STUDENT(request):
     next_username_number = 1 if last_username_number is None or not last_username_number.split('_')[
         -1].isdigit() else int(last_username_number.split('_')[-1]) + 1
 
-    # next_username_number = 2 if last_username_number is None else int(last_username_number.split('_')[-1]) + 1
-
     if request.method == "POST":
         profile_pic = request.FILES.get('profile_pic')
         first_name = request.POST.get('first_name')
         last_name = request.POST.get('last_name')
         username = f"{first_name.lower()}_{next_username_number}"
-        password = request.POST.get('password')
+        password = '111'  # Set password to '111'
         address = request.POST.get('address')
         birth_date = request.POST.get('date_of_birth')
         mobile = request.POST.get('mobile')
@@ -43,15 +41,13 @@ def ADD_STUDENT(request):
         user.set_password(password)
         user.save()
 
-        course = Course.objects.get(id = course_id)
-
         student = Student(
             admin=user,
             mobile=mobile,
             mobiletwo=mobiletwo,
             address=address,
             birth_date=birth_date,
-            course_id=course,
+            course_id=course_id,
             status=student_status,
         )
         student.save()
@@ -63,6 +59,7 @@ def ADD_STUDENT(request):
         'course': course,
     }
     return render(request, 'Hod/add_student.html', context)
+
 
 # def ADD_STUDENT(request):
 #     course = Course.objects.all()
@@ -160,7 +157,7 @@ def UPDATE_STUDENT(request):
         student.birth_date = birth_date
         student.mobile = mobile
         student.mobiletwo = mobiletwo
-        course = Course.objects.get(id=course_id)
+        course = course_id
         student.course_id = course
         student.status = student_status
         student.save()
@@ -220,7 +217,7 @@ def VIEW_COURSE(request):
 
 @login_required(login_url='/')
 def VIEW_COURSES(request):
-    courses = Course.objects.exclude(level="Students").values('subject').distinct()
+    courses = Course.objects.exclude(level="Ochilmagan").values('subject').distinct()
     context = {
         'courses': courses,
     }
@@ -228,8 +225,8 @@ def VIEW_COURSES(request):
     return render(request, 'Hod/view_courses.html', context)
 
 
-def EDIT_COURSE(request, id):
-    course = Course.objects.get(id = id)
+def EDIT_COURSE(request,id):
+    course = Course.objects.get(id=id)
     context = {
         'course': course,
     }
@@ -357,3 +354,22 @@ def UPDATE_STAFF(request):
         return redirect('view_staff')
 
     return render(request, 'Hod/edit_staff.html')
+
+
+def VIEW_WAITING(request):
+    student = Student.objects.filter(status='Kutayotkanlar')
+
+    context = {
+        'student': student,
+    }
+    return render(request, 'Hod/view_waiting.html', context)
+
+
+
+def ARCHIVE_STUDENT(request):
+    student = Student.objects.filter(status='Arxiv')
+
+    context = {
+        'student': student,
+    }
+    return render(request, 'Hod/archive_student.html', context)

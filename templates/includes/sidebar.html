@@ -13,7 +13,7 @@
                      <li class="submenu">
                         <a href="#"><i class="fas fa-user-graduate"></i> <span> O'quvchilar</span> <span class="menu-arrow"></span></a>
                         <ul>
-                           <li><a href="students.html">Kutayotkanlar</a></li>
+                           <li><a href="{% url 'view_waiting' %}">Kutayotkanlar</a></li>
                            <li><a href="{% url 'view_student' %}">O'quvchilar</a></li>
                         </ul>
                      </li>
@@ -70,6 +70,14 @@
                            <li><a href="add-salary.html">Add Salary</a></li>
                         </ul>
                      </li>
+                      <li class="submenu">
+                        <a style="color: red" href="#"><i class="fas fa-trash-alt"></i> <span> Arxiv</span> <span class="menu-arrow"></span></a>
+                        <ul>
+                           <li><a href="{% url 'archive_student' %}">Arxivlangan O'quvchilar</a></li>
+                           <li><a href="expenses.html">Arxivlangan Hodimlar</a></li>
+                           <li><a href="salary.html">Arxivlangan Guruhlar</a></li>
+                        </ul>
+                     </li>
                      <li>
                         <a href="holiday.html"><i class="fas fa-holly-berry"></i> <span>Holiday</span></a>
                      </li>
@@ -89,7 +97,7 @@
                         <a href="library.html"><i class="fas fa-book"></i> <span>Library</span></a>
                      </li>
                       <li>
-                        <a style="color: darkred" href="{% url 'logout' %}"><i class="fas fa-sign-out-alt"></i> <span>Exit</span></a>
+                        <a style="color: red" href="{% url 'logout' %}"><i class="fas fa-sign-out-alt"></i> <span>Exit</span></a>
                      </li>
                      <li class="menu-title">
                         <span>Pages</span>

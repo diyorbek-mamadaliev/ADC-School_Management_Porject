@@ -23,6 +23,8 @@ urlpatterns = [
     path('Hod/Student/View', Hod_Views.VIEW_STUDENT, name="view_student"),
     path('Hod/Student/Edit<str:id>', Hod_Views.EDIT_STUDENT, name="edit_student"),
     path('Hod/Student/Update', Hod_Views.UPDATE_STUDENT, name="update_student"),
+    path('Hod/Student/Waiting', Hod_Views.VIEW_WAITING, name="view_waiting"),
+    path('Hod/Student/Archive', Hod_Views.ARCHIVE_STUDENT, name="archive_student"),
 
     path('Hod/Course/Add', Hod_Views.ADD_COURSE, name="add_course"),
     path('Hod/Course/View', Hod_Views.VIEW_COURSE, name="view_course"),

@@ -76,62 +76,6 @@ $(document).ready(function () {
 });
 </script>
 
-
-{#   <script>#}
-{#       $(document).ready(function () {#}
-{#  // Loop through all tables with class 'data-table'#}
-{#  $('table.data-table').each(function() {#}
-{#    var table = $(this);#}
-{##}
-{#    // Setup - add a text input to each footer cell#}
-{#    table.find('thead th').each(function (i) {#}
-{#      var title = $(this).text();#}
-{#      $(this).html('<input type="text" placeholder="' + title + '" data-index="' + i + '" />');#}
-{#    });#}
-{##}
-{#    // DataTable#}
-{#    var dataTable = table.DataTable({#}
-{#      scrollY: "600px",#}
-{#      scrollX: true,#}
-{#      scrollCollapse: true,#}
-{#      paging: false,#}
-{#      fixedColumns: false#}
-{#    });#}
-{##}
-{#    // Filter event handler#}
-{#    $(dataTable.table().container()).on('keyup', 'thead input', function () {#}
-{#      dataTable.column($(this).data('index')).search(this.value).draw();#}
-{#    });#}
-{#  });#}
-{#});#}
-{##}
-{#   </script>#}
-
-{#       <script type="text/javascript">#}
-{#    $(document).ready(function () {#}
-{#    // Setup - add a text input to each footer cell#}
-{#    $('#table_id thead th').each(function (i) {#}
-{#        var title = $(this).text();#}
-{#        $(this).html('<input type="text" placeholder="' + title + '" data-index="' + i + '" />');#}
-{#    });#}
-{##}
-{#    // DataTable#}
-{#    var table = $('#table_id').DataTable({#}
-{#        scrollY: "600px",#}
-{#        scrollX: true,#}
-{#        scrollCollapse: true,#}
-{#        paging: false,#}
-{#        fixedColumns: false#}
-{#    });#}
-{##}
-{#    // Filter event handler#}
-{#    $(table.table().container()).on('keyup', 'thead input', function () {#}
-{#        table.column($(this).data('index')).search(this.value).draw();#}
-{#    });#}
-{#});#}
-{##}
-{#</script>#}
-
    </div>
    </body>
 

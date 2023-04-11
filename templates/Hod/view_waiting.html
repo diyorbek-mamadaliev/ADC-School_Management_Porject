@@ -1,11 +1,10 @@
 {% extends 'base.html' %}
 {% block content %}
-
     <div class="content container-fluid">
                <div class="page-header">
                   <div class="row align-items-center">
                      <div class="col">
-                        <h3 class="page-title">O'quvchilar</h3>
+                        <h3 class="page-title">Kutayotkanlar</h3>
 
                      </div>
                       {% include 'includes/messages.html' %}
@@ -15,7 +14,7 @@
                      </div>
                   </div>
                </div>
-               <div class="row">s
+               <div class="row">
                   <div class="col-sm-12">
                      <div class="card card-table">
                         <div class="card-body">
@@ -25,7 +24,6 @@
     <tr>
       <th style="color: #1d9bea">In</th>
       <th style="color: #1d9bea">O'quvchi</th>
-      <th style="color: #1d9bea">ID</th>
       <th style="color: #1d9bea">Kurs</th>
       <th style="color: #1d9bea">Raqam</th>
       <th style="color: #1d9bea">Manzil</th>
@@ -39,7 +37,6 @@
       <td>
         <a href="{% url 'edit_student' i.id %}">{{ i.admin.first_name }}&nbsp;{{ i.admin.last_name }}</a>
       </td>
-      <td>{{ i.admin.username }}</td>
       <td>{{ i.course_id }}</td>
       <td>{{ i.mobile }}</td>
       <td>{{ i.address }}</td>

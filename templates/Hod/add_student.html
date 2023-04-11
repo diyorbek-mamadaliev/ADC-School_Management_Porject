@@ -54,28 +54,33 @@
                                        <input type="text" class="form-control" name="mobile_two">
                                     </div>
                                  </div>
-                              <div class="col-12 col-sm-6">
+                                  <div class="col-12 col-sm-6">
                                     <div class="form-group">
                                        <label>Guruh</label>
                                        <select class="form-control" name="course_id">
-                                           {% for i in course %}
-                                          <option value="{{ i.id }}">({{ i.id }}) {{ i.subject }} | {{ i.level }}</option>
-                                           {% endfor %}
+                                          <option value="Ingliz Tili">Ingliz Tili</option>
+                                               <option value="Rus Tili">Rus Tili</option>
+                                               <option value="Koreys Tili">Koreys Tili</option>
+                                               <option value="Yapon Tili">Yapon Tili</option>
                                        </select>
                                     </div>
                                  </div>
+{#                              <div class="col-12 col-sm-6">#}
+{#                                    <div class="form-group">#}
+{#                                       <label>Guruh</label>#}
+{#                                       <select class="form-control" name="course_id">#}
+{#                                           {% for i in course %}#}
+{#                                          <option value="{{ i.id }}">({{ i.id }}) {{ i.subject }} | {{ i.level }}</option>#}
+{#                                           {% endfor %}#}
+{#                                       </select>#}
+{#                                    </div>#}
+{#                                 </div>#}
 {#                                  <div class="col-12 col-sm-6">#}
 {#                                    <div class="form-group">#}
 {#                                       <label>ID</label>#}
 {#                                       <input type="text" class="form-control" name="username">#}
 {#                                    </div>#}
 {#                                 </div>#}
-                              <div class="col-12 col-sm-6">
-                                    <div class="form-group">
-                                       <label>Parol</label>
-                                       <input type="text" class="form-control" name="password" required>
-                                    </div>
-                                 </div>
                               <div class="col-12 col-sm-6">
                                     <div class="form-group">
                                        <label>Status</label>
