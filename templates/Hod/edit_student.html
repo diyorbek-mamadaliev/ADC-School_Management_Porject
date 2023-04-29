@@ -8,24 +8,24 @@
                                {% csrf_token %}
                               <div class="row">
                                  <div class="col-12">
-                                    <h5 class="form-title"><span>Tahrirlash</span></h5>
+                                    <h5 class="form-title"><span>Edit Student Information</span></h5>
                                  </div>
                                  <div class="col-12 col-sm-6">
                                     <div class="form-group">
-                                       <label>Ism</label>
+                                       <label>Name</label>
                                        <input type="text" style="color: gray" class="form-control" name="first_name" value="{% for i in student %}{{ i.admin.first_name }}{% endfor %}">
                                         <input type="text" style="color: gray" class="form-control" name="student_id" value="{% for i in student %}{{ i.admin.id }}{% endfor %}" hidden>
                                     </div>
                                  </div>
                                  <div class="col-12 col-sm-6">
                                     <div class="form-group">
-                                       <label>Familiya</label>
+                                       <label>Surname</label>
                                        <input type="text" style="color: gray" class="form-control" name="last_name" value="{% for i in student %}{{ i.admin.last_name }}{% endfor %}">
                                     </div>
                                  </div>
                               <div class="col-12 col-sm-6">
                                     <div class="form-group">
-                                       <label>Tug'ilgan Sana</label>
+                                       <label>Birth-Date</label>
                                        <div>
                                           <input type="date" style="color: gray" class="form-control" name="date_of_birth" value="{% for i in student %}{{ i.birth_date|date:'Y-m-d' }}{% endfor %}">
                                        </div>
@@ -33,7 +33,7 @@
                                  </div>
                               <div class="col-12 col-sm-6">
                                     <div class="form-group">
-                                       <label>Manzil</label>
+                                       <label>Address</label>
                                        <textarea class="form-control" style="color: gray" name="address">{% for i in student %}{{ i.address }}{% endfor %}</textarea>
                                     </div>
                                  </div>
@@ -45,22 +45,22 @@
 {#                                 </div>#}
                               <div class="col-12 col-sm-6">
                                     <div class="form-group">
-                                       <label>Telefon Raqam</label>
+                                       <label>Mobile</label>
                                        <input type="text" style="color: gray" class="form-control" name="mobile" value="{% for i in student %}{{ i.mobile }}{% endfor %}">
                                     </div>
                                  </div>
                               <div class="col-12 col-sm-6">
                                     <div class="form-group">
-                                       <label>Telefon Raqam (Qo'shimcha)</label>
+                                       <label>Mobile (Optional)</label>
                                        <input type="text" style="color: gray" class="form-control" name="mobile_two" value="{% for i in student %}{{ i.mobiletwo }}{% endfor %}">
                                     </div>
                                  </div>
                               <div class="col-12 col-sm-6">
                                     <div class="form-group">
-                                       <label>Guruh</label>
+                                       <label>Group</label>
                                        <select class="form-control" name="course_id">
                                            {% for i in course %}
-                                          <option value="{{ i.id }}">{{ i.subject }} | {{ i.level }}</option>
+                                          <option value="{{ i.id }}">({{ i.id }}){{ i.subject }} | {{ i.level }}</option>
                                            {% endfor %}
                                        </select>
                                     </div>
@@ -83,15 +83,15 @@
                                         <select class="form-control" name="status">
                                             {% for i in student %}
                                             <option value="{{ i.status }}">{{ i.status }}</option>
-                                            <option value="Kutayotkanlar">Kutayotkanlar</option>
-                                                <option value="Aktiv">Aktiv</option>
-                                            <option value="Arxiv">Arxiv</option>
+                                            <option value="Waiting">Waiting</option>
+                                                <option value="Active">Active</option>
+                                            <option value="Archived">Archived</option>
                                             {% endfor %}
                                         </select>
                                     </div>
                                 </div>
                                  <div class="col-12">
-                                    <button type="submit" class="btn btn-primary" style="width: 100%">Tasdiqlash</button>
+                                    <button type="submit" class="btn btn-primary" style="width: 100%">Update</button>
                                  </div>
 
                               {% include 'includes/messages.html' %}

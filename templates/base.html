@@ -40,13 +40,14 @@
       <script src="{% static 'assets/plugins/apexchart/chart-data.js' %}"></script>
       <script src="{% static 'assets/js/script.js' %}"></script>
 
-       <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+{#       <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>#}
        <link rel="stylesheet" href="{% static 'assets/plugins/datatables/datatables.min.css' %}">
 
        <script src="{% static 'assets/plugins/datatables/datatables.min.js'%}"></script>
-       <script src="https://cdn.datatables.net/1.10.4/js/jquery.dataTables.min.js"></script>
+{#       <script src="https://cdn.datatables.net/1.10.4/js/jquery.dataTables.min.js"></script>#}
 
-   <script>
+
+<script>
 $(document).ready(function () {
   // Loop through all tables with class 'data-table'
   $('table.data-table').each(function() {
@@ -55,7 +56,7 @@ $(document).ready(function () {
     // Setup - add a text input to each footer cell
     table.find('thead th').each(function (i) {
       var title = $(this).text();
-      $(this).html('<input type="text" placeholder="' + title + '" data-index="' + i + '" />');
+      $(this).html('<div class="form-group"><input type="text" class="form-control" placeholder="' + title + '" data-index="' + i + '" /></div>');
     });
 
     // DataTable
@@ -75,7 +76,6 @@ $(document).ready(function () {
   });
 });
 </script>
-
    </div>
    </body>
 

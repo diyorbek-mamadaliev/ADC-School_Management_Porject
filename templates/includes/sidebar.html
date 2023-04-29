@@ -8,48 +8,47 @@
                         <span>Asosiy Bo'lim</span>
                      </li>
                      <li>
-                        <a href="{% url 'hod_home' %}"><i class="fas fa-holly-berry"></i> <span>Analitika</span></a>
+                        <a href="{% url 'hod_home' %}"><i class="fas fa-holly-berry"></i> <span>Analytics</span></a>
                      </li>
                      <li class="submenu">
-                        <a href="#"><i class="fas fa-user-graduate"></i> <span> O'quvchilar</span> <span class="menu-arrow"></span></a>
+                        <a href="#"><i class="fas fa-user-graduate"></i> <span> Students</span> <span class="menu-arrow"></span></a>
                         <ul>
-                           <li><a href="{% url 'view_waiting' %}">Kutayotkanlar</a></li>
-                           <li><a href="{% url 'view_student' %}">O'quvchilar</a></li>
+                           <li><a href="{% url 'view_waiting' %}">Waiting</a></li>
+                           <li><a href="{% url 'view_student' %}">Student List</a></li>
                         </ul>
                      </li>
                       <li class="submenu">
-                        <a href="#"><i class="fas fa-book-reader"></i> <span> Kurslar</span> <span class="menu-arrow"></span></a>
+                        <a href="#"><i class="fas fa-book-reader"></i> <span> Courses</span> <span class="menu-arrow"></span></a>
                         <ul>
-                           <li><a href="{% url 'view_courses' %}">Kurslar</a></li>
-                           <li><a href="{% url 'view_course' %}">Guruhlar</a></li>
+                           <li><a href="{% url 'view_courses' %}">Catalogue</a></li>
+                           <li><a href="{% url 'view_course' %}">Groups</a></li>
                         </ul>
                      </li>
                      <li class="submenu">
-                        <a href="#"><i class="fas fa-chalkboard-teacher"></i> <span> Hodimlar</span> <span class="menu-arrow"></span></a>
+                        <a href="#"><i class="fas fa-chalkboard-teacher"></i> <span> HR</span> <span class="menu-arrow"></span></a>
                         <ul>
-                           <li><a href="{% url 'view_staff' %}">Barcha Hodimlar</a></li>
-                            <li><a href="{% url 'add_staff' %}">Hodim Qo'shish</a></li>
-                           <li><a href="teacher-details.html">O'qituvchilar</a></li>
-                           <li><a href="add-teacher.html">Ishga Topshirganlar</a></li>
-                           <li><a href="edit-teacher.html">Ishdan Ketayotkanlar</a></li>
+                           <li><a href="{% url 'view_staff' %}">Employee List</a></li>
+                            <li><a href="{% url 'view_teacher' %}">Teachers</a></li>
+                            <li><a href="{% url 'add_staff' %}">Add Employee</a></li>
+                           <li><a href="add-teacher.html">Applicants</a></li>
+                           <li><a href="edit-teacher.html">Resignating Employees</a></li>
                         </ul>
                      </li>
                      <li class="submenu">
-                        <a href="#"><i class="fas fa-building"></i> <span> Filiallar</span> <span class="menu-arrow"></span></a>
+                        <a href="#"><i class="fas fa-building"></i> <span> Branches</span> <span class="menu-arrow"></span></a>
                         <ul>
-                           <li><a href="departments.html">Barcha Filiallar</a></li>
                            <li><a href="add-department.html">Filial 1</a></li>
                            <li><a href="edit-department.html">Filial 2</a></li>
                         </ul>
                      </li>
 
                      <li class="menu-title">
-                        <span>Boshqaruv Bo'limi</span>
+                        <span>Management</span>
                      </li>
                      <li class="submenu">
-                        <a href="#"><i class="fas fa-file-invoice-dollar"></i> <span> Finances</span> <span class="menu-arrow"></span></a>
+                        <a style="color: #1e7e34" href="#"><i class="fas fa-file-invoice-dollar"></i> <span> Finances</span> <span class="menu-arrow"></span></a>
                         <ul>
-                           <li><a href="fees-collections.html">Fees Collection</a></li>
+                           <li><a href="{% url 'view_payments' %}">Fees Collection</a></li>
                            <li><a href="expenses.html">Expenses</a></li>
                            <li><a href="salary.html">Salary</a></li>
                            <li><a href="add-fees-collection.html">Add Fees</a></li>
@@ -59,58 +58,55 @@
                      </li>
                      <li>
                      </li>
-                     <li class="submenu">
-                        <a href="#"><i class="fas fa-file-invoice-dollar"></i> <span> Attendance</span> <span class="menu-arrow"></span></a>
-                        <ul>
-                           <li><a href="fees-collections.html">Fees Collection</a></li>
-                           <li><a href="expenses.html">Expenses</a></li>
-                           <li><a href="salary.html">Salary</a></li>
-                           <li><a href="add-fees-collection.html">Add Fees</a></li>
-                           <li><a href="add-expenses.html">Add Expenses</a></li>
-                           <li><a href="add-salary.html">Add Salary</a></li>
-                        </ul>
+{#                     <li class="submenu">#}
+{#                        <a href="#"><i class="fas fa-file-invoice-dollar"></i> <span> Attendance</span> <span class="menu-arrow"></span></a>#}
+{#                        <ul>#}
+{#                           <li><a href="fees-collections.html">Fees Collection</a></li>#}
+{#                           <li><a href="expenses.html">Expenses</a></li>#}
+{#                           <li><a href="salary.html">Salary</a></li>#}
+{#                           <li><a href="add-fees-collection.html">Add Fees</a></li>#}
+{#                           <li><a href="add-expenses.html">Add Expenses</a></li>#}
+{#                           <li><a href="add-salary.html">Add Salary</a></li>#}
+{#                        </ul>#}
+{#                     </li>#}
+                      <li>
+                        <a style="color: #1e7e34" href="fees.html"><i class="fas fa-comment-dollar"></i> <span>Taxes</span></a>
+                     </li>
+                      <li class="menu-title">
+                        <span>Resources</span>
+                     </li>
+                     <li>
+                        <a style="color: orange" href="library.html"><i class="fas fa-book"></i> <span>Library</span></a>
+                     </li>
+                      <li class="menu-title">
+                        <span>Removed Items</span>
                      </li>
                       <li class="submenu">
-                        <a style="color: red" href="#"><i class="fas fa-trash-alt"></i> <span> Arxiv</span> <span class="menu-arrow"></span></a>
+                        <a style="color: red" href="#"><i class="fas fa-trash-alt"></i> <span> Archive</span> <span class="menu-arrow"></span></a>
                         <ul>
-                           <li><a href="{% url 'archive_student' %}">Arxivlangan O'quvchilar</a></li>
-                           <li><a href="expenses.html">Arxivlangan Hodimlar</a></li>
-                           <li><a href="salary.html">Arxivlangan Guruhlar</a></li>
+                           <li><a href="{% url 'archive_student' %}">Archived Students</a></li>
+                           <li><a href="expenses.html">Archived Employees</a></li>
+                           <li><a href="salary.html">Archived Groups</a></li>
                         </ul>
                      </li>
-                     <li>
-                        <a href="holiday.html"><i class="fas fa-holly-berry"></i> <span>Holiday</span></a>
-                     </li>
-                     <li>
-                        <a href="fees.html"><i class="fas fa-comment-dollar"></i> <span>Taxes</span></a>
-                     </li>
-                     <li>
-                        <a href="exam.html"><i class="fas fa-clipboard-list"></i> <span>Exams</span></a>
-                     </li>
-                     <li>
-                        <a href="event.html"><i class="fas fa-calendar-day"></i> <span>Events</span></a>
-                     </li>
-                     <li>
-                        <a href="time-table.html"><i class="fas fa-table"></i> <span>Time Table</span></a>
-                     </li>
-                     <li>
-                        <a href="library.html"><i class="fas fa-book"></i> <span>Library</span></a>
+                      <li class="menu-title">
+                        <span>Leave the System</span>
                      </li>
                       <li>
                         <a style="color: red" href="{% url 'logout' %}"><i class="fas fa-sign-out-alt"></i> <span>Exit</span></a>
                      </li>
-                     <li class="menu-title">
-                        <span>Pages</span>
-                     </li>
-                     <li class="submenu">
-                        <a href="#"><i class="fas fa-shield-alt"></i> <span> Authentication </span> <span class="menu-arrow"></span></a>
-                        <ul>
-                           <li><a href="login.html">Login</a></li>
-                           <li><a href="register.html">Register</a></li>
-                           <li><a href="forgot-password.html">Forgot Password</a></li>
-                           <li><a href="error-404.html">Error Page</a></li>
-                        </ul>
-                     </li>
+{#                     <li class="menu-title">#}
+{#                        <span>Pages</span>#}
+{#                     </li>#}
+{#                     <li class="submenu">#}
+{#                        <a href="#"><i class="fas fa-shield-alt"></i> <span> Authentication </span> <span class="menu-arrow"></span></a>#}
+{#                        <ul>#}
+{#                           <li><a href="login.html">Login</a></li>#}
+{#                           <li><a href="register.html">Register</a></li>#}
+{#                           <li><a href="forgot-password.html">Forgot Password</a></li>#}
+{#                           <li><a href="error-404.html">Error Page</a></li>#}
+{#                        </ul>#}
+{#                     </li>#}
                   </ul>
                </div>
             </div>

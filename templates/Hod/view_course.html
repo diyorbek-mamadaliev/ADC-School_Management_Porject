@@ -5,7 +5,7 @@
                <div class="page-header">
                   <div class="row align-items-center">
                      <div class="col">
-                        <h3 class="page-title">Guruhlar</h3>
+                        <h3 class="page-title">Groups</h3>
 
                      </div>
                       {% include 'includes/messages.html' %}
@@ -20,27 +20,27 @@
                      <div class="card card-table">
                         <div class="card-body">
                            <div class="table-responsive">
-                              <table class="data-table">
+                              <table class="data-table table">
                                  <thead>
                                     <tr>
-                                       <th style="color: #1d9bea">In</th>
-                                       <th style="color: #1d9bea">Fan</th>
-                                        <th style="color: #1d9bea">Daraja</th>
-                                       <th style="color: #1d9bea">O'qituvchi</th>
-                                       <th style="color: #1d9bea">Xona</th>
-                                       <th style="color: #1d9bea">Kunlar</th>
-                                        <th style="color: #1d9bea">Boshlangan</th>
+                                       <th style="color: #1d9bea">Subject</th>
+                                        <th style="color: #1d9bea">Level</th>
+                                        <th style="color: #1d9bea">ID</th>
+                                       <th style="color: #1d9bea">Teacher</th>
+                                       <th style="color: #1d9bea">Class</th>
+                                       <th style="color: #1d9bea">Days</th>
+                                        <th style="color: #1d9bea">Started</th>
                                     </tr>
                                  </thead>
                               <tbody>
                                   {% for i in course %}
                                     <tr>
-                                       <td>{{ i.id }}</td>
                                        <td>
-                                             <a href="{% url 'edit_course' i.id %}">{{ i.subject }}</a>
+                                             <a href="{% url 'view_students' i.id %}">{{ i.subject }}</a>
                                        </td>
                                         <td>{{ i.level }}</td>
-                                       <td></td>
+                                        <td style="color: grey">{{ i.username }}</td>
+                                       <td>{{ i.teacher_id.admin.first_name }} {{ i.teacher_id.admin.last_name }}</td>
                                        <td></td>
                                        <td></td>
                                         <td style="color: lightslategray">{{ i.created_at.date }}</td>

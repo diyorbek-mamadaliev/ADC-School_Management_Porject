@@ -4,7 +4,7 @@
                <div class="page-header">
                   <div class="row align-items-center">
                      <div class="col">
-                        <h3 class="page-title">Employee List</h3>
+                        <h3 class="page-title">Teachers list</h3>
 
                      </div>
                       {% include 'includes/messages.html' %}
@@ -24,7 +24,6 @@
                                         <tr>
                                             <th style="color: #1d9bea">Staff</th>
                                             <th style="color: #1d9bea">Login</th>
-                                            <th style="color: #1d9bea">Department</th>
                                             <th style="color: #1d9bea">Role</th>
                                             <th style="color: #1d9bea">Work Format</th>
                                             <th style="color: #1d9bea">Mobile</th>
@@ -39,7 +38,6 @@
                                                 </h2>
                                             </td>
                                             <td>{{ i.admin.username }}</td>
-                                            <td>{{ i.department }}</td>
                                             <td>{{ i.role }}</td>
                                             <td>{{ i.work_format }}</td>
                                             <td>{{ i.mobile }}</td>

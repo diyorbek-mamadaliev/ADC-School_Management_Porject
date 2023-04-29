@@ -25,17 +25,23 @@ urlpatterns = [
     path('Hod/Student/Update', Hod_Views.UPDATE_STUDENT, name="update_student"),
     path('Hod/Student/Waiting', Hod_Views.VIEW_WAITING, name="view_waiting"),
     path('Hod/Student/Archive', Hod_Views.ARCHIVE_STUDENT, name="archive_student"),
+    path('Hod/Student/Payment', Hod_Views.VIEW_PAYMENTS, name="view_payments"),
 
     path('Hod/Course/Add', Hod_Views.ADD_COURSE, name="add_course"),
     path('Hod/Course/View', Hod_Views.VIEW_COURSE, name="view_course"),
     path('Hod/Course/Gallery', Hod_Views.VIEW_COURSES, name='view_courses'),
     path('Hod/Course/Edit/<str:id>', Hod_Views.EDIT_COURSE, name="edit_course"),
     path('Hod/Course/Update', Hod_Views.UPDATE_COURSE, name="update_course"),
+    path('Hod/Payments/Fee<str:id>', Hod_Views.ADD_FEE, name="add_fee"),
 
     path('Hod/Staff/Add', Hod_Views.ADD_STAFF, name="add_staff"),
     path('Hod/Staff/View', Hod_Views.VIEW_STAFF, name="view_staff"),
+    path('Hod/Staff/Teacher', Hod_Views.VIEW_TEACHER, name='view_teacher'),
+    path('Hod/Staff/Student/<str:id>', Hod_Views.VIEW_STUDENTS, name='view_students'),
     path('Hod/Staff/Edit/<str:id>', Hod_Views.EDIT_STAFF, name="edit_staff"),
     path('Hod/Staff/Update', Hod_Views.UPDATE_STAFF, name="update_staff"),
+
+
 
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

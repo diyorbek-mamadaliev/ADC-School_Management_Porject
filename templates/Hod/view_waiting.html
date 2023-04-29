@@ -4,7 +4,7 @@
                <div class="page-header">
                   <div class="row align-items-center">
                      <div class="col">
-                        <h3 class="page-title">Kutayotkanlar</h3>
+                        <h3 class="page-title">Waiting List</h3>
 
                      </div>
                       {% include 'includes/messages.html' %}
@@ -19,21 +19,19 @@
                      <div class="card card-table">
                         <div class="card-body">
                            <div class="table-responsive">
-                              <table class="data-table">
+                              <table class="data-table table">
   <thead>
     <tr>
-      <th style="color: #1d9bea">In</th>
-      <th style="color: #1d9bea">O'quvchi</th>
-      <th style="color: #1d9bea">Kurs</th>
-      <th style="color: #1d9bea">Raqam</th>
-      <th style="color: #1d9bea">Manzil</th>
-      <th style="color: #1d9bea">Sana</th>
+      <th style="color: #1d9bea">Student</th>
+      <th style="color: #1d9bea">Group</th>
+      <th style="color: #1d9bea">Mobile</th>
+      <th style="color: #1d9bea">Address</th>
+      <th style="color: #1d9bea">Date</th>
     </tr>
   </thead>
   <tbody>
     {% for i in student %}
     <tr>
-      <td>{{ i.id }}</td>
       <td>
         <a href="{% url 'edit_student' i.id %}">{{ i.admin.first_name }}&nbsp;{{ i.admin.last_name }}</a>
       </td>

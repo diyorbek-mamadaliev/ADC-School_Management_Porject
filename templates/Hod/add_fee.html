@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+{% block content %}
+   <div class="content container-fluid">
+      <div class="page-header">
+         <div class="row align-items-center">
+            <div class="col">
+               <h3 class="page-title">Add Fees</h3>
+               <ul class="breadcrumb">
+                  <li class="breadcrumb-item"><a href="fees-collections.html">Accounts</a></li>
+                  <li class="breadcrumb-item active">Add Fees</li>
+               </ul>
+            </div>
+         </div>
+      </div>
+      <div class="row">
+         <div class="col-sm-12">
+            <div class="card">
+               <div class="card-body">
+                  <form>
+                     <div class="row">
+                        <div class="col-12">
+                           <h5 class="form-title"><span>Fees Information</span></h5>
+                        </div>
+                        <div class="col-12 col-sm-6">
+                           <div class="form-group">
+                              <label>First Name</label>
+                              <input style="color: gray" type="text" name="first_name" class="form-control" value="{% for i in student %}{{ i.admin.first_name }}{% endfor %}">
+                                <input type="text" style="color: gray" class="form-control" name="student_id" value="{% for i in student %}{{ i.admin.id }}{% endfor %}" hidden>
+                           </div>
+                        </div>
+                        <div class="col-12 col-sm-6">
+                           <div class="form-group">
+                              <label>Last Name</label>
+                              <input type="text" style="color: gray" name="last_name" class="form-control" value="{% for i in student %}{{ i.admin.last_name }}{% endfor %}">
+                           </div>
+                        </div>
+                     <div class="col-12 col-sm-6">
+                           <div class="form-group">
+                              <label>Student ID</label>
+                              <input type="text" style="color: gray" name="last_name" class="form-control" value="{% for i in student %}{{ i.admin.username }}{% endfor %}">
+                           </div>
+                        </div>
+
+                     <div class="col-12 col-sm-6">
+                           <div class="form-group">
+                              <label>Group</label>
+                              <input type="text" style="color: gray" name="course_id" class="form-control" value="{% for i in student %}({{ i.course_id.id }}) {{ i.course_id }}{% endfor %}">
+                           </div>
+                        </div>
+
+                        <div class="col-12 col-sm-6">
+                           <div class="form-group">
+                              <label>Teacher</label>
+                              <input type="text" style="color: gray" name="teacher" class="form-control" value="{% for i in student %}{{ i.course_id.teacher_id }}{% endfor %}">
+                           </div>
+                        </div>
+                        <div class="col-12 col-sm-6">
+                           <div class="form-group">
+                              <label>Fees Amount</label>
+                              <input type="text" name="fee_amount" class="form-control">
+                           </div>
+                        </div>
+                     <div class="col-12 col-sm-6">
+                                    <div class="form-group">
+                                       <label>Comment</label>
+                                       <textarea class="form-control" name="comments"></textarea>
+                                    </div>
+                                 </div>
+{#                        <div class="col-12 col-sm-6">#}
+{#                           <div class="form-group">#}
+{#                              <label>Paid Date</label>#}
+{#                              <input type="date" class="form-control">#}
+{#                           </div>#}
+{#                        </div>#}
+                        <div class="col-12">
+                           <button type="submit" class="btn btn-primary">Checkout</button>
+                        </div>
+                     </div>
+                  </form>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+{% endblock %}

@@ -9,22 +9,36 @@
                                {% csrf_token %}
                               <div class="row">
                                  <div class="col-12">
-                                    <h5 class="form-title"><span>Guruhni Tahrirlash</span></h5>
+                                    <h5 class="form-title"><span>Edit Group</span></h5>
                                  </div>
                                   <div class="col-12 col-sm-6">
                                     <div class="form-group">
-                                       <label>Fan</label>
+                                       <label>Subject</label>
                                        <input type="text" class="form-control" name="subject" value="{{ course.subject }}" required>
                                         <input type="text" class="form-control" name="course_id" value="{{ course.id }}" hidden>
                                     </div>
                                   </div>
                                       <div class="col-12 col-sm-6">
                                     <div class="form-group">
-                                       <label>Daraja</label>
+                                       <label>Level</label>
                                        <input type="text" class="form-control" name="level" value="{{ course.level }}" required>
                                         <input type="text" class="form-control" name="course_id" value="{{ course.id }}" hidden>
                                     </div>
                                     </div>
+
+                                  <div class="col-12 col-sm-6">
+                                    <div class="form-group">
+                                       <label>Teacher</label>
+                                       <select class="form-control" name="teacher_id">
+                                           {% for i in staff %}
+                                               {% if i.department == "Teacher" %}
+                                                <option value="{{ i.id }}">{{ i.admin.first_name }} {{ i.admin.last_name }} ({{ i.admin.username }})</option>
+                                               {% endif %}
+                                           {% endfor %}
+                                       </select>
+                                    </div>
+                                 </div>
+
                                   <div class="col-12 col-sm-6">
                                     <div class="form-group">
                                         <label>Status</label>
@@ -49,7 +63,7 @@
 {#                                    </div>#}
 {#                                 </div>#}
                                  <div class="col-12">
-                                    <button type="submit" class="btn btn-primary">Guruhni Yangilash</button>
+                                    <button type="submit" class="btn btn-primary">Update</button>
                                  </div>
                                   <br>
                                   <br>

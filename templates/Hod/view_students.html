@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% block content %}
+
+    <div class="content container-fluid">
+  <div class="page-header">
+    <div class="row align-items-center">
+      <div class="col">
+        <h3 class="page-title"><a href="{% url 'edit_course' course.id %}">{{ course.subject }} {{ course.level }}</a></h3>
+        <br>
+        <h6 style="color: gray">ID: {{ course.username }}</h6>
+        <hr>
+        <h5>Teacher: </h5>
+        <h5 style="color: gray">{{ course.teacher_id }}</h5>
+      </div>
+      {% include 'includes/messages.html' %}
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="card card-table">
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table" style="table-layout: fixed;">
+              <thead>
+                <tr>
+                  <th style="color: #1d9bea; width: 30%;">Student</th>
+                  <th style="color: #1d9bea; width: 20%;">ID</th>
+                  <th style="color: #1d9bea; width: 25%;">Mobile</th>
+                  <th style="color: #1d9bea; width: 25%;">Date</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for i in student %}
+                  <tr>
+                    <td>
+                      <a href="{% url 'edit_student' i.id %}">{{ i.admin.first_name }}&nbsp;{{ i.admin.last_name }}</a>
+                    </td>
+                    <td>{{ i.admin.username }}</td>
+                    <td>{{ i.mobile }}</td>
+                    <td style="color: lightslategray">{{ i.created_at.date }}</td>
+                  </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+{% endblock %}

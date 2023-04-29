@@ -9,23 +9,23 @@
                                {% csrf_token %}
                               <div class="row">
                                  <div class="col-12">
-                                    <h5 class="form-title"><span>Hodim Kiritish</span></h5>
+                                    <h5 class="form-title"><span>Add New Staff</span></h5>
                                  </div>
                                  <div class="col-12 col-sm-6">
                                     <div class="form-group">
-                                       <label>Ism</label>
+                                       <label>Name</label>
                                        <input type="text" class="form-control" name="first_name" required>
                                     </div>
                                  </div>
                                  <div class="col-12 col-sm-6">
                                     <div class="form-group">
-                                       <label>Familiya</label>
+                                       <label>Surname</label>
                                        <input type="text" class="form-control" name="last_name" required>
                                     </div>
                                  </div>
                               <div class="col-12 col-sm-6">
                                     <div class="form-group">
-                                       <label>Tug'ilgan Sana</label>
+                                       <label>Birth-Date</label>
                                        <div>
                                           <input type="date" class="form-control" name="birth_date" required>
                                        </div>
@@ -33,39 +33,38 @@
                                  </div>
                               <div class="col-12 col-sm-6">
                                     <div class="form-group">
-                                       <label>Bo'lim</label>
+                                       <label>Department</label>
                                        <select class="form-control" name="department">
-                                          <option>O'qituvchi</option>
-                                          <option>Administratsiya</option>
-                                           <option>Boshqa</option>
+                                          <option>Teacher</option>
+                                          <option>Administrator</option>
+                                           <option>Other</option>
                                        </select>
                                     </div>
                                  </div>
                               <div class="col-12 col-sm-6">
                                     <div class="form-group">
-                                       <label>Yo'nalishi</label>
+                                       <label>Role</label>
                                        <input type="text" class="form-control" name="role" required>
                                     </div>
                                  </div>
                               <div class="col-12 col-sm-6">
                                     <div class="form-group">
-                                       <label>Ish Xaqi Turi</label>
+                                       <label>Salary Type</label>
                                        <select class="form-control" name="salary_type">
-                                          <option>Foyiz</option>
+                                          <option>%</option>
                                           <option>Fixed</option>
-                                          <option>Summa</option>
                                        </select>
                                     </div>
                                  </div>
                               <div class="col-12 col-sm-6">
                                     <div class="form-group">
-                                       <label>Ish xaqi</label>
+                                       <label>Salary Amount</label>
                                        <input type="text" class="form-control" name="salary_amount" required>
                                     </div>
                                  </div>
                               <div class="col-12 col-sm-6">
                                     <div class="form-group">
-                                       <label>Ish Formati</label>
+                                       <label>Work Format</label>
                                        <select class="form-control" name="work_format">
                                           <option>Yarim kun</option>
                                           <option>To'liq</option>
@@ -74,7 +73,7 @@
                                  </div>
                               <div class="col-12 col-sm-6">
                                     <div class="form-group">
-                                       <label>Manzil</label>
+                                       <label>Address</label>
                                        <textarea class="form-control" name="address" required></textarea>
                                     </div>
                                  </div>
@@ -86,13 +85,13 @@
 {#                                 </div>#}
                               <div class="col-12 col-sm-6">
                                     <div class="form-group">
-                                       <label>Telefon Raqam</label>
+                                       <label>Mobile</label>
                                        <input type="text" class="form-control" name="mobile" required>
                                     </div>
                                  </div>
                               <div class="col-12 col-sm-6">
                                     <div class="form-group">
-                                       <label>Telefon Raqam (Qo'shimcha)</label>
+                                       <label>Mobile (Optional)</label>
                                        <input type="text" class="form-control" name="mobile_two">
                                     </div>
                                  </div>
@@ -104,7 +103,7 @@
 {#                                 </div>#}
                               <div class="col-12 col-sm-6">
                                     <div class="form-group">
-                                       <label>Parol</label>
+                                       <label>Password</label>
                                        <input type="text" class="form-control" name="password" required>
                                     </div>
                                  </div>

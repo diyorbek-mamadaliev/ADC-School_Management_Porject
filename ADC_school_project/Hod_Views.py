@@ -22,7 +22,7 @@ def ADD_STUDENT(request):
         profile_pic = request.FILES.get('profile_pic')
         first_name = request.POST.get('first_name')
         last_name = request.POST.get('last_name')
-        username = f"{first_name.lower()}_{next_username_number}"
+        username = f"{first_name.capitalize()}_{next_username_number}"
         password = '111'  # Set password to '111'
         address = request.POST.get('address')
         birth_date = request.POST.get('date_of_birth')
@@ -41,13 +41,15 @@ def ADD_STUDENT(request):
         user.set_password(password)
         user.save()
 
+        course = Course.objects.get(id=course_id)
+
         student = Student(
             admin=user,
             mobile=mobile,
             mobiletwo=mobiletwo,
             address=address,
             birth_date=birth_date,
-            course_id=course_id,
+            course_id=course,
             status=student_status,
         )
         student.save()
@@ -109,7 +111,7 @@ def ADD_STUDENT(request):
 
 @login_required(login_url='/')
 def VIEW_STUDENT(request):
-    student = Student.objects.filter(status='Aktiv')
+    student = Student.objects.filter(status='Active')
 
     context = {
         'student': student,
@@ -157,9 +159,11 @@ def UPDATE_STUDENT(request):
         student.birth_date = birth_date
         student.mobile = mobile
         student.mobiletwo = mobiletwo
-        course = course_id
-        student.course_id = course
         student.status = student_status
+
+        course = Course.objects.get(id=course_id)
+        student.course_id = course
+
         student.save()
         messages.success(request, "Ma'lumot Yangilandi")
         return redirect('view_student')
@@ -174,21 +178,32 @@ def UPDATE_STUDENT(request):
 
 @login_required(login_url='/')
 def ADD_COURSE(request):
+    last_username_number = Course.objects.aggregate(Max('username'))['username__max']
+    next_username_number = 1 if last_username_number is None or not last_username_number.split('_')[-1].isdigit() else int(last_username_number.split('_')[-1]) + 1
     if request.method == "POST":
         course_name = request.POST.get('subject')
         course_level = request.POST.get('level')
+        username = f"{course_name.capitalize()}_{next_username_number}"
         course_status = request.POST.get('status')
+        teacher_id = request.POST.get('teacher_id')
+        teacher = Staff.objects.get(id=teacher_id)
 
         course = Course(
             subject=course_name,
-            level=course_level,
+            username=username,
             status=course_status,
+            level=course_level,
+            teacher_id=teacher,
         )
         course.save()
         messages.success(request, "Yangi Gruppa Qo'shildi")
         return redirect('add_course')
+    staff = Staff.objects.all()
+    context = {'staff': staff}
 
-    return render(request, 'Hod/add_course.html')
+    return render(request, 'Hod/add_course.html', context)
+
+
 
 # def ADD_COURSE(request):
 #     if request.method == "POST":
@@ -227,8 +242,10 @@ def VIEW_COURSES(request):
 
 def EDIT_COURSE(request,id):
     course = Course.objects.get(id=id)
+    staff = Staff.objects.all()
     context = {
         'course': course,
+        'staff': staff,
     }
     return render(request, 'Hod/edit_course.html', context)
 
@@ -239,11 +256,16 @@ def UPDATE_COURSE(request):
         level = request.POST.get('level')
         course_id = request.POST.get('course_id')
         course_status = request.POST.get('status')
+        teacher_id = request.POST.get('teacher_id')
         course = Course.objects.get(id=course_id)
+
+        staff = Staff.objects.get(id=teacher_id)
+
 
         course.subject = subject
         course.level = level
         course.status = course_status
+        course.teacher_id = staff
         course.save()
 
         messages.success(request, "Muvaffaqiyatli O'zgartirildi")
@@ -259,7 +281,7 @@ def ADD_STAFF(request):
     if request.method == "POST":
         first_name = request.POST.get('first_name')
         last_name = request.POST.get('last_name')
-        username = f"{first_name.lower()}_{next_username_number}"
+        username = f"{first_name.capitalize()}_{next_username_number}"
         department = request.POST.get('department')
         role = request.POST.get('role')
         salary_type = request.POST.get('salary_type')
@@ -357,7 +379,7 @@ def UPDATE_STAFF(request):
 
 
 def VIEW_WAITING(request):
-    student = Student.objects.filter(status='Kutayotkanlar')
+    student = Student.objects.filter(status='Waiting')
 
     context = {
         'student': student,
@@ -367,9 +389,52 @@ def VIEW_WAITING(request):
 
 
 def ARCHIVE_STUDENT(request):
-    student = Student.objects.filter(status='Arxiv')
+    student = Student.objects.filter(status='Archived')
 
     context = {
         'student': student,
     }
     return render(request, 'Hod/archive_student.html', context)
+
+
+def VIEW_TEACHER(request):
+    staff = Staff.objects.filter(department='Teacher')
+    context = {
+        'staff': staff,
+    }
+    return render(request, 'Hod/view_teacher.html', context)
+
+
+def VIEW_STUDENTS(request, id):
+    course = Course.objects.get(id=id)
+    student = Student.objects.filter(course_id=id)
+    context = {
+        'course': course,
+        'student': student,
+    }
+    return render(request, 'Hod/view_students.html', context)
+
+
+def ADD_FEE(request, id):
+    student = Student.objects.filter(id=id)
+    course = Course.objects.all()
+    context = {
+        'course': course,
+        'student': student,
+    }
+    return render(request, 'Hod/add_fee.html', context)
+
+    # if request.method == 'POST':
+    #     # get the user object for the current user
+    #     author = request.user
+    #     # create a new fee object with the form data and author set to the current user
+    #     fee = ADD_FEE(student=student, author=author, **request.POST)
+    #     fee.save()
+    #     return redirect('fee_detail', fee.id)
+def VIEW_PAYMENTS(request):
+    student = Student.objects.filter(status='Active')
+
+    context = {
+        'student': student,
+    }
+    return render(request, 'Hod/view_payments.html', context)

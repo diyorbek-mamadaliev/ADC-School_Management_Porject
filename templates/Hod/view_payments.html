@@ -1,10 +1,11 @@
 {% extends 'base.html' %}
 {% block content %}
+
     <div class="content container-fluid">
                <div class="page-header">
                   <div class="row align-items-center">
                      <div class="col">
-                        <h3 class="page-title">Arxivlangan O'quvchilar</h3>
+                        <h3 class="page-title">Proceed Payments</h3>
 
                      </div>
                       {% include 'includes/messages.html' %}
@@ -19,14 +20,14 @@
                      <div class="card card-table">
                         <div class="card-body">
                            <div class="table-responsive">
-                              <table class="data-table">
+                              <table class="data-table table">
   <thead>
     <tr>
       <th style="color: #1d9bea">Student</th>
       <th style="color: #1d9bea">ID</th>
       <th style="color: #1d9bea">Group</th>
+        <th style="color: #1d9bea">Teacher</th>
       <th style="color: #1d9bea">Mobile</th>
-      <th style="color: #1d9bea">Address</th>
       <th style="color: #1d9bea">Date</th>
     </tr>
   </thead>
@@ -34,12 +35,12 @@
     {% for i in student %}
     <tr>
       <td>
-        <a href="{% url 'edit_student' i.id %}">{{ i.admin.first_name }}&nbsp;{{ i.admin.last_name }}</a>
+        <a href="{% url 'add_fee' i.id %}">{{ i.admin.first_name }}&nbsp;{{ i.admin.last_name }}</a>
       </td>
       <td>{{ i.admin.username }}</td>
-      <td>{{ i.course_id }}</td>
+      <td>{{ i.course_id.username }}</td>
+        <td>{{ i.course_id.teacher_id }}</td>
       <td>{{ i.mobile }}</td>
-      <td>{{ i.address }}</td>
       <td style="color: lightslategray">{{ i.created_at.date }}</td>
     </tr>
     {% endfor %}

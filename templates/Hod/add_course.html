@@ -5,7 +5,7 @@
                   <div class="col-sm-12">
                      <div class="card">
                         <div class="card-body">
-                           <form method="post"action="{% url 'add_course' %}">
+                           <form method="post" action="{% url 'add_course' %}">
                                {% csrf_token %}
                               <div class="row">
                                  <div class="col-12">
@@ -15,11 +15,15 @@
                                     <div class="form-group">
                                        <label>Fan</label>
                                        <select class="form-control" name="subject" required>
-                                          <option>Ingliz tili</option>
-                                          <option>Rus Tili</option>
-                                          <option>Koreys tili</option>
-                                           <option>Yapon tili</option>
-                                           <option>Matematika</option>
+                                          <option>English</option>
+                                          <option>Russian</option>
+                                          <option>Korean</option>
+                                           <option>Japanese</option>
+                                           <option>Arabic</option>
+                                           <option>IELTS</option>
+                                           <option>CEFR</option>
+                                           <option>History</option>
+                                           <option>Maths</option>
                                        </select>
                                     </div>
                                   </div>
@@ -36,6 +40,20 @@
                                        </select>
                                     </div>
                                     </div>
+
+                                  <div class="col-12 col-sm-6">
+                                    <div class="form-group">
+                                       <label>Teacher</label>
+                                       <select class="form-control" name="teacher_id">
+                                           {% for i in staff %}
+                                               {% if i.department == "Teacher" %}
+                                                <option value="{{ i.id }}">{{ i.admin.first_name }} {{ i.admin.last_name }} ({{ i.admin.username }})</option>
+                                               {% endif %}
+                                           {% endfor %}
+                                       </select>
+                                    </div>
+                                 </div>
+
                                   <div class="col-12 col-sm-6">
                                     <div class="form-group">
                                        <label>Status</label>
