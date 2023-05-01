@@ -34,7 +34,7 @@
                 {% for i in student %}
                   <tr>
                     <td>
-                      <a href="{% url 'edit_student' i.id %}">{{ i.admin.first_name }}&nbsp;{{ i.admin.last_name }}</a>
+                      {{ i.admin.first_name }}&nbsp;{{ i.admin.last_name }}
                     </td>
                     <td>{{ i.admin.username }}</td>
                     <td>{{ i.mobile }}</td>

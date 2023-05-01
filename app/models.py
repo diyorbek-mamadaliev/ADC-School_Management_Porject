@@ -68,15 +68,16 @@ class Student(models.Model):
         return '{}'.format(self.admin.first_name + " " + self.admin.last_name)
 
 class Payments(models.Model):
-    first_name = models.CharField(max_length=40, blank=True, null=True)
-    last_name = models.CharField(max_length=40, blank=True, null=True)
-    group_id = models.CharField(max_length=70, blank=True, null=True)
-    student_id = models.CharField(max_length=50, blank=True, null=True)
-    teacher_id = models.CharField(max_length=50, blank=True, null=True)
-    author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, blank=True, null=True)
+    first_name = models.CharField(max_length=40)
+    last_name = models.CharField(max_length=40)
+    group_id = models.CharField(max_length=70)
+    student_id = models.CharField(max_length=50)
+    teacher_id = models.CharField(max_length=50)
+    author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    comment = models.TextField(max_length=150)
     # author = models.ForeignKey(User, on_delete=models.CASCADE)
-    fee_amount = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
-    created_at = models.DateTimeField(auto_now_add=True, blank=True, null=True)
+    fee_amount = models.DecimalField(max_digits=10, decimal_places=2)
+    created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return f"{self.first_name} {self.last_name}"
