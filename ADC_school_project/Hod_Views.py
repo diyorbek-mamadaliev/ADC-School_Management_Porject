@@ -1,9 +1,10 @@
+from django.db.models.functions import Now
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from app.models import Course, customUser, Student, Staff, Payments
 from django.contrib import messages
 from django.shortcuts import redirect
-from django.db.models import Max
+from django.db.models import Max, Count
 from django.utils import timezone
 from django.db.models import Sum
 from datetime import datetime, date
@@ -13,7 +14,30 @@ from decimal import Decimal
 
 @login_required(login_url='/')
 def HOME(request):
-    return render(request, 'Hod/home.html')
+    student_count = Student.objects.all().count()
+    student_counted = Student.objects.all().count()
+    group_count = Course.objects.all().count()
+    payment_count = Payments.objects.all().count()
+    teacher_count = Staff.objects.filter(department='Teacher').count()
+    staff_list = Staff.objects.filter(department='Teacher')
+
+    course_with_student_counts = (
+        Course.objects.filter(student__status='Active')
+        .values('subject')
+        .annotate(student_count=Count('student'))
+    )
+
+    context = {
+        'student': student_count,
+        'student_count': student_counted,
+        'groups': group_count,
+        'payments': payment_count,
+        'teachers': teacher_count,
+        'staff_list': staff_list,
+        'course_with_student_counts': course_with_student_counts
+    }
+
+    return render(request, 'Hod/home.html', context)
 
 @login_required(login_url='/')
 def ADD_STUDENT(request):
@@ -189,6 +213,7 @@ def ADD_COURSE(request):
         course_level = request.POST.get('level')
         username = f"{course_name.capitalize()}_{next_username_number}"
         course_status = request.POST.get('status')
+        branch = request.POST.get('branch')
         teacher_id = request.POST.get('teacher_id')
         teacher = Staff.objects.get(id=teacher_id)
 
@@ -198,6 +223,7 @@ def ADD_COURSE(request):
             status=course_status,
             level=course_level,
             teacher_id=teacher,
+            branch=branch
         )
         course.save()
         messages.success(request, "Yangi Gruppa Qo'shildi")
@@ -227,7 +253,7 @@ def ADD_COURSE(request):
 
 @login_required(login_url='/')
 def VIEW_COURSE(request):
-    course = Course.objects.exclude(level="Students")
+    course = Course.objects.exclude(status="Archived")
     context = {
         'course': course,
     }
@@ -236,7 +262,7 @@ def VIEW_COURSE(request):
 
 @login_required(login_url='/')
 def VIEW_COURSES(request):
-    courses = Course.objects.exclude(level="Ochilmagan").values('subject').distinct()
+    courses = Course.objects.exclude(status='Archived').values('subject').distinct()
     context = {
         'courses': courses,
     }
@@ -258,6 +284,7 @@ def UPDATE_COURSE(request):
     if request.method == "POST":
         subject = request.POST.get('subject')
         level = request.POST.get('level')
+        branch = request.POST.get('branch')
         course_id = request.POST.get('course_id')
         course_status = request.POST.get('status')
         teacher_id = request.POST.get('teacher_id')
@@ -268,6 +295,7 @@ def UPDATE_COURSE(request):
 
         course.subject = subject
         course.level = level
+        course.branch = branch
         course.status = course_status
         course.teacher_id = staff
         course.save()
@@ -288,6 +316,7 @@ def ADD_STAFF(request):
         username = f"{first_name.capitalize()}_{next_username_number}"
         department = request.POST.get('department')
         role = request.POST.get('role')
+        branch = request.POST.get('branch')
         salary_type = request.POST.get('salary_type')
         salary_amount = request.POST.get('salary_amount')
         work_format = request.POST.get('work_format')
@@ -310,6 +339,7 @@ def ADD_STAFF(request):
                       salary_type=salary_type,
                       salary_amount=salary_amount,
                       work_format=work_format,
+                      branch=branch,
                       birth_date=birth_date,
                       address=address,
                       mobile=mobile,
@@ -349,6 +379,7 @@ def UPDATE_STAFF(request):
         salary_type = request.POST.get('salary_type')
         salary_amount = request.POST.get('salary_amount')
         work_format = request.POST.get('work_format')
+        branch = request.POST.get('branch')
         birth_date = request.POST.get('birth_date')
         address = request.POST.get('address')
         mobile = request.POST.get('mobile')
@@ -371,6 +402,7 @@ def UPDATE_STAFF(request):
         staff.salary_amount = salary_amount
         staff.work_format = work_format
         staff.birth_date = birth_date
+        staff.branch = branch
         staff.address = address
         staff.mobile = mobile
         staff.mobiletwo = mobiletwo
@@ -427,6 +459,7 @@ def ADD_FEE(request, id):
         last_name = request.POST.get('last_name')
         group_id = request.POST.get('group_id')
         student_id = request.POST.get('student_id')
+        payment_type = request.POST.get('payment_type')
         teacher_id = request.POST.get('teacher_id')
         comment = request.POST.get('comment')
         fee_amount = request.POST.get('fee_amount')
@@ -438,6 +471,7 @@ def ADD_FEE(request, id):
             teacher_id=teacher_id,
             comment=comment,
             student_id=student_id,
+            payment_type=payment_type,
             fee_amount=fee_amount,
             author=author
         )

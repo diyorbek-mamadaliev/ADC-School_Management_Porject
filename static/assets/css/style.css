@@ -260,6 +260,11 @@ table.table td h2 span {
     background-color: #f8f9fa;
     border-color: #eff2f7;
 }
+.table-responsive {
+    display: block;
+    width: 100%;
+    overflow-x: auto;
+}
 
 /*-----------------
 	3. Helper Class

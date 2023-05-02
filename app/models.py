@@ -23,9 +23,11 @@ class Staff(models.Model):
     department = models.CharField(max_length=50)
     role = models.CharField(max_length=100)
     salary_type = models.CharField(max_length=30)
+    branch = models.CharField(max_length=30, blank=True, null=True)
     work_format = models.CharField(max_length=30)
     salary_amount = models.CharField(max_length=30)
     birth_date = models.DateTimeField(blank=True, null=True)
+    status = models.CharField(max_length=20, blank=True, null=True)
     address = models.TextField(max_length=150, blank=True, null=True)
     mobile = models.CharField(max_length=20, blank=True, null=True)
     mobiletwo = models.CharField(max_length=20, blank=True, null=True)
@@ -39,9 +41,12 @@ class Staff(models.Model):
 class Course(models.Model):
     subject = models.CharField(max_length=100)
     level = models.CharField(max_length=150)
+    branch = models.CharField(max_length=30, blank=True, null=True)
     username = models.CharField(max_length=50, blank=True, null=True)
     teacher_id = models.ForeignKey(Staff, on_delete=models.DO_NOTHING, blank=True, null=True)
     status = models.CharField(max_length=30, blank=True, null=True)
+    days = models.CharField(max_length=25, blank=True, null=True)
+    hours = models.CharField(max_length=25, blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)  # Updated
 
@@ -71,6 +76,7 @@ class Payments(models.Model):
     first_name = models.CharField(max_length=40)
     last_name = models.CharField(max_length=40)
     group_id = models.CharField(max_length=70)
+    payment_type = models.CharField(max_length=15, blank=True, null=True)
     student_id = models.CharField(max_length=50)
     teacher_id = models.CharField(max_length=50)
     author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)

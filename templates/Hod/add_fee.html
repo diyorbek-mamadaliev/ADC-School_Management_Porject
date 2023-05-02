@@ -54,6 +54,17 @@
                               <input type="text" style="color: gray" name="teacher_id" class="form-control" value="{% for i in student %}{{ i.course_id.teacher_id }}{% endfor %}" readonly>
                            </div>
                         </div>
+                     <div class="col-12 col-sm-6">
+                                    <div class="form-group">
+                                       <label>Payment Type</label>
+                                       <select class="form-control" name="payment_type">
+                                          <option>Cash</option>
+                                          <option>Plastic</option>
+                                           <option>Click</option>
+                                           <option>Payme</option>
+                                       </select>
+                                    </div>
+                                 </div>
                         <div class="col-12 col-sm-6">
                            <div class="form-group">
                               <label>Fees Amount</label>

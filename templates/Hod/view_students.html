@@ -8,6 +8,8 @@
         <h3 class="page-title"><a href="{% url 'edit_course' course.id %}">{{ course.subject }} {{ course.level }}</a></h3>
         <br>
         <h6 style="color: gray">ID: {{ course.username }}</h6>
+          <br>
+        <h6 style="color: black">Branch: {{ course.branch }}</h6>
         <hr>
         <h5>Teacher: </h5>
         <h5 style="color: gray">{{ course.teacher_id }}</h5>
@@ -24,10 +26,10 @@
             <table class="table" style="table-layout: fixed;">
               <thead>
                 <tr>
-                  <th style="color: #1d9bea; width: 30%;">Student</th>
-                  <th style="color: #1d9bea; width: 20%;">ID</th>
-                  <th style="color: #1d9bea; width: 25%;">Mobile</th>
-                  <th style="color: #1d9bea; width: 25%;">Date</th>
+                  <th style="color: darkred; width: 30%;">Student</th>
+                  <th style="color: darkred; width: 20%;">ID</th>
+                  <th style="color: darkred; width: 25%;">Mobile</th>
+                  <th style="color: darkred; width: 25%;">Date</th>
                 </tr>
               </thead>
               <tbody>

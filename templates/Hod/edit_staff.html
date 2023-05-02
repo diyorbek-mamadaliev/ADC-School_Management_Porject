@@ -112,12 +112,23 @@
                                     <div class="form-group">
                                         <label>Status</label>
                                         <select class="form-control" name="status">
-                                            {% for i in student %}
-                                            <option value="{{ i.status }}">{{ i.status }}</option>
-                                            <option value="Kutayotkanlar">Kutayotkanlar</option>
-                                                <option value="Aktiv">Aktiv</option>
-                                            <option value="Arxiv">Arxiv</option>
-                                            {% endfor %}
+                                            <option value="{{ staff.status }}">{{ staff.status }}</option>
+                                            <option value="Active">Active</option>
+                                            <option value="Archived">Archived</option>
+                                        </select>
+                                    </div>
+                                </div>
+                              <div class="col-12 col-sm-6">
+                                    <div class="form-group">
+                                        <label>Branch</label>
+                                        <select class="form-control" name="branch">
+                                            <option value="{{ staff.branch }}">{{ staff.branch }}</option>
+                                            <option value="Hotel Branch">Hotel Branch</option>
+                                            <option value="Main Branch">Main Branch</option>
+                                            <option value="Sharq Branch">Sharq Branch</option>
+                                            <option value="Dialog Branch">Dialog Branch</option>
+                                            <option value="Old City Branch">Old City Branch</option>
+                                            <option value="Orange Branch">Orange Branch</option>
                                         </select>
                                     </div>
                                 </div>

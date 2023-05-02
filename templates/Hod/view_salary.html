@@ -19,39 +19,39 @@
             <table class="table" style="table-layout: fixed;">
               <thead>
                 <tr>
-                  <th style="color: #1d9bea; width: 30%;">Student</th>
-                  <th style="color: #1d9bea; width: 25%;">Cash</th>
-                     <th style="color: #1d9bea; width: 20%;">Plastic</th>
-                     <th style="color: #1d9bea; width: 20%;">Total</th>
-                    <th style="color: #1d9bea; width: 20%;">39%</th>
-                    <th style="color: #1d9bea; width: 20%;">1% Comp</th>
-                    <th style="color: #1d9bea; width: 20%;">Fines</th>
-                    <th style="color: #1d9bea; width: 20%;">Bonus</th>
-                    <th style="color: #1d9bea; width: 20%;">Bills</th>
-                    <th style="color: #1d9bea; width: 20%;">Tax</th>
-                    <th style="color: #1d9bea; width: 20%;">Plastic</th>
-                    <th style="color: #1d9bea; width: 20%;">Avans</th>
-                    <th style="color: #1d9bea; width: 20%;">Salary</th>
+                  <th style="color: darkred; width: 30%;">Teacher</th>
+                  <th style="color: darkred; width: 25%;">Cash</th>
+                     <th style="color: darkred; width: 20%;">Plastic</th>
+                     <th style="color: darkred; width: 20%;">Total</th>
+                    <th style="color: darkred; width: 20%;">39%</th>
+                    <th style="color: darkred; width: 20%;">1% Comp</th>
+                    <th style="color: darkred; width: 20%;">Fines</th>
+                    <th style="color: darkred; width: 20%;">Bonus</th>
+                    <th style="color: darkred; width: 20%;">Bills</th>
+                    <th style="color: darkred; width: 20%;">Tax</th>
+                    <th style="color: darkred; width: 20%;">Plastic</th>
+                    <th style="color: darkred; width: 20%;">Avans</th>
+                    <th style="color: darkred; width: 20%;">Salary</th>
                 </tr>
               </thead>
               <tbody>
                 {% for teacher in teacher_fees %}
                   <tr>
-                    <td>
+                    <td style="font-size: 14px">
                       {{ teacher.first_name }}&nbsp;{{ teacher.last_name }}
                     </td>
-                      <td style="color: lightslategray"></td>
-                      <td style="color: lightslategray"></td>
-                    <td style="color: lightslategray">{{ teacher.total_fees }}</td>
-                  <td style="color: lightslategray">{{ teacher.commission }}</td>
-                  <td style="color: lightslategray">{{ teacher.bonus }}</td>
-                  <td style="color: lightslategray"></td>
-                  <td style="color: lightslategray"></td>
-                  <td style="color: lightslategray"></td>
-                  <td style="color: lightslategray"></td>
-                  <td style="color: lightslategray"></td>
-                  <td style="color: lightslategray"></td>
-                  <td style="color: lightslategray"></td>
+                      <td style="color: lightslategray; font-size: 14px"></td>
+                      <td style="color: lightslategray; font-size: 14px"></td>
+                    <td style="color: lightslategray; font-size: 14px">{{ teacher.total_fees }}</td>
+                  <td style="color: lightslategray; font-size: 14px">{{ teacher.commission }}</td>
+                  <td style="color: lightslategray; font-size: 14px">{{ teacher.bonus }}</td>
+                  <td style="color: lightslategray; font-size: 14px"></td>
+                  <td style="color: lightslategray; font-size: 14px"></td>
+                  <td style="color: lightslategray; font-size: 14px"></td>
+                  <td style="color: lightslategray; font-size: 14px"></td>
+                  <td style="color: lightslategray; font-size: 14px"></td>
+                  <td style="color: lightslategray; font-size: 14px"></td>
+                  <td style="color: lightslategray; font-size: 14px"></td>
                   </tr>
                 {% endfor %}
               </tbody>
