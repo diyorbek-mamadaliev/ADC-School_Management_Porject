@@ -22,6 +22,9 @@ class Staff(models.Model):
     admin = models.OneToOneField(customUser, on_delete=models.CASCADE)
     department = models.CharField(max_length=50)
     role = models.CharField(max_length=100)
+    fines = models.CharField(max_length=30, blank=True, null=True)
+    bonus = models.CharField(max_length=30, blank=True, null=True)
+    tax = models.CharField(max_length=30, blank=True, null=True)
     salary_type = models.CharField(max_length=30)
     branch = models.CharField(max_length=30, blank=True, null=True)
     work_format = models.CharField(max_length=30)
@@ -87,3 +90,12 @@ class Payments(models.Model):
 
     def __str__(self):
         return f"{self.first_name} {self.last_name}"
+
+class ExistingStudent(models.Model):
+    student_id = models.CharField(max_length=30, blank=True, null=True)
+    preferred_course = models.CharField(max_length=30)
+    preferred_level = models.CharField(max_length=30)
+    preferred_days = models.CharField(max_length=30)
+    preferred_time = models.CharField(max_length=30)
+    status = models.CharField(max_length=20, blank=True, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)

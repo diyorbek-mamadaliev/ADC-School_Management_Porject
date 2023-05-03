@@ -9,9 +9,12 @@
                      </div>
                       {% include 'includes/messages.html' %}
                      <div class="col-auto text-right float-right ml-auto">
-                        <a href="#" class="btn btn-outline-primary mr-2"><i class="fas fa-download"></i> Download</a>
-                        <a href="{% url 'add_student' %}" class="btn btn-primary"><i class="fas fa-plus"></i></a>
+                        <a href="{% url 'waiting_form' %}" class="btn btn-outline-primary mr-2"><i class="fas fa-plus"></i> Add New</a>
                      </div>
+                     <div class="col-auto text-right float-right ml-auto">
+                        <a href="{% url 'view_existing' %}" class="btn btn-outline-primary mr-2"><i class="fas fa-map-pin"></i> Waiting List of Existing Students</a>
+                     </div>
+
                   </div>
                </div>
                <div class="row">
@@ -23,7 +26,10 @@
   <thead>
     <tr>
       <th style="color: darkred">Student</th>
-      <th style="color: darkred">Group</th>
+      <th style="color: darkred">Subject</th>
+        <th style="color: darkred">Level</th>
+        <th style="color: darkred">Days</th>
+        <th style="color: darkred">Time</th>
       <th style="color: darkred">Mobile</th>
         <th style="color: darkred">Mobile 2</th>
       <th style="color: darkred">Address</th>
@@ -33,13 +39,16 @@
   <tbody>
     {% for i in student %}
     <tr>
-      <td>
+      <td style="font-size: 14px">
         <a href="{% url 'edit_student' i.id %}">{{ i.admin.first_name }}&nbsp;{{ i.admin.last_name }}</a>
       </td>
-      <td>{{ i.course_id }}</td>
-      <td>{{ i.mobile }}</td>
-        <td>{{ i.mobiletwo }}</td>
-      <td>{{ i.address }}</td>
+      <td style="color: gray; font-size: 14px">{{ i.preferred_course }}</td>
+        <td style="color: gray; font-size: 14px">{{ i.preferred_level }}</td>
+        <td style="color: gray; font-size: 14px">{{ i.preferred_days }}</td>
+        <td style="color: gray; font-size: 14px">{{ i.preferred_time }}</td>
+      <td style="font-size: 14px">{{ i.mobile }}</td>
+        <td style="font-size: 14px">{{ i.mobiletwo }}</td>
+      <td style="color: gray; font-size: 14px">{{ i.address }}</td>
       <td style="color: lightslategray">{{ i.created_at.date }}</td>
     </tr>
     {% endfor %}

@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div class="content container-fluid">
+               <div class="page-header">
+                  <div class="row align-items-center">
+                     <div class="col">
+                        <h3 class="page-title">Waiting List</h3>
+
+                     </div>
+                      {% include 'includes/messages.html' %}
+                     <div class="col-auto text-right float-right ml-auto">
+                        <a href="{% url 'waiting_form' %}" class="btn btn-outline-primary mr-2"><i class="fas fa-plus"></i> Add New</a>
+                     </div>
+
+                     <div class="col-auto text-right float-right ml-auto">
+                        <a href="{% url 'view_existing' %}" class="btn btn-outline-primary mr-2"><i class="fas fa-map-pin"></i> Waiting List of Existing Students</a>
+                     </div>
+
+                  </div>
+               </div>
+               <div class="row">
+                  <div class="col-sm-12">
+                     <div class="card card-table">
+                        <div class="card-body">
+                           <div class="table-responsive">
+                              <table class="data-table table">
+  <thead>
+    <tr>
+      <th style="color: darkred">Student</th>
+      <th style="color: darkred">Subject</th>
+        <th style="color: darkred">Level</th>
+        <th style="color: darkred">Days</th>
+        <th style="color: darkred">Time</th>
+      <th style="color: darkred">Date</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for i in existstudent %}
+    <tr>
+      <td style="font-size: 14px">
+        {{ i.student_id }}
+      </td>
+      <td style="color: gray; font-size: 14px">{{ i.preferred_course }}</td>
+        <td style="color: gray; font-size: 14px">{{ i.preferred_level }}</td>
+        <td style="color: gray; font-size: 14px">{{ i.preferred_days }}</td>
+        <td style="color: gray; font-size: 14px">{{ i.preferred_time }}</td>
+      <td style="color: lightslategray">{{ i.created_at.date }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+{% endblock %}

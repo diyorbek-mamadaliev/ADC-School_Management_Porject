@@ -29,6 +29,7 @@
                                        <th style="color: darkred">Teacher</th>
                                        <th style="color: darkred">Branch</th>
                                        <th style="color: darkred">Days</th>
+                                        <th style="color: darkred">Hours</th>
                                         <th style="color: darkred">Started</th>
                                     </tr>
                                  </thead>
@@ -42,7 +43,8 @@
                                         <td style="color: grey">{{ i.username }}</td>
                                        <td>{{ i.teacher_id.admin.first_name }} {{ i.teacher_id.admin.last_name }}</td>
                                        <td>{{ i.branch }}</td>
-                                       <td></td>
+                                       <td>{{ i.days }}</td>
+                                        <td>{{ i.hours }}</td>
                                         <td style="color: lightslategray">{{ i.created_at.date }}</td>
                                     </tr>
                                   {% endfor %}

@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+
+{% block content %}
+   <div class="content container-fluid">
+      <div class="page-header">
+         <div class="row align-items-center">
+            <div class="col">
+               <h3 class="page-title">Add Fees</h3>
+
+            </div>
+         </div>
+      </div>
+      <div class="row">
+         <div class="col-sm-12">
+            <div class="card">
+               <div class="card-body">
+                  <form method="POST">
+                     {% csrf_token %}
+                     <div class="row">
+                        <div class="col-12">
+                           <h5 class="form-title"><span>Fees Information</span></h5>
+                        </div>
+                        <div class="col-12 col-sm-6">
+                           <div class="form-group">
+                              <label>Student ID</label>
+                              <input style="color: gray" type="text" name="student_id" class="form-control" value="{% for i in student %}{{ i.admin.username }}{% endfor %}">
+                              <input type="hidden" name="student_id" value="{% for i in student %}{{ i.admin.username }}{% endfor %}">
+                           </div>
+                        </div>
+
+                     <div class="col-12 col-sm-6">
+                           <div class="form-group">
+                              <label>Subject</label>
+                              <input type="text" name="preferred_course" class="form-control" required>
+                           </div>
+                        </div>
+                     <div class="col-12 col-sm-6">
+                           <div class="form-group">
+                              <label>Level</label>
+                              <input type="text" name="preferred_level" class="form-control" required>
+                           </div>
+                        </div>
+                     <div class="col-12 col-sm-6">
+                           <div class="form-group">
+                              <label>Days</label>
+                              <input type="text" name="preferred_days" class="form-control" required>
+                           </div>
+                        </div>
+                     <div class="col-12 col-sm-6">
+                           <div class="form-group">
+                              <label>Hours</label>
+                              <input type="text" name="preferred_time" class="form-control" required>
+                           </div>
+                        </div>
+
+                     <div class="col-12 col-sm-6">
+                                    <div class="form-group">
+                                       <label>Status</label>
+                                       <select class="form-control" name="status">
+                                          <option>Active</option>
+                                          <option>Waiting</option>
+                                       </select>
+                                    </div>
+                                 </div>
+
+
+{#                        <div class="col-12 col-sm-6">#}
+{#                           <div class="form-group">#}
+{#                              <label>Paid Date</label>#}
+{#                              <input type="date" class="form-control">#}
+{#                           </div>#}
+{#                        </div>#}
+                        <div class="col-12">
+                           <button type="submit" class="btn btn-primary">Checkout</button>
+                        </div>
+                     </div>
+                  </form>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+{% endblock %}
