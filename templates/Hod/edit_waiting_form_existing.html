@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+
+{% block content %}
+   <div class="content container-fluid">
+      <div class="page-header">
+         <div class="row align-items-center">
+            <div class="col">
+               <h3 class="page-title">Edit Waiting Student Info</h3>
+            </div>
+         </div>
+      </div>
+      <div class="row">
+         <div class="col-sm-12">
+            <div class="card">
+               <div class="card-body">
+                  <form method="POST" action="{% url 'update_existing' %}">
+                     {% csrf_token %}
+                     <div class="row">
+                        <div class="col-12">
+                           <h5 class="form-title"><span>Student Information</span></h5>
+                        </div>
+                        <div class="col-12 col-sm-6">
+                           <div class="form-group">
+                              <label>Student ID</label>
+                              <input style="color: gray" type="text" name="student_id" class="form-control" value="{{ existing.student_id }}" required>
+                           </div>
+                        </div>
+                        <div class="col-12 col-sm-6">
+                           <div class="form-group">
+                              <label>Subject</label>
+                              <input style="color: gray" type="text" name="preferred_course" class="form-control" value="{{ existing.preferred_course }}" required>
+                           </div>
+                        </div>
+                        <div class="col-12 col-sm-6">
+                           <div class="form-group">
+                              <label>Level</label>
+                              <input style="color: gray" type="text" name="preferred_level" class="form-control" value="{{ existing.preferred_level }}" required>
+                           </div>
+                        </div>
+                        <div class="col-12 col-sm-6">
+                           <div class="form-group">
+                              <label>Days</label>
+                              <input style="color: gray" type="text" name="preferred_days" class="form-control" value="{{ existing.preferred_days }}" required>
+                           </div>
+                        </div>
+                        <div class="col-12 col-sm-6">
+                           <div class="form-group">
+                              <label>Hours</label>
+                              <input style="color: gray" type="text" name="preferred_time" class="form-control" value="{{ existing.preferred_time }}" required>
+                           </div>
+                        </div>
+                        <div class="col-12 col-sm-6">
+                           <div class="form-group">
+                              <label>Status</label>
+                              <select class="form-control" name="status" required>
+                                 <option value="Active" {% if existing.status == "Active" %}selected{% endif %}>Active</option>
+                                 <option value="Waiting" {% if existing.status == "Waiting" %}selected{% endif %}>Waiting</option>
+                              </select>
+                           </div>
+                        </div>
+                        <input type="hidden" name="id" value="{{ existing.id }}">
+                        <div class="col-12">
+                           <button type="submit" style="width: 100%" class="btn btn-primary">Update</button>
+                            {% include 'includes/messages.html' %}
+                        </div>
+                     </div>
+                  </form>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+{% endblock %}

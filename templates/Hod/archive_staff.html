@@ -4,11 +4,10 @@
                <div class="page-header">
                   <div class="row align-items-center">
                      <div class="col">
-                        <h3 class="page-title">Waiting List of Existing Students</h3>
+                        <h3 class="page-title">Archived Employee</h3>
+
                      </div>
                       {% include 'includes/messages.html' %}
-
-
                   </div>
                </div>
                <div class="row">
@@ -16,28 +15,28 @@
                      <div class="card card-table">
                         <div class="card-body">
                            <div class="table-responsive">
-                              <table class="data-table table">
-  <thead class="thead-light">
+                              <table class="data-table">
+  <thead>
     <tr>
       <th style="color: darkred">Student</th>
-      <th style="color: darkred">Subject</th>
-        <th style="color: darkred">Level</th>
-        <th style="color: darkred">Days</th>
-        <th style="color: darkred">Time</th>
+      <th style="color: darkred">ID</th>
+      <th style="color: darkred">Department</th>
+      <th style="color: darkred">Mobile</th>
+      <th style="color: darkred">Address</th>
       <th style="color: darkred">Date</th>
     </tr>
   </thead>
   <tbody>
-    {% for i in existstudent %}
+    {% for i in staff %}
     <tr>
-      <td style="font-size: 14px">
-        <a href="{% url 'edit_existing' i.id %}">{{ i.student_id }}</a>
+      <td>
+        <a href="{% url 'edit_staff' i.id %}">{{ i.admin.first_name }}&nbsp;{{ i.admin.last_name }}</a>
       </td>
-      <td style="color: gray; font-size: 14px">{{ i.preferred_course }}</td>
-        <td style="color: gray; font-size: 14px">{{ i.preferred_level }}</td>
-        <td style="color: gray; font-size: 14px">{{ i.preferred_days }}</td>
-        <td style="color: gray; font-size: 14px">{{ i.preferred_time }}</td>
-      <td style="color: lightslategray">{{ i.created_at.date }}</td>
+      <td>{{ i.admin.username }}</td>
+      <td>{{ i.department }}</td>
+      <td>{{ i.mobile }}</td>
+      <td>{{ i.address }}</td>
+      <td style="color: lightslategray">{{ i.created_date.date }}</td>
     </tr>
     {% endfor %}
   </tbody>

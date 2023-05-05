@@ -29,12 +29,15 @@ urlpatterns = [
     path('Hod/Student/WaitingView', Hod_Views.VIEW_WAITLIST, name="view_waitlist"),
     path('Hod/Student/ExistingWait/<str:id>', Hod_Views.EXISTING_WAIT, name="existing_wait"),
     path('Hod/Student/ViewExistingWaitlist', Hod_Views.VIEW_EXISTING, name="view_existing"),
+    path('Hod/Student/EditExisting/<str:id>', Hod_Views.EDIT_EXISTING, name="edit_existing"),
+    path('Hod/Student/UpdateExisting', Hod_Views.UPDATE_EXISTING, name="update_existing"),
 
     path('Hod/Course/Add', Hod_Views.ADD_COURSE, name="add_course"),
     path('Hod/Course/View', Hod_Views.VIEW_COURSE, name="view_course"),
     path('Hod/Course/Gallery', Hod_Views.VIEW_COURSES, name='view_courses'),
     path('Hod/Course/Edit/<str:id>', Hod_Views.EDIT_COURSE, name="edit_course"),
     path('Hod/Course/Update', Hod_Views.UPDATE_COURSE, name="update_course"),
+    path('Hod/Course/Archive', Hod_Views.ARCHIVE_COURSE, name="archive_course"),
     path('Hod/Payments/Fee/<str:id>', Hod_Views.ADD_FEE, name="add_fee"),
     path('Hod/Payments/History', Hod_Views.VIEW_PAYMENT_HISTORY, name="view_payment_history"),
     # path('Hod/Payments/Add', Hod_Views.ADD_NEW_PAYMENT, name="add_name_payment"),
@@ -46,6 +49,8 @@ urlpatterns = [
     path('Hod/Staff/Edit/<str:id>', Hod_Views.EDIT_STAFF, name="edit_staff"),
     path('Hod/Staff/Update', Hod_Views.UPDATE_STAFF, name="update_staff"),
     path('Hod/Staff/Salary', Hod_Views.STAFF_SALARY, name="staff_salary"),
+    path('Hod/Staff/Archived', Hod_Views.ARCHIVE_STAFF, name="archive_staff"),
+    path('Hod/Staff/TeacherPanel', Hod_Views.TEACHER_PANEL, name="teacher_panel")
 
 
 

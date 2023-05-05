@@ -1,7 +1,8 @@
 {% load static %}
 
 <div class="sidebar toggled" id="sidebar">
-            <div class="sidebar-inner slimscroll">
+            {% if user.is_authenticated and 'admin' in user.email|lower %}
+                <div class="sidebar-inner slimscroll">
                <div id="sidebar-menu" class="sidebar-menu">
                   <ul>
                      <li class="menu-title">
@@ -20,7 +21,6 @@
                       <li class="submenu">
                         <a href="#"><i class="fas fa-book-reader"></i> <span> Courses</span> <span class="menu-arrow"></span></a>
                         <ul>
-                           <li><a href="{% url 'view_courses' %}">Catalogue</a></li>
                            <li><a href="{% url 'view_course' %}">Groups</a></li>
                         </ul>
                      </li>
@@ -30,8 +30,6 @@
                            <li><a href="{% url 'view_staff' %}">Employee List</a></li>
                             <li><a href="{% url 'view_teacher' %}">Teachers</a></li>
                             <li><a href="{% url 'add_staff' %}">Add Employee</a></li>
-                           <li><a href="add-teacher.html">Applicants</a></li>
-                           <li><a href="edit-teacher.html">Resignating Employees</a></li>
                         </ul>
                      </li>
                      <li class="submenu">
@@ -49,11 +47,8 @@
                         <a style="color: #1e7e34" href="#"><i class="fas fa-file-invoice-dollar"></i> <span> Finances</span> <span class="menu-arrow"></span></a>
                         <ul>
                            <li><a href="{% url 'view_payment_history' %}">Payment History</a></li>
-                           <li><a href="expenses.html">Expenses</a></li>
                            <li><a href="{% url 'staff_salary' %}">Salary</a></li>
-                           <li><a href="add-fees-collection.html">Add Fees</a></li>
-                           <li><a href="add-expenses.html">Add Expenses</a></li>
-                           <li><a href="add-salary.html">Add Salary</a></li>
+                           <li><a href="add-fees-collection.html">Tax</a></li>
                         </ul>
                      </li>
                      <li>
@@ -69,15 +64,7 @@
 {#                           <li><a href="add-salary.html">Add Salary</a></li>#}
 {#                        </ul>#}
 {#                     </li>#}
-                      <li>
-                        <a style="color: #1e7e34" href="fees.html"><i class="fas fa-comment-dollar"></i> <span>Taxes</span></a>
-                     </li>
-                      <li class="menu-title">
-                        <span>Resources</span>
-                     </li>
-                     <li>
-                        <a style="color: orange" href="library.html"><i class="fas fa-book"></i> <span>Library</span></a>
-                     </li>
+
                       <li class="menu-title">
                         <span>Removed Items</span>
                      </li>
@@ -85,8 +72,8 @@
                         <a style="color: red" href="#"><i class="fas fa-trash-alt"></i> <span> Archive</span> <span class="menu-arrow"></span></a>
                         <ul>
                            <li><a href="{% url 'archive_student' %}">Archived Students</a></li>
-                           <li><a href="expenses.html">Archived Employees</a></li>
-                           <li><a href="salary.html">Archived Groups</a></li>
+                           <li><a href="{% url 'archive_staff' %}">Archived Employees</a></li>
+                           <li><a href="{% url 'archive_course' %}">Archived Groups</a></li>
                         </ul>
                      </li>
                       <li class="menu-title">
@@ -110,4 +97,115 @@
                   </ul>
                </div>
             </div>
+            {% endif %}
+{% if user.is_authenticated and 'manager' in user.email|lower %}
+    <div class="sidebar-inner slimscroll">
+               <div id="sidebar-menu" class="sidebar-menu">
+                  <ul>
+                     <li class="submenu">
+                        <a href="#"><i class="fas fa-user-graduate"></i> <span> Students</span> <span class="menu-arrow"></span></a>
+                        <ul>
+                           <li><a href="{% url 'view_waiting' %}">Waiting</a></li>
+                           <li><a href="{% url 'view_student' %}">Student List</a></li>
+                        </ul>
+                     </li>
+                      <li class="submenu">
+                        <a href="#"><i class="fas fa-book-reader"></i> <span> Courses</span> <span class="menu-arrow"></span></a>
+                        <ul>
+                           <li><a href="{% url 'view_course' %}">Groups</a></li>
+                        </ul>
+                     </li>
+                     <li class="submenu">
+                        <a href="#"><i class="fas fa-chalkboard-teacher"></i> <span> HR</span> <span class="menu-arrow"></span></a>
+                        <ul>
+                            <li><a href="{% url 'view_teacher' %}">Teachers</a></li>
+                        </ul>
+                     </li>
+
+                     <li class="menu-title">
+                        <span>Management</span>
+                     </li>
+                     <li class="submenu">
+                        <a style="color: #1e7e34" href="#"><i class="fas fa-file-invoice-dollar"></i> <span> Finances</span> <span class="menu-arrow"></span></a>
+                        <ul>
+                           <li><a href="{% url 'view_payment_history' %}">Payment History</a></li>
+                        </ul>
+                     </li>
+{#                     <li class="submenu">#}
+{#                        <a href="#"><i class="fas fa-file-invoice-dollar"></i> <span> Attendance</span> <span class="menu-arrow"></span></a>#}
+{#                        <ul>#}
+{#                           <li><a href="fees-collections.html">Fees Collection</a></li>#}
+{#                           <li><a href="expenses.html">Expenses</a></li>#}
+{#                           <li><a href="salary.html">Salary</a></li>#}
+{#                           <li><a href="add-fees-collection.html">Add Fees</a></li>#}
+{#                           <li><a href="add-expenses.html">Add Expenses</a></li>#}
+{#                           <li><a href="add-salary.html">Add Salary</a></li>#}
+{#                        </ul>#}
+{#                     </li>#}
+
+                      <li class="menu-title">
+                        <span>Leave the System</span>
+                     </li>
+                      <li>
+                        <a style="color: red" href="{% url 'logout' %}"><i class="fas fa-sign-out-alt"></i> <span>Exit</span></a>
+                     </li>
+{#                     <li class="menu-title">#}
+{#                        <span>Pages</span>#}
+{#                     </li>#}
+{#                     <li class="submenu">#}
+{#                        <a href="#"><i class="fas fa-shield-alt"></i> <span> Authentication </span> <span class="menu-arrow"></span></a>#}
+{#                        <ul>#}
+{#                           <li><a href="login.html">Login</a></li>#}
+{#                           <li><a href="register.html">Register</a></li>#}
+{#                           <li><a href="forgot-password.html">Forgot Password</a></li>#}
+{#                           <li><a href="error-404.html">Error Page</a></li>#}
+{#                        </ul>#}
+{#                     </li>#}
+                  </ul>
+               </div>
+            </div>
+{% endif %}
+{% if user.is_authenticated and 'teacher' in user.email|lower %}
+    <div class="sidebar-inner slimscroll">
+               <div id="sidebar-menu" class="sidebar-menu">
+                  <ul>
+{#                     <li class="submenu">#}
+{#                        <a href="#"><i class="fas fa-file-invoice-dollar"></i> <span> Attendance</span> <span class="menu-arrow"></span></a>#}
+{#                        <ul>#}
+{#                           <li><a href="fees-collections.html">Fees Collection</a></li>#}
+{#                           <li><a href="expenses.html">Expenses</a></li>#}
+{#                           <li><a href="salary.html">Salary</a></li>#}
+{#                           <li><a href="add-fees-collection.html">Add Fees</a></li>#}
+{#                           <li><a href="add-expenses.html">Add Expenses</a></li>#}
+{#                           <li><a href="add-salary.html">Add Salary</a></li>#}
+{#                        </ul>#}
+{#                     </li>#}
+                      <li class="menu-title">
+                        <span>Payments for Current Month</span>
+                     </li>
+                       <li>
+                        <a style="color: #1e7e34" href="{% url 'teacher_panel' %}"><i class="fas fa-comment-dollar"></i> <span>Students Payment</span></a>
+                     </li>
+                      <li class="menu-title">
+                        <span>Leave the System</span>
+                     </li>
+                      <li>
+                        <a style="color: red" href="{% url 'logout' %}"><i class="fas fa-sign-out-alt"></i> <span>Exit</span></a>
+                     </li>
+{#                     <li class="menu-title">#}
+{#                        <span>Pages</span>#}
+{#                     </li>#}
+{#                     <li class="submenu">#}
+{#                        <a href="#"><i class="fas fa-shield-alt"></i> <span> Authentication </span> <span class="menu-arrow"></span></a>#}
+{#                        <ul>#}
+{#                           <li><a href="login.html">Login</a></li>#}
+{#                           <li><a href="register.html">Register</a></li>#}
+{#                           <li><a href="forgot-password.html">Forgot Password</a></li>#}
+{#                           <li><a href="error-404.html">Error Page</a></li>#}
+{#                        </ul>#}
+{#                     </li>#}
+                  </ul>
+               </div>
+            </div>
+{% endif %}
          </div>

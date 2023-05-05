@@ -13,71 +13,49 @@
                </div>
                <div class="row">
                   <div class="col-xl-3 col-sm-6 col-12 d-flex">
-                     <div class="card bg-one w-100">
-                        <div class="card-body">
-                           <div class="db-widgets d-flex justify-content-between align-items-center">
-                              <div class="db-icon">
-                                 <i class="fas fa-user-graduate"></i>
-                              </div>
-                              <div class="db-info">
-                                 <h3>{{ student_count }}</h3>
-                                 <h6>Active Students</h6>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
+                      <div class="card flex-fill insta sm-box" style="background-color: darkred; color: white;">
+                    <h6>{{ student_count }}</h6>
+                    <p>Students<i class="fas fa-user-graduate" style="float: right; height: 60%; opacity: 0.6;"></i></p>
+                </div>
+
+{#                     <div class="card bg-one w-100">#}
+{#                        <div class="card-body">#}
+{#                           <div class="db-widgets d-flex justify-content-between align-items-center">#}
+{#                              <div class="db-icon">#}
+{#                                 <i class="fas fa-user-graduate"></i>#}
+{#                              </div>#}
+{#                              <div class="db-info">#}
+{#                                 <h3>{{ student_count }}</h3>#}
+{#                                 <h6>Active Students</h6>#}
+{#                              </div>#}
+{#                           </div>#}
+{#                        </div>#}
+{#                     </div>#}
                   </div>
                   <div class="col-xl-3 col-sm-6 col-12 d-flex">
-                     <div class="card bg-two w-100">
-                        <div class="card-body">
-                           <div class="db-widgets d-flex justify-content-between align-items-center">
-                              <div class="db-icon">
-                                 <i class="fas fa-book-reader"></i>
-                              </div>
-                              <div class="db-info">
-                                 <h3>{{ groups }}</h3>
-                                 <h6>Open Groups</h6>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
+                      <div class="card flex-fill insta sm-box" style="background-color: darkred; color: white;">
+                    <h6>{{ groups }}</h6>
+                    <p>Groups<i class="fas fa-book-reader" style="float: right; height: 60%; opacity: 0.6;"></i></p>
+                </div>
                   </div>
                   <div class="col-xl-3 col-sm-6 col-12 d-flex">
-                     <div class="card bg-three w-100">
-                        <div class="card-body">
-                           <div class="db-widgets d-flex justify-content-between align-items-center">
-                              <div class="db-icon">
-                                 <i class="fas fa-chalkboard-teacher"></i>
-                              </div>
-                              <div class="db-info">
-                                 <h3>{{ teachers }}</h3>
-                                 <h6>Teachers</h6>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
+                      <div class="card flex-fill insta sm-box" style="background-color: darkred; color: white;">
+                    <h6>{{ teachers }}</h6>
+                    <p>Teachers<i class="fas fa-chalkboard-teacher" style="float: right; height: 60%; opacity: 0.6;"></i></p>
+                </div>
                   </div>
                   <div class="col-xl-3 col-sm-6 col-12 d-flex">
-                     <div class="card bg-four w-100">
-                        <div class="card-body">
-                           <div class="db-widgets d-flex justify-content-between align-items-center">
-                              <div class="db-icon">
-                                 <i class="fas fa-file-invoice-dollar"></i>
-                              </div>
-                              <div class="db-info">
-                                 <h3>{{ payments }}</h3>
-                                 <h6>Payment Transactions</h6>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
+                     <div class="card flex-fill insta sm-box" style="background-color: darkred; color: white;">
+                    <h6>{{ payments }}</h6>
+                    <p>Payments<i class="fas fa-file-invoice-dollar" style="float: right; height: 60%; opacity: 0.6;"></i></p>
+                </div>
                   </div>
                </div>
 
                <div class="row">
                   <div class="col-md-12 col-lg-12">
                      <div class="card flex-fill">
-                        <div class="card-header">
+                        <div style="background-color: lightskyblue;" class="card-header">
                            <h5 class="card-title">Student Shares Per Subject</h5>
                         </div>
                         <div class="card-body">
@@ -103,8 +81,33 @@
                      </div>
                   </div>
 
-               </div>
+               <div class="col-md-12 col-lg-12">
+                     <div class="card flex-fill">
+                        <div style="background-color: lightpink" class="card-header">
+                           <h5>Waiting Shares Per Subject</h5>
+                        </div>
+                        <div class="card-body">
+                           <div class="table-responsive">
+                              <table class="table table-hover table-center">
+                                 <thead class="thead-light">
+                                    <tr>
+                                        <th>Subjects</th>
+                                       <th>Total Students</th>
+                                    </tr>
+                                 </thead>
+                                 <tbody>
+                                    {% for student in course_with_waiting_counts %}
+                                        <tr>
+                                          <td>{{ student.preferred_course }}</td>
+                                          <td>{{ student.waiting_count }}</td>
+                                        </tr>
+                                      {% endfor %}
+                                 </tbody>
+                              </table>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
 
                </div>
-            </div>
 {% endblock %}

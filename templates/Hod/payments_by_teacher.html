@@ -1,11 +1,12 @@
 {% extends 'base.html' %}
+
 {% block content %}
 
     <div class="content container-fluid">
         <div class="page-header">
             <div class="row align-items-center">
                 <div class="col">
-                    <h3 class="page-title">Payment History</h3>
+                    <h3 class="page-title">Student Payments</h3>
                 </div>
                 {% include 'includes/messages.html' %}
 
@@ -27,6 +28,7 @@
                                         <th style="color: darkred">Type</th>
                                         <th style="color: darkred">Date</th>
                                         <th style="color: darkred">Cashier</th>
+                                        <th style="color: darkred">Comment</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -40,8 +42,13 @@
                                         <td style="font-size: 14px; color: gray">{{ payment.teacher_id }}</td>
                                         <td style="font-size: 14px;">{{ payment.fee_amount }}</td>
                                         <td style="font-size: 14px;">{{ payment.payment_type }}</td>
-                                        <td style="color: lightslategray; font-size: 12px">{{ payment.created_at }}</td>
-                                    <td style="font-size: 14px;">{{ payment.author }}</td>
+                                        <td style="color: lightslategray; font-size: 12px">{{ payment.created_at|date:'F j, Y' }}</td>
+                                        <td style="font-size: 14px;">{{ payment.author }}</td>
+                                    <td style="font-size: 14px;">{{ payment.comment }}</td>
+                                    </tr>
+                                    {% empty %}
+                                    <tr>
+                                        <td colspan="8">No payments found.</td>
                                     </tr>
                                     {% endfor %}
                                 </tbody>

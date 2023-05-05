@@ -7,6 +7,7 @@ from django.shortcuts import redirect
 from django.db.models import Max, Count
 from django.utils import timezone
 from django.db.models import Sum
+import datetime
 from datetime import datetime, date
 from decimal import Decimal
 
@@ -16,8 +17,9 @@ from decimal import Decimal
 @login_required(login_url='/')
 def HOME(request):
     student_count = Student.objects.all().count()
+    waiting_count = Student.objects.all()
     student_counted = Student.objects.filter(status='Active').exclude(course_id__username='Not_Selected_1').count()
-    group_count = Course.objects.exclude(username='Not_Selected_1').count()
+    group_count = Course.objects.exclude(username='Not_Selected_1').filter(status='Active').count()
     payment_count = Payments.objects.all().count()
     teacher_count = Staff.objects.filter(department='Teacher').count()
     staff_list = Staff.objects.filter(department='Teacher')
@@ -27,6 +29,11 @@ def HOME(request):
         .values('subject')
         .annotate(student_count=Count('student'))
     )
+    course_with_waiting_counts = (
+        Student.objects.filter(status='Waiting')
+        .values('preferred_course')
+        .annotate(waiting_count=Count('id'))
+    )
 
     context = {
         'student': student_count,
@@ -35,7 +42,8 @@ def HOME(request):
         'payments': payment_count,
         'teachers': teacher_count,
         'staff_list': staff_list,
-        'course_with_student_counts': course_with_student_counts
+        'course_with_student_counts': course_with_student_counts,
+        'course_with_waiting_counts': course_with_waiting_counts
     }
 
     return render(request, 'Hod/home.html', context)
@@ -84,7 +92,7 @@ def ADD_STUDENT(request):
         student.save()
 
         messages.success(request,  user.first_name + ' ' + user.last_name + ' Saved Successfully')
-        return redirect('view_student')
+        return redirect('view_waitlist')
 
     context = {
         'course': course,
@@ -172,6 +180,7 @@ def UPDATE_STUDENT(request):
         mobile = request.POST.get('mobile')
         mobiletwo = request.POST.get('mobile_two')
         course_id = request.POST.get('course_id')
+        course_id_2 = request.POST.get('course_id_2')
         student_status = request.POST.get('status')
 
         user = customUser.objects.get(id=student_id)
@@ -186,6 +195,7 @@ def UPDATE_STUDENT(request):
         student = Student.objects.get(admin=student_id)
         student.address = address
         student.birth_date = birth_date
+        student.course_id_2 = course_id_2
         student.mobile = mobile
         student.mobiletwo = mobiletwo
         student.status = student_status
@@ -209,7 +219,7 @@ def WAITING_FORM(request):
         profile_pic = request.FILES.get('profile_pic')
         first_name = request.POST.get('first_name')
         last_name = request.POST.get('last_name')
-        username = f"{first_name.capitalize()}_{next_username_number}"
+        username = f"{first_name.lower()}_{next_username_number}"
         password = '111'  # Set password to '111'
         address = request.POST.get('address')
         birth_date = request.POST.get('date_of_birth')
@@ -367,7 +377,7 @@ def UPDATE_COURSE(request):
         course.teacher_id = staff
         course.save()
 
-        messages.success(request, "Muvaffaqiyatli O'zgartirildi")
+        messages.success(request, "Updated Successfully")
         return redirect('view_course')
 
     return render(request, 'Hod/edit_course.html')
@@ -385,6 +395,7 @@ def ADD_STAFF(request):
         role = request.POST.get('role')
         branch = request.POST.get('branch')
         salary_type = request.POST.get('salary_type')
+        status = request.POST.get('status')
         salary_amount = request.POST.get('salary_amount')
         work_format = request.POST.get('work_format')
         birth_date = request.POST.get('birth_date')
@@ -396,7 +407,7 @@ def ADD_STAFF(request):
         user = customUser(first_name=first_name,
                           last_name=last_name,
                           username=username,
-                          user_type=2)
+                          user_type=1)
         user.set_password(password)
         user.save()
 
@@ -407,6 +418,7 @@ def ADD_STAFF(request):
                       salary_amount=salary_amount,
                       work_format=work_format,
                       branch=branch,
+                      status=status,
                       birth_date=birth_date,
                       address=address,
                       mobile=mobile,
@@ -419,7 +431,7 @@ def ADD_STAFF(request):
 
 @login_required(login_url='/')
 def VIEW_STAFF(request):
-    staff = Staff.objects.all()
+    staff = Staff.objects.exclude(status='Archived')
     context = {
         'staff': staff,
     }
@@ -450,6 +462,7 @@ def UPDATE_STAFF(request):
         salary_amount = request.POST.get('salary_amount')
         work_format = request.POST.get('work_format')
         branch = request.POST.get('branch')
+        status = request.POST.get('status')
         birth_date = request.POST.get('birth_date')
         address = request.POST.get('address')
         mobile = request.POST.get('mobile')
@@ -473,6 +486,7 @@ def UPDATE_STAFF(request):
         staff.work_format = work_format
         staff.birth_date = birth_date
         staff.fines = fines
+        staff.status = status
         staff.bonus = bonus
         staff.tax = tax
         staff.branch = branch
@@ -690,8 +704,72 @@ def EXISTING_WAIT(request, id):
 
 
 def VIEW_EXISTING(request):
-    existstudent = ExistingStudent.objects.all()
+    existstudent = ExistingStudent.objects.filter(status='Waiting')
     context = {
         'existstudent': existstudent
     }
     return render(request, 'Hod/view_existwaitlist.html', context)
+
+
+def EDIT_EXISTING(request, id):
+    existing = ExistingStudent.objects.get(id=id)
+
+    context = {
+        'existing': existing,
+    }
+    return render(request, 'Hod/edit_waiting_form_existing.html', context)
+
+
+def UPDATE_EXISTING(request):
+    if request.method == "POST":
+        preferred_course = request.POST.get('preferred_course')
+        preferred_level = request.POST.get('preferred_level')
+        preferred_time = request.POST.get('preferred_time')
+        student_id = request.POST.get('student_id')
+        existing_id = request.POST.get('id')
+        preferred_days = request.POST.get('preferred_days')
+        status = request.POST.get('status')
+        existing = ExistingStudent.objects.get(id=existing_id)
+
+        existing.preferred_course = preferred_course
+        existing.preferred_level = preferred_level
+        existing.preferred_days = preferred_days
+        existing.student_id = student_id
+        existing.preferred_time = preferred_time
+        existing.status = status
+
+        existing.save()
+
+        messages.success(request, "Updated Successfully")
+        return redirect('view_existing')
+
+    return render(request, 'Hod/edit_waiting_form_existing.html')
+
+
+def ARCHIVE_STAFF(request):
+    staff = Staff.objects.filter(status='Archived')
+
+    context = {
+        'staff': staff,
+    }
+    return render(request, 'Hod/archive_staff.html', context)
+
+
+def ARCHIVE_COURSE(request):
+    course = Course.objects.filter(status='Archived')
+
+    context = {
+        'course': course,
+    }
+    return render(request, 'Hod/archive_course.html', context)
+
+
+def TEACHER_PANEL(request):
+    now_month = datetime.now().month
+    payments = Payments.objects.filter(
+        teacher_id=request.user.username,
+        created_at__month=now_month,
+        created_at__year=datetime.now().year
+    )
+    context = {'payments': payments}
+    return render(request, 'Hod/payments_by_teacher.html', context)

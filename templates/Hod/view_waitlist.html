@@ -23,7 +23,7 @@
                         <div class="card-body">
                            <div class="table-responsive">
                               <table class="data-table table">
-  <thead>
+  <thead class="thead-light">
     <tr>
       <th style="color: darkred">Student</th>
       <th style="color: darkred">Subject</th>
@@ -49,7 +49,7 @@
       <td style="font-size: 14px">{{ i.mobile }}</td>
         <td style="font-size: 14px">{{ i.mobiletwo }}</td>
       <td style="color: gray; font-size: 14px">{{ i.address }}</td>
-      <td style="color: lightslategray">{{ i.created_at.date }}</td>
+      <td style="color: lightslategray; font-size: 14px">{{ i.created_at.date }}</td>
     </tr>
     {% endfor %}
   </tbody>

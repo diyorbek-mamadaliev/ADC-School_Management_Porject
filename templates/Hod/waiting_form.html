@@ -4,7 +4,7 @@
                   <div class="col-sm-12">
                      <div class="card">
                         <div class="card-body">
-                           <form method="post"action="{% url 'add_student' %}" enctype="multipart/form-data">
+                           <form method="post"action="{% url 'waiting_form' %}" enctype="multipart/form-data">
                                {% csrf_token %}
                               <div class="row">
                                  <div class="col-12">
@@ -22,30 +22,69 @@
                                        <input type="text" class="form-control" name="last_name" required>
                                     </div>
                                  </div>
-                                  <div class="col-12 col-sm-6">
+                              <div class="col-12 col-sm-6">
                                     <div class="form-group">
                                        <label>Subject</label>
-                                       <input type="text" class="form-control" name="preferred_course" required>
+                                       <select class="form-control" name="preferred_course" required>
+                                          <option>English</option>
+                                           <option>IELTS</option>
+                                           <option>CEFR</option>
+                                           <option>Maths</option>
+                                           <option>Mental Maths</option>
+                                           <option>History</option>
+                                           <option>Mother Tongue and Literature</option>
+                                           <option>Korean</option>
+                                           <option>Japanese</option>
+                                           <option>Russian</option>
+                                           <option>German</option>
+                                       </select>
                                     </div>
                                  </div>
-                                  <div class="col-12 col-sm-6">
+                              <div class="col-12 col-sm-6">
                                     <div class="form-group">
                                        <label>Level</label>
-                                       <input type="text" class="form-control" name="preferred_level" required>
+                                       <select class="form-control" name="preferred_level" required>
+                                          <option>Starter</option>
+                                           <option>Beginner</option>
+                                           <option>Elementary</option>
+                                           <option>Pre-Intermediate</option>
+                                           <option>Intermediate</option>
+                                           <option>Upper-Intermediate</option>
+                                           <option>Advanced</option>
+                                           <option>1</option>
+                                           <option>2</option>
+                                           <option>3</option>
+                                           <option>4</option>
+                                       </select>
                                     </div>
                                  </div>
-                                  <div class="col-12 col-sm-6">
+                              <div class="col-12 col-sm-6">
                                     <div class="form-group">
                                        <label>Days</label>
-                                       <input type="text" class="form-control" name="preferred_days" required>
+                                       <select class="form-control" name="preferred_days" required>
+                                          <option>Any</option>
+                                           <option>MWF</option>
+                                           <option>TTS</option>
+                                           <option>Individual</option>
+                                       </select>
                                     </div>
                                  </div>
-                                  <div class="col-12 col-sm-6">
+                              <div class="col-12 col-sm-6">
                                     <div class="form-group">
                                        <label>Time</label>
-                                       <input type="text" class="form-control" name="preferred_time" required>
+                                       <select class="form-control" name="preferred_time" required>
+                                          <option>Any</option>
+                                           <option>9:00</option>
+                                           <option>10:30</option>
+                                           <option>14:00</option>
+                                           <option>15:30</option>
+                                           <option>17:00</option>
+                                           <option>18:30</option>
+                                           <option>Individual</option>
+                                       </select>
                                     </div>
                                  </div>
+
                               <div class="col-12 col-sm-6">
                                     <div class="form-group">
                                        <label>Birth-Date</label>

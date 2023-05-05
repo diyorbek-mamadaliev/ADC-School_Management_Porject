@@ -11,7 +11,6 @@ from django.contrib.auth.models import User
 class customUser(AbstractUser):
     USER = (
         (1, 'HOD'),
-        (2, 'STAFF'),
         (3, 'STUDENT'),
     )
     user_type = models.CharField(choices=USER, max_length=50, default=1)
@@ -68,6 +67,7 @@ class Student(models.Model):
     preferred_time = models.CharField(max_length=30, blank=True, null=True)
     address = models.CharField(max_length=150, blank=True, null=True)
     course_id = models.ForeignKey(Course, on_delete=models.DO_NOTHING, blank=True, null=True)
+    course_id_2 = models.CharField(max_length=50, blank=True, null=True)
     birth_date = models.DateTimeField()
     status = models.CharField(max_length=20, blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -99,3 +99,5 @@ class ExistingStudent(models.Model):
     preferred_time = models.CharField(max_length=30)
     status = models.CharField(max_length=20, blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
+    def __str__(self):
+        return f"{self.student_id}"

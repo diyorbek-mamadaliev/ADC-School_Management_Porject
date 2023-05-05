@@ -56,11 +56,33 @@
                                     </div>
                                  </div>
                               <div class="col-12 col-sm-6">
+                              <label>Group 1</label>
+                              <div class="container-fluid" style="background-color: lightgreen">
+                                    <h6>{% for i in student %}{{ i.course_id.username }}{% endfor %}</h6>
+                              </div>
+                                 </div>
+                              <div class="col-12 col-sm-6">
+                              <label>Group 2</label>
+                              <div class="container-fluid" style="background-color: lightgreen">
+                                    <h6>{% for i in student %}{{ i.course_id_2 }}{% endfor %}</h6>
+                              </div>
+                                 </div>
+                              <div class="col-12 col-sm-6">
                                     <div class="form-group">
-                                       <label>Group</label>
+                                       <label> Update Group 1</label>
                                        <select class="form-control" name="course_id">
                                            {% for i in course %}
-                                          <option value="{{ i.id }}">({{ i.id }}){{ i.subject }} | {{ i.level }}</option>
+                                          <option value="{{ i.id }}">{{ i.subject }} | {{ i.level }} ({{ i.username }})</option>
+                                           {% endfor %}
+                                       </select>
+                                    </div>
+                                 </div>
+                              <div class="col-12 col-sm-6">
+                                    <div class="form-group">
+                                       <label>Update Group 2</label>
+                                       <select class="form-control" name="course_id_2">
+                                           {% for i in course %}
+                                          <option value="{{ i.username }}">{{ i.subject }} | {{ i.level }} ({{ i.username }})</option>
                                            {% endfor %}
                                        </select>
                                     </div>
