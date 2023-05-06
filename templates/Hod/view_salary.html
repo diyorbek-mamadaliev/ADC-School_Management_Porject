@@ -19,22 +19,22 @@
       <div class="card card-table">
         <div class="card-body">
           <div class="table-responsive">
-            <table class="table" style="table-layout: fixed;">
+            <table class="table" style="table-layout: auto;">
               <thead class="thead-light">
                 <tr>
-                  <th style="color: darkred; width: 30%;">Teacher</th>
-                  <th style="color: darkred; width: 25%;">Cash</th>
-                     <th style="color: darkred; width: 20%;">Plastic</th>
-                     <th style="color: darkred; width: 20%;">Total</th>
-                    <th style="color: darkred; width: 20%;">39%</th>
-                    <th style="color: darkred; width: 20%;">1% Comp</th>
-                    <th style="color: darkred; width: 20%;">Fines</th>
-                    <th style="color: darkred; width: 20%;">Bonus</th>
-                    <th style="color: darkred; width: 20%;">Bills</th>
-                    <th style="color: darkred; width: 20%;">Tax</th>
-                    <th style="color: darkred; width: 20%;">Plastic</th>
-                    <th style="color: darkred; width: 20%;">Avans</th>
-                    <th style="color: darkred; width: 20%;">Salary</th>
+                  <th style="color: darkred;">Teacher</th>
+                  <th style="color: darkred;">Cash</th>
+                     <th style="color: darkred;">Plastic</th>
+                     <th style="color: darkred;">Total</th>
+                    <th style="color: darkred;">39%</th>
+                    <th style="color: darkred;">1% Comp</th>
+                    <th style="color: darkred;">Fines</th>
+                    <th style="color: darkred;">Bonus</th>
+                    <th style="color: darkred;">Bills</th>
+                    <th style="color: darkred;">Tax</th>
+                    <th style="color: darkred;">Plastic</th>
+                    <th style="color: darkred;">Avans</th>
+                    <th style="color: darkred;">Salary</th>
                 </tr>
               </thead>
               <tbody>
@@ -43,8 +43,8 @@
                     <td style="font-size: 14px">
                       {{ teacher.first_name }}&nbsp;{{ teacher.last_name }}
                     </td>
-                      <td style="color: lightslategray; font-size: 14px">{{ cash_fees }}</td>
-                      <td style="color: lightslategray; font-size: 14px">{{ card_fees }}</td>
+                      <td style="color: lightslategray; font-size: 14px">{{ teacher.total_cash }}</td>
+                      <td style="color: lightslategray; font-size: 14px">{{ teacher.total_plastic }}</td>
                     <td style="color: lightslategray; font-size: 14px">{{ teacher.total_fees }}</td>
                   <td style="color: lightslategray; font-size: 14px">{{ teacher.commission }}</td>
                   <td style="color: lightslategray; font-size: 14px">{{ teacher.bonus }}</td>

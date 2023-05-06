@@ -4,7 +4,7 @@ from django.contrib.auth.decorators import login_required
 from app.models import Course, customUser, Student, Staff, Payments, ExistingStudent
 from django.contrib import messages
 from django.shortcuts import redirect
-from django.db.models import Max, Count
+from django.db.models import Max, Count, Q
 from django.utils import timezone
 from django.db.models import Sum
 import datetime
@@ -639,53 +639,48 @@ def VIEW_PAYMENT_HISTORY(request):
 #         return redirect('Hod/payment_history')
 #
 
+from django.db.models import Sum
 
 def STAFF_SALARY(request):
     teachers = Staff.objects.filter(department='Teacher')
 
     # Calculate total fees for each teacher by summing up all fees created by them
     current_month = datetime.now().month
-
-    cash_fees = Payments.objects.filter(
+    fees = Payments.objects.filter(
         teacher_id__in=[teacher.admin.username for teacher in teachers],
-        created_at__month=current_month,
-        payment_type='Cash'
-    ).aggregate(Sum('fee_amount'))['fee_amount__sum']
-
-    card_fees = Payments.objects.filter(
-        teacher_id__in=[teacher.admin.username for teacher in teachers],
-        created_at__month=current_month,
-        payment_type='Card'
-    ).aggregate(Sum('fee_amount'))['fee_amount__sum']
+        created_at__month=current_month
+    ).values('teacher_id').annotate(
+        total_fees=Sum('fee_amount'),
+        total_cash=Sum('fee_amount', filter=Q(payment_type='Cash')),
+        total_plastic=Sum('fee_amount', filter=Q(payment_type='Plastic'))
+    )
 
     # Calculate total fees across all teachers
-    total_fees = (cash_fees or Decimal('0')) + (card_fees or Decimal('0'))
+    total_fees = sum([fee['total_fees'] for fee in fees])
 
     # Calculate 39% of the total fees for each teacher and add it to the teacher_fees list
     teacher_fees = []
-    for teacher in teachers:
-        teacher_total_fees = Payments.objects.filter(
-            teacher_id=teacher.admin.username,
-            created_at__month=current_month
-        ).aggregate(Sum('fee_amount'))['fee_amount__sum']
-
-        if teacher_total_fees is not None:
-            teacher_commission = Decimal('0.39') * teacher_total_fees
-            administrator_bonus = Decimal('0.01') * teacher_total_fees
-            teacher_fees.append({
-                'first_name': teacher.admin.first_name,
-                'last_name': teacher.admin.last_name,
-                'department': teacher.department,
-                'total_fees': teacher_total_fees,
-                'commission': teacher_commission,
-                'bonus': administrator_bonus,
-            })
+    for fee in fees:
+        teacher = Staff.objects.get(admin__username=fee['teacher_id'])
+        teacher_total_fees = fee['total_fees']
+        teacher_total_cash = fee['total_cash']
+        teacher_total_plastic = fee['total_plastic']
+        teacher_commission = Decimal('0.39') * teacher_total_fees
+        administrator_bonus = Decimal('0.01') * teacher_total_fees
+        teacher_fees.append({
+            'first_name': teacher.admin.first_name,
+            'last_name': teacher.admin.last_name,
+            'department': teacher.department,
+            'total_fees': teacher_total_fees,
+            'total_cash': teacher_total_cash,
+            'total_plastic': teacher_total_plastic,
+            'commission': teacher_commission,
+            'bonus': administrator_bonus,
+        })
 
     context = {
         'teacher_fees': teacher_fees,
         'total_fees': total_fees,
-        'cash_fees': cash_fees,
-        'card_fees': card_fees,
     }
 
     return render(request, 'Hod/view_salary.html', context)

@@ -108,7 +108,7 @@
 
                <div class="col-md-12 col-lg-12">
                      <div class="card flex-fill">
-                        <div style="background-color: lightpink" class="card-header">
+                        <div style="background-color: lightgreen" class="card-header">
                            <h5>Waiting Shares Per Existing Students</h5>
                         </div>
                         <div class="card-body">
@@ -121,10 +121,10 @@
                                     </tr>
                                  </thead>
                                  <tbody>
-                                    {% for student in course_with_waiting_counts %}
+                                    {% for student in course_with_existing_counts %}
                                         <tr>
                                           <td>{{ student.preferred_course }}</td>
-                                          <td>{{ student.waiting_count }}</td>
+                                          <td>{{ student.existing_waiting }}</td>
                                         </tr>
                                       {% endfor %}
                                  </tbody>
