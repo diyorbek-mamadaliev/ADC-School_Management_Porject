@@ -4,10 +4,7 @@
 <div class="page-header">
                   <div class="row">
                      <div class="col-sm-12">
-                        <h3 class="page-title">Analytics</h3>
-                        <ul class="breadcrumb">
-                           <li class="breadcrumb-item active">Dashboard</li>
-                        </ul>
+                        <h3 class="page-title">Analytics Center</h3>
                      </div>
                   </div>
                </div>
@@ -53,7 +50,7 @@
                </div>
 
                <div class="row">
-                  <div class="col-md-12 col-lg-12">
+                  <div class="col-md-12 col-lg-6">
                      <div class="card flex-fill">
                         <div style="background-color: lightskyblue;" class="card-header">
                            <h5 class="card-title">Student Shares Per Subject</h5>
@@ -81,10 +78,38 @@
                      </div>
                   </div>
 
-               <div class="col-md-12 col-lg-12">
+               <div class="col-md-12 col-lg-6">
                      <div class="card flex-fill">
                         <div style="background-color: lightpink" class="card-header">
                            <h5>Waiting Shares Per Subject</h5>
+                        </div>
+                        <div class="card-body">
+                           <div class="table-responsive">
+                              <table class="table table-hover table-center">
+                                 <thead class="thead-light">
+                                    <tr>
+                                        <th>Subjects</th>
+                                       <th>Total Students</th>
+                                    </tr>
+                                 </thead>
+                                 <tbody>
+                                    {% for student in course_with_waiting_counts %}
+                                        <tr>
+                                          <td>{{ student.preferred_course }}</td>
+                                          <td>{{ student.waiting_count }}</td>
+                                        </tr>
+                                      {% endfor %}
+                                 </tbody>
+                              </table>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+
+               <div class="col-md-12 col-lg-12">
+                     <div class="card flex-fill">
+                        <div style="background-color: lightpink" class="card-header">
+                           <h5>Waiting Shares Per Existing Students</h5>
                         </div>
                         <div class="card-body">
                            <div class="table-responsive">

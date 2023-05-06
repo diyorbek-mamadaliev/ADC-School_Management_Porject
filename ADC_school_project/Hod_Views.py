@@ -18,6 +18,7 @@ from decimal import Decimal
 def HOME(request):
     student_count = Student.objects.all().count()
     waiting_count = Student.objects.all()
+    existing_waiting = ExistingStudent.objects.all()
     student_counted = Student.objects.filter(status='Active').exclude(course_id__username='Not_Selected_1').count()
     group_count = Course.objects.exclude(username='Not_Selected_1').filter(status='Active').count()
     payment_count = Payments.objects.all().count()
@@ -34,6 +35,11 @@ def HOME(request):
         .values('preferred_course')
         .annotate(waiting_count=Count('id'))
     )
+    course_with_existing_counts = (
+        ExistingStudent.objects.filter(status='Waiting')
+        .values('preferred_course')
+        .annotate(existing_waiting=Count('id'))
+    )
 
     context = {
         'student': student_count,
@@ -43,7 +49,8 @@ def HOME(request):
         'teachers': teacher_count,
         'staff_list': staff_list,
         'course_with_student_counts': course_with_student_counts,
-        'course_with_waiting_counts': course_with_waiting_counts
+        'course_with_waiting_counts': course_with_waiting_counts,
+        'course_with_existing_counts': course_with_existing_counts
     }
 
     return render(request, 'Hod/home.html', context)
@@ -149,9 +156,11 @@ def ADD_STUDENT(request):
 @login_required(login_url='/')
 def VIEW_STUDENT(request):
     student = Student.objects.filter(status='Active')
+    existing = ExistingStudent.objects.filter(status='Active')
 
     context = {
         'student': student,
+        'existing': existing
     }
     return render(request, 'Hod/view_student.html', context)
 
@@ -180,7 +189,6 @@ def UPDATE_STUDENT(request):
         mobile = request.POST.get('mobile')
         mobiletwo = request.POST.get('mobile_two')
         course_id = request.POST.get('course_id')
-        course_id_2 = request.POST.get('course_id_2')
         student_status = request.POST.get('status')
 
         user = customUser.objects.get(id=student_id)
@@ -195,7 +203,6 @@ def UPDATE_STUDENT(request):
         student = Student.objects.get(admin=student_id)
         student.address = address
         student.birth_date = birth_date
-        student.course_id_2 = course_id_2
         student.mobile = mobile
         student.mobiletwo = mobiletwo
         student.status = student_status
@@ -513,9 +520,11 @@ def VIEW_WAITING(request):
 @login_required(login_url='/')
 def ARCHIVE_STUDENT(request):
     student = Student.objects.filter(status='Archived')
+    existing = ExistingStudent.objects.filter(status='Archived')
 
     context = {
         'student': student,
+        'existing': existing,
     }
     return render(request, 'Hod/archive_student.html', context)
 
@@ -636,33 +645,47 @@ def STAFF_SALARY(request):
 
     # Calculate total fees for each teacher by summing up all fees created by them
     current_month = datetime.now().month
-    fees = Payments.objects.filter(
+
+    cash_fees = Payments.objects.filter(
         teacher_id__in=[teacher.admin.username for teacher in teachers],
-        created_at__month=current_month
-    ).values('teacher_id').annotate(total_fees=Sum('fee_amount'))
+        created_at__month=current_month,
+        payment_type='Cash'
+    ).aggregate(Sum('fee_amount'))['fee_amount__sum']
+
+    card_fees = Payments.objects.filter(
+        teacher_id__in=[teacher.admin.username for teacher in teachers],
+        created_at__month=current_month,
+        payment_type='Card'
+    ).aggregate(Sum('fee_amount'))['fee_amount__sum']
 
     # Calculate total fees across all teachers
-    total_fees = sum([fee['total_fees'] for fee in fees])
+    total_fees = (cash_fees or Decimal('0')) + (card_fees or Decimal('0'))
 
     # Calculate 39% of the total fees for each teacher and add it to the teacher_fees list
     teacher_fees = []
-    for fee in fees:
-        teacher = Staff.objects.get(admin__username=fee['teacher_id'])
-        teacher_total_fees = fee['total_fees']
-        teacher_commission = Decimal('0.39') * teacher_total_fees
-        administrator_bonus = Decimal('0.01') * teacher_total_fees
-        teacher_fees.append({
-            'first_name': teacher.admin.first_name,
-            'last_name': teacher.admin.last_name,
-            'department': teacher.department,
-            'total_fees': teacher_total_fees,
-            'commission': teacher_commission,
-            'bonus': administrator_bonus,
-        })
+    for teacher in teachers:
+        teacher_total_fees = Payments.objects.filter(
+            teacher_id=teacher.admin.username,
+            created_at__month=current_month
+        ).aggregate(Sum('fee_amount'))['fee_amount__sum']
+
+        if teacher_total_fees is not None:
+            teacher_commission = Decimal('0.39') * teacher_total_fees
+            administrator_bonus = Decimal('0.01') * teacher_total_fees
+            teacher_fees.append({
+                'first_name': teacher.admin.first_name,
+                'last_name': teacher.admin.last_name,
+                'department': teacher.department,
+                'total_fees': teacher_total_fees,
+                'commission': teacher_commission,
+                'bonus': administrator_bonus,
+            })
 
     context = {
         'teacher_fees': teacher_fees,
         'total_fees': total_fees,
+        'cash_fees': cash_fees,
+        'card_fees': card_fees,
     }
 
     return render(request, 'Hod/view_salary.html', context)
@@ -680,6 +703,7 @@ def VIEW_WAITLIST(request):
 def EXISTING_WAIT(request, id):
     student = Student.objects.filter(id=id)
     if request.method == 'POST':
+        full_name = request.POST.get('full name')
         preferred_course = request.POST.get('preferred_course')
         preferred_level = request.POST.get('preferred_level')
         preferred_time = request.POST.get('preferred_time')
@@ -691,6 +715,7 @@ def EXISTING_WAIT(request, id):
             preferred_course=preferred_course,
             preferred_level=preferred_level,
             preferred_days=preferred_days,
+            full_name=full_name,
             status=status,
             preferred_time=preferred_time
         )
@@ -713,24 +738,30 @@ def VIEW_EXISTING(request):
 
 def EDIT_EXISTING(request, id):
     existing = ExistingStudent.objects.get(id=id)
+    course = Course.objects.all()
 
     context = {
         'existing': existing,
+        'course': course
     }
     return render(request, 'Hod/edit_waiting_form_existing.html', context)
 
 
 def UPDATE_EXISTING(request):
     if request.method == "POST":
+        full_name = request.POST.get('full_name')
         preferred_course = request.POST.get('preferred_course')
         preferred_level = request.POST.get('preferred_level')
         preferred_time = request.POST.get('preferred_time')
         student_id = request.POST.get('student_id')
         existing_id = request.POST.get('id')
         preferred_days = request.POST.get('preferred_days')
+        course_id = request.POST.get('course_id')
         status = request.POST.get('status')
-        existing = ExistingStudent.objects.get(id=existing_id)
 
+        existing = ExistingStudent.objects.get(id=existing_id)
+        course = Course.objects.get(id=course_id)
+        existing.course_id = course
         existing.preferred_course = preferred_course
         existing.preferred_level = preferred_level
         existing.preferred_days = preferred_days
@@ -773,3 +804,7 @@ def TEACHER_PANEL(request):
     )
     context = {'payments': payments}
     return render(request, 'Hod/payments_by_teacher.html', context)
+
+
+def WELCOME(request):
+    return render(request, 'Hod/welcome_page.html')

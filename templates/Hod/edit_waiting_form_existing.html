@@ -5,7 +5,7 @@
       <div class="page-header">
          <div class="row align-items-center">
             <div class="col">
-               <h3 class="page-title">Edit Waiting Student Info</h3>
+               <h3 class="page-title">Edit Student Info</h3>
             </div>
          </div>
       </div>
@@ -49,15 +49,27 @@
                               <input style="color: gray" type="text" name="preferred_time" class="form-control" value="{{ existing.preferred_time }}" required>
                            </div>
                         </div>
-                        <div class="col-12 col-sm-6">
-                           <div class="form-group">
-                              <label>Status</label>
-                              <select class="form-control" name="status" required>
-                                 <option value="Active" {% if existing.status == "Active" %}selected{% endif %}>Active</option>
-                                 <option value="Waiting" {% if existing.status == "Waiting" %}selected{% endif %}>Waiting</option>
-                              </select>
-                           </div>
-                        </div>
+                     <div class="col-12 col-sm-6">
+                                    <div class="form-group">
+                                       <label> Given to Group</label>
+                                       <select class="form-control" name="course_id">
+                                           {% for i in course %}
+                                          <option value="{{ i.id }}">{{ i.subject }} | {{ i.level }} ({{ i.username }})</option>
+                                           {% endfor %}
+                                       </select>
+                                    </div>
+                                 </div>
+                     <div class="col-12 col-sm-6">
+   <div class="form-group">
+      <label>Status</label>
+      <select class="form-control" name="status" required>
+         <option value="Active" {% if existing.status == "Active" %}selected{% endif %}>Active</option>
+         <option value="Waiting" {% if existing.status == "Waiting" %}selected{% endif %}>Waiting</option>
+         <option value="Archived" {% if existing.status == "Archived" %}selected{% endif %}>Archived</option>
+      </select>
+   </div>
+</div>
+
                         <input type="hidden" name="id" value="{{ existing.id }}">
                         <div class="col-12">
                            <button type="submit" style="width: 100%" class="btn btn-primary">Update</button>

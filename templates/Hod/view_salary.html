@@ -1,12 +1,14 @@
 {% extends 'base.html' %}
 {% block content %}
-
     <div class="content container-fluid">
   <div class="page-header">
     <div class="row align-items-center">
       <div class="col">
                     <h3 class="page-title">Salary Calculator</h3>
                 </div>
+        <a href="javascript:void(0);" id="toggle_btn">
+                    <i class="fas fa-backward"></i>
+                </a>
       {% include 'includes/messages.html' %}
     </div>
   </div>
@@ -41,8 +43,8 @@
                     <td style="font-size: 14px">
                       {{ teacher.first_name }}&nbsp;{{ teacher.last_name }}
                     </td>
-                      <td style="color: lightslategray; font-size: 14px"></td>
-                      <td style="color: lightslategray; font-size: 14px"></td>
+                      <td style="color: lightslategray; font-size: 14px">{{ cash_fees }}</td>
+                      <td style="color: lightslategray; font-size: 14px">{{ card_fees }}</td>
                     <td style="color: lightslategray; font-size: 14px">{{ teacher.total_fees }}</td>
                   <td style="color: lightslategray; font-size: 14px">{{ teacher.commission }}</td>
                   <td style="color: lightslategray; font-size: 14px">{{ teacher.bonus }}</td>
