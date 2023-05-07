@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h3>Payment Details for {{ payment.first_name }} {{ payment.last_name }} ({{ payment.student_id }})</h3>
+
+<table class="table">
+  <tbody>
+    <tr>
+      <th>First Name:</th>
+      <td>{{ payment.first_name }}</td>
+    </tr>
+    <tr>
+      <th>Last Name:</th>
+      <td>{{ payment.last_name }}</td>
+    </tr>
+    <tr>
+      <th>Student ID:</th>
+      <td>{{ payment.student_id }}</td>
+    </tr>
+    <tr>
+      <th>Group ID:</th>
+      <td>{{ payment.group_id }}</td>
+    </tr>
+    <tr>
+      <th>Teacher ID:</th>
+      <td>{{ payment.teacher_id }}</td>
+    </tr>
+    <tr>
+      <th>Payment Type:</th>
+      <td>{{ payment.payment_type }}</td>
+    </tr>
+    <tr>
+      <th>Payment Amount:</th>
+      <td>{{ payment.fee_amount }}</td>
+    </tr>
+    <tr>
+      <th>Cashier:</th>
+      <td>{{ payment.author }}</td>
+    </tr>
+    <tr>
+      <th>Comment:</th>
+      <td>{{ payment.comment }}</td>
+    </tr>
+    <tr>
+      <th>Created Date:</th>
+      <td>{{ payment.created_at }}</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="text-center mt-3">
+  <button class="btn btn-primary" style="width: 100%" onclick="window.print()">Print Receipt</button>
+</div>
+
+{% endblock %}

@@ -10,6 +10,8 @@ from django.db.models import Sum
 import datetime
 from datetime import datetime, date
 from decimal import Decimal
+from django.db.models import Sum
+from django.shortcuts import get_object_or_404
 
 
 
@@ -540,9 +542,11 @@ def VIEW_TEACHER(request):
 def VIEW_STUDENTS(request, id):
     course = Course.objects.get(id=id)
     student = Student.objects.filter(course_id=id)
+    existing_students = ExistingStudent.objects.filter(course_id=id)
     context = {
         'course': course,
         'student': student,
+        'existing_students': existing_students
     }
     return render(request, 'Hod/view_students.html', context)
 
@@ -572,7 +576,7 @@ def ADD_FEE(request, id):
             author=author
         )
         payment.save()
-        return redirect('view_payment_history')
+        return redirect('payment_preview')
     else:
         context = {
             'course': course,
@@ -639,7 +643,7 @@ def VIEW_PAYMENT_HISTORY(request):
 #         return redirect('Hod/payment_history')
 #
 
-from django.db.models import Sum
+
 
 def STAFF_SALARY(request):
     teachers = Staff.objects.filter(department='Teacher')
@@ -703,6 +707,7 @@ def EXISTING_WAIT(request, id):
         preferred_level = request.POST.get('preferred_level')
         preferred_time = request.POST.get('preferred_time')
         preferred_days = request.POST.get('preferred_days')
+        mobile = request.POST.get('mobile')
         status = request.POST.get('status')
         student_id = request.POST.get('student_id')
         existing = ExistingStudent(
@@ -710,6 +715,7 @@ def EXISTING_WAIT(request, id):
             preferred_course=preferred_course,
             preferred_level=preferred_level,
             preferred_days=preferred_days,
+            mobile=mobile,
             full_name=full_name,
             status=status,
             preferred_time=preferred_time
@@ -803,3 +809,17 @@ def TEACHER_PANEL(request):
 
 def WELCOME(request):
     return render(request, 'Hod/welcome_page.html')
+
+
+def PAYMENT_PREVIEW(request):
+    # get the current logged-in user's username
+    current_user = request.user.username
+
+    # filter payments by the current user's username
+    payment = Payments.objects.filter(author__username=current_user).order_by('-created_at').first()
+
+    # pass payment object to template
+    context = {
+        'payment': payment
+    }
+    return render(request, 'Hod/payment_preview.html', context)

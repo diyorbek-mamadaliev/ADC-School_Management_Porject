@@ -30,8 +30,15 @@
                         <div class="col-12 col-sm-6">
                            <div class="form-group">
                               <label>Student ID</label>
-                              <input style="color: gray" type="text" name="student_id" class="form-control" value="{% for i in student %}{{ i.admin.username }}{% endfor %}">
-                              <input type="hidden" name="student_id" value="{% for i in student %}{{ i.admin.username }}{% endfor %}">
+                              <input style="color: gray" type="text" name="mobile" class="form-control" value="{% for i in student %}{{ i.admin.username }}{% endfor %}">
+                              <input type="hidden" name="mobile" value="{% for i in student %}{{ i.admin.username }}{% endfor %}">
+                           </div>
+                        </div>
+                     <div class="col-12 col-sm-6">
+                           <div class="form-group">
+                              <label>Mobile</label>
+                              <input style="color: gray" type="text" name="mobile" class="form-control" value="{% for i in student %}{{ i.mobile }}{% endfor %}">
+                              <input type="hidden" name="mobile" value="{% for i in student %}{{ i.mobile }}{% endfor %}">
                            </div>
                         </div>
 

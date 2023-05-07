@@ -94,6 +94,7 @@ class ExistingStudent(models.Model):
     full_name = models.CharField(max_length=70, blank=True, null=True)
     student_id = models.CharField(max_length=30, blank=True, null=True)
     preferred_course = models.CharField(max_length=30)
+    mobile = models.CharField(max_length=15, blank=True, null=True)
     preferred_level = models.CharField(max_length=30)
     preferred_days = models.CharField(max_length=30)
     preferred_time = models.CharField(max_length=30)
