@@ -45,9 +45,7 @@
                 {% endfor %}
               {% for i in existing_students %}
                   <tr>
-                    <td>
-                      {{ i.full_name }}
-                    </td>
+                    <td>{{ i.first_name }} {{ i.last_name }}</td>
                     <td>{{ i.student_id }}</td>
                     <td>{{ i.mobile }}</td>
                     <td style="color: lightslategray">{{ i.created_at.date }}</td>

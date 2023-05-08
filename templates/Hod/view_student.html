@@ -68,7 +68,7 @@
 {% for j in existing %}
     <tr>
       <td style="font-size: 14px">
-        <a href="{% url 'edit_existing' j.id %}">{{ j.full_name }}</a>
+        <a href="{% url 'edit_existing' j.id %}">{{ j.first_name }} {{ j.last_name }}</a>
       </td>
       <td style="color: lightslategray; font-size: 14px">{{ j.student_id }}</td>
       <td style="color: lightslategray; font-size: 14px">{{ j.course_id.branch }}</td>
@@ -79,11 +79,8 @@
       <td style="color: lightslategray; font-size: 14px">{{ j.created_at.date }}</td>
       <td class="text-right">
         <div class="actions">
-            {% for b in student %}
-              {% if b.admin.username == j.student_id %}
-        <a href="{% url 'add_fee' b.id %}" class="btn btn-sm bg-success-light mr-2">
-              {% endif %}
-              {% endfor %}
+
+        <a href="{% url 'add_fee_existing' j.id %}" class="btn btn-sm bg-success-light mr-2">
             <i class="fas fa-money-bill"></i>
           </a>
         </div>

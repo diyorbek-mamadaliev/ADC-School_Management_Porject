@@ -22,32 +22,32 @@
                         <div class="col-12 col-sm-6">
                            <div class="form-group">
                               <label>First Name</label>
-                              <input style="color: gray" type="text" name="first_name" class="form-control" value="{% for i in student %}{{ i.admin.first_name }}{% endfor %}">
-                              <input type="hidden" name="student_id" value="{% for i in student %}{{ i.admin.id }}{% endfor %}">
+                              <input style="color: gray" type="text" name="first_name" class="form-control" value="{% for i in existing %}{{ i.first_name }}{% endfor %}">
+                              <input type="hidden" name="student_id" value="{% for i in existing %}{{ i.id }}{% endfor %}">
                            </div>
                         </div>
                         <div class="col-12 col-sm-6">
                            <div class="form-group">
                               <label>Last Name</label>
-                              <input type="text" style="color: gray" name="last_name" class="form-control" value="{% for i in student %}{{ i.admin.last_name }}{% endfor %}">
+                              <input type="text" style="color: gray" name="last_name" class="form-control" value="{% for i in existing %}{{ i.last_name }}{% endfor %}">
                            </div>
                         </div>
                         <div class="col-12 col-sm-6">
                            <div class="form-group">
                               <label>Student ID</label>
-                              <input type="text" style="color: gray" name="student_id" class="form-control" value="{% for i in student %}{{ i.admin.username }}{% endfor %}" readonly>
+                              <input type="text" style="color: gray" name="student_id" class="form-control" value="{% for i in existing %}{{ i.student_id }}{% endfor %}" readonly>
                            </div>
                         </div>
                         <div class="col-12 col-sm-6">
                            <div class="form-group">
                               <label>Group</label>
-                              <input type="text" style="color: gray" name="group_id" class="form-control" value="{% for i in student %}{{ i.course_id.subject }} {{ i.course_id.level }} ({{ i.course_id.username }}){% endfor %}" readonly>
+                              <input type="text" style="color: gray" name="group_id" class="form-control" value="{% for i in existing %}{{ i.course_id.subject }} {{ i.course_id.level }} ({{ i.course_id.username }}){% endfor %}" readonly>
                            </div>
                         </div>
                         <div class="col-12 col-sm-6">
                            <div class="form-group">
                               <label>Teacher</label>
-                              <input type="text" style="color: gray" name="teacher_id" class="form-control" value="{% for i in student %}{{ i.course_id.teacher_id }}{% endfor %}" readonly>
+                              <input type="text" style="color: gray" name="teacher_id" class="form-control" value="{% for i in existing %}{{ i.course_id.teacher_id }}{% endfor %}" readonly>
                            </div>
                         </div>
                      <div class="col-12 col-sm-6">

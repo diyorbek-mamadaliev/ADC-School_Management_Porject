@@ -1,29 +1,57 @@
 {% extends 'base.html' %}
 {% block content %}
-<!DOCTYPE html>
-<html>
+
+
   <head>
     <title>Welcome to ADC CRM</title>
     <style>
-      /* Center align the text */
+      /* Set the height of the body to 100% */
       body {
+        height: 100%;
+        margin: 0;
+      }
+
+      /* Set the footer to position absolute */
+      footer {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 50px;
+        background-color: #333;
+        color: #fff;
+        text-align: center;
+        line-height: 0px;
+      }
+
+      /* Set the background image */
+      .bg-image {
+        background-image: url('/static/assets/img/101.jpg');
+        background-size: cover;
+        height: calc(100% - 50px);
         display: flex;
         justify-content: center;
         align-items: center;
-        height: 100vh;
       }
 
       /* Set the font size to 24 and center the text */
       h1 {
-        font-size: 24px;
-        text-align: center;
-        margin: 0;
+        font-size: 56px;
+          width: 30%;
+        text-align: left;
+        margin: 10px;
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
       }
     </style>
   </head>
-  <body>
-    <h1>Welcome to ADC CRM</h1>
+  <body class="bg-image">
+    <div>
+      <h1>Welcome to ADC CRM 🤝️️️️️️</h1>
+    </div>
+    <footer>Footer content goes here</footer>
   </body>
-</html>
+    <br>
 
 {% endblock %}

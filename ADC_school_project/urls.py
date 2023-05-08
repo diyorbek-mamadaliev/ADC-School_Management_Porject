@@ -40,6 +40,7 @@ urlpatterns = [
     path('Hod/Course/Update', Hod_Views.UPDATE_COURSE, name="update_course"),
     path('Hod/Course/Archive', Hod_Views.ARCHIVE_COURSE, name="archive_course"),
     path('Hod/Payments/Fee/<str:id>', Hod_Views.ADD_FEE, name="add_fee"),
+    path('Hod/Payments/FeeExisting/<str:id>', Hod_Views.ADD_FEE_EXISTING, name="add_fee_existing"),
     path('Hod/Payments/History', Hod_Views.VIEW_PAYMENT_HISTORY, name="view_payment_history"),
     path('Hod/Payments/Preview', Hod_Views.PAYMENT_PREVIEW, name="payment_preview"),
     # path('Hod/Payments/Add', Hod_Views.ADD_NEW_PAYMENT, name="add_name_payment"),

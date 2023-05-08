@@ -91,7 +91,8 @@ class Payments(models.Model):
         return f"{self.first_name} {self.last_name}"
 
 class ExistingStudent(models.Model):
-    full_name = models.CharField(max_length=70, blank=True, null=True)
+    first_name = models.CharField(max_length=40, blank=True, null=True)
+    last_name = models.CharField(max_length=40, blank=True, null=True)
     student_id = models.CharField(max_length=30, blank=True, null=True)
     preferred_course = models.CharField(max_length=30)
     mobile = models.CharField(max_length=15, blank=True, null=True)

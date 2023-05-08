@@ -19,7 +19,8 @@
                               <table class="data-table table">
   <thead class="thead-light">
     <tr>
-      <th style="color: darkred">Student</th>
+        <th style="color: darkred">Student</th>
+      <th style="color: darkred">Student ID</th>
       <th style="color: darkred">Subject</th>
         <th style="color: darkred">Level</th>
         <th style="color: darkred">Days</th>
@@ -31,8 +32,9 @@
     {% for i in existstudent %}
     <tr>
       <td style="font-size: 14px">
-        <a href="{% url 'edit_existing' i.id %}">{{ i.student_id }}</a>
+        <a href="{% url 'edit_existing' i.id %}">{{ i.first_name }} {{ i.last_name }}</a>
       </td>
+        <td style="color: gray; font-size: 14px">{{ i.student_id }}</td>
       <td style="color: gray; font-size: 14px">{{ i.preferred_course }}</td>
         <td style="color: gray; font-size: 14px">{{ i.preferred_level }}</td>
         <td style="color: gray; font-size: 14px">{{ i.preferred_days }}</td>

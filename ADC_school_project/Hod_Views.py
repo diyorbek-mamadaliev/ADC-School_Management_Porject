@@ -289,7 +289,7 @@ def ADD_COURSE(request):
     if request.method == "POST":
         course_name = request.POST.get('subject')
         course_level = request.POST.get('level')
-        username = f"{course_name.capitalize()}_{next_username_number}"
+        username = f"{course_name.lower()}_{next_username_number}"
         course_status = request.POST.get('status')
         days = request.POST.get('days')
         hours = request.POST.get('hours')
@@ -702,7 +702,8 @@ def VIEW_WAITLIST(request):
 def EXISTING_WAIT(request, id):
     student = Student.objects.filter(id=id)
     if request.method == 'POST':
-        full_name = request.POST.get('full name')
+        first_name = request.POST.get('first_name')
+        last_name = request.POST.get('last_name')
         preferred_course = request.POST.get('preferred_course')
         preferred_level = request.POST.get('preferred_level')
         preferred_time = request.POST.get('preferred_time')
@@ -716,7 +717,8 @@ def EXISTING_WAIT(request, id):
             preferred_level=preferred_level,
             preferred_days=preferred_days,
             mobile=mobile,
-            full_name=full_name,
+            first_name=first_name,
+            last_name=last_name,
             status=status,
             preferred_time=preferred_time
         )
@@ -750,7 +752,8 @@ def EDIT_EXISTING(request, id):
 
 def UPDATE_EXISTING(request):
     if request.method == "POST":
-        full_name = request.POST.get('full_name')
+        first_name = request.POST.get('full_name')
+        last_name = request.POST.get('last_name')
         preferred_course = request.POST.get('preferred_course')
         preferred_level = request.POST.get('preferred_level')
         preferred_time = request.POST.get('preferred_time')
@@ -763,6 +766,8 @@ def UPDATE_EXISTING(request):
         existing = ExistingStudent.objects.get(id=existing_id)
         course = Course.objects.get(id=course_id)
         existing.course_id = course
+        existing.frst_name = first_name
+        existing.last_name = last_name
         existing.preferred_course = preferred_course
         existing.preferred_level = preferred_level
         existing.preferred_days = preferred_days
@@ -773,7 +778,7 @@ def UPDATE_EXISTING(request):
         existing.save()
 
         messages.success(request, "Updated Successfully")
-        return redirect('view_existing')
+        return redirect('view_student')
 
     return render(request, 'Hod/edit_waiting_form_existing.html')
 
@@ -823,3 +828,37 @@ def PAYMENT_PREVIEW(request):
         'payment': payment
     }
     return render(request, 'Hod/payment_preview.html', context)
+
+
+def ADD_FEE_EXISTING(request, id):
+    existing = ExistingStudent.objects.filter(id=id)
+    course = Course.objects.all()
+    if request.method == 'POST':
+        first_name = request.POST.get('first_name')
+        last_name = request.POST.get('last_name')
+        group_id = request.POST.get('group_id')
+        student_id = request.POST.get('student_id')
+        payment_type = request.POST.get('payment_type')
+        teacher_id = request.POST.get('teacher_id')
+        comment = request.POST.get('comment')
+        fee_amount = request.POST.get('fee_amount')
+        author = request.user
+        payment = Payments(
+            first_name=first_name,
+            last_name=last_name,
+            group_id=group_id,
+            teacher_id=teacher_id,
+            comment=comment,
+            student_id=student_id,
+            payment_type=payment_type,
+            fee_amount=fee_amount,
+            author=author
+        )
+        payment.save()
+        return redirect('payment_preview')
+    else:
+        context = {
+            'course': course,
+            'existing': existing,
+        }
+    return render(request, 'Hod/add_fee_existing.html', context)

@@ -22,16 +22,24 @@
                         </div>
                      <div class="col-12 col-sm-6">
                            <div class="form-group">
-                              <label>Full Name</label>
-                              <input style="color: gray" type="text" name="full_name" class="form-control" value="{% for i in student %}{{ i.admin.first_name }} {{ i.admin.last_name }}{% endfor %}">
-                              <input type="hidden" name="full_name" value="{% for i in student %}{{ i.admin.first_name }}{{ i.admin.last_name }}{% endfor %}">
+                              <label>First Name</label>
+                              <input style="color: gray" type="text" name="first_name" class="form-control" value="{% for i in student %}{{ i.admin.first_name }}{% endfor %}">
+                              <input type="hidden" name="first_name" value="{% for i in student %}{{ i.admin.first_name }}{% endfor %}">
                            </div>
                         </div>
+                     <div class="col-12 col-sm-6">
+                           <div class="form-group">
+                              <label>Last Name</label>
+                              <input style="color: gray" type="text" name="last_name" class="form-control" value="{% for i in student %}{{ i.admin.last_name }}{% endfor %}">
+                              <input type="hidden" name="last_name" value="{% for i in student %}{{ i.admin.last_name }}{% endfor %}">
+                           </div>
+                        </div>
+
                         <div class="col-12 col-sm-6">
                            <div class="form-group">
                               <label>Student ID</label>
-                              <input style="color: gray" type="text" name="mobile" class="form-control" value="{% for i in student %}{{ i.admin.username }}{% endfor %}">
-                              <input type="hidden" name="mobile" value="{% for i in student %}{{ i.admin.username }}{% endfor %}">
+                              <input style="color: gray" type="text" name="student_id" class="form-control" value="{% for i in student %}{{ i.admin.username }}{% endfor %}">
+                              <input type="hidden" name="student_id" value="{% for i in student %}{{ i.admin.username }}{% endfor %}">
                            </div>
                         </div>
                      <div class="col-12 col-sm-6">
