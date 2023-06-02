@@ -6,7 +6,7 @@ from django.contrib.auth.models import User
 
 
 
-# Create your models here.
+# User registratiom type hirerarchy (for all users by default registered in HOD)
 
 class customUser(AbstractUser):
     USER = (
@@ -17,6 +17,7 @@ class customUser(AbstractUser):
     profile_pic = models.ImageField(upload_to='media/profile_pic',blank=True, null=True)
 
 
+# Stores Staff by this model
 class Staff(models.Model):
     admin = models.OneToOneField(customUser, on_delete=models.CASCADE)
     department = models.CharField(max_length=50)
@@ -40,6 +41,7 @@ class Staff(models.Model):
         return self.admin.username
 
 
+# Stores Course by this view
 class Course(models.Model):
     subject = models.CharField(max_length=100)
     level = models.CharField(max_length=150)
@@ -57,6 +59,7 @@ class Course(models.Model):
         return '{}'.format(self.subject + " | " + self.level)
 
 
+# Stores Students by this model using also custom User model
 class Student(models.Model):
     admin = models.OneToOneField(customUser, on_delete=models.CASCADE)
     mobile = models.CharField(max_length=14)
@@ -74,6 +77,8 @@ class Student(models.Model):
     def __str__(self):
         return '{}'.format(self.admin.first_name + " " + self.admin.last_name)
 
+
+# Stores payments by this model, used separately, also connected to a view for adding payment for existing students
 class Payments(models.Model):
     first_name = models.CharField(max_length=40)
     last_name = models.CharField(max_length=40)
@@ -90,6 +95,8 @@ class Payments(models.Model):
     def __str__(self):
         return f"{self.first_name} {self.last_name}"
 
+
+# Stores a waiting list the exiting student fetching from Student model
 class ExistingStudent(models.Model):
     first_name = models.CharField(max_length=40, blank=True, null=True)
     last_name = models.CharField(max_length=40, blank=True, null=True)

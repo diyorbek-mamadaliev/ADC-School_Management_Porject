@@ -540,12 +540,18 @@ def VIEW_TEACHER(request):
 
 @login_required(login_url='/')
 def VIEW_STUDENTS(request, id):
+    now_month = datetime.now().month
     course = Course.objects.get(id=id)
     student = Student.objects.filter(course_id=id)
+    payments = Payments.objects.filter(group_id=id,
+                                       created_at__month=now_month,
+                                       created_at__year=datetime.now().year
+                                       )
     existing_students = ExistingStudent.objects.filter(course_id=id)
     context = {
         'course': course,
         'student': student,
+        'payments': payments,
         'existing_students': existing_students
     }
     return render(request, 'Hod/view_students.html', context)
