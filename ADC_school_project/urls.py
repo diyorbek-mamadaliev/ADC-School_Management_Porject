@@ -43,6 +43,7 @@ urlpatterns = [
     path('Hod/Payments/FeeExisting/<str:id>', Hod_Views.ADD_FEE_EXISTING, name="add_fee_existing"),
     path('Hod/Payments/History', Hod_Views.VIEW_PAYMENT_HISTORY, name="view_payment_history"),
     path('Hod/Payments/Preview', Hod_Views.PAYMENT_PREVIEW, name="payment_preview"),
+    path('download-csv/', Hod_Views.DOWNLOAD_CSV, name='download_csv'),
     # path('Hod/Payments/Add', Hod_Views.ADD_NEW_PAYMENT, name="add_name_payment"),
 
     path('Hod/Staff/Add', Hod_Views.ADD_STAFF, name="add_staff"),

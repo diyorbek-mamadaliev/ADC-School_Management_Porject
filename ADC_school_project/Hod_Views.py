@@ -12,6 +12,9 @@ from datetime import datetime, date
 from decimal import Decimal
 from django.db.models import Sum
 from django.shortcuts import get_object_or_404
+import csv
+from django.http import HttpResponse
+from app.models import Payments
 
 
 
@@ -868,3 +871,16 @@ def ADD_FEE_EXISTING(request, id):
             'existing': existing,
         }
     return render(request, 'Hod/add_fee_existing.html', context)
+
+
+def DOWNLOAD_CSV(request):
+    model_data = Payments.objects.all().values()
+
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename="model_data.csv"'
+
+    writer = csv.DictWriter(response, fieldnames=model_data[0].keys())
+    writer.writeheader()
+    writer.writerows(model_data)
+
+    return response
