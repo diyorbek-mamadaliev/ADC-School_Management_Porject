@@ -1,7 +1,7 @@
 from django.db.models.functions import Now
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
-from app.models import Course, customUser, Student, Staff, Payments, ExistingStudent
+from app.models import Course, customUser, Student, Staff, Payments, ExistingStudent, CorporateTax
 from django.contrib import messages
 from django.shortcuts import redirect
 from django.db.models import Max, Count, Q
@@ -468,7 +468,7 @@ def UPDATE_STAFF(request):
         department = request.POST.get('department')
         role = request.POST.get('role')
         fines = request.POST.get('fines')
-        bonus = request.POST.get('tax')
+        bonus = request.POST.get('bonus')
         tax = request.POST.get('tax')
         salary_type = request.POST.get('salary_type')
         salary_amount = request.POST.get('salary_amount')
@@ -653,7 +653,6 @@ def VIEW_PAYMENT_HISTORY(request):
 #
 
 
-
 def STAFF_SALARY(request):
     teachers = Staff.objects.filter(department='Teacher')
 
@@ -671,7 +670,7 @@ def STAFF_SALARY(request):
     # Calculate total fees across all teachers
     total_fees = sum([fee['total_fees'] for fee in fees])
 
-    # Calculate 39% of the total fees for each teacher and add it to the teacher_fees list
+    # Calculate commission, bonus, fines, teacher_bonus, and tax for each teacher based on their total fees
     teacher_fees = []
     for fee in fees:
         teacher = Staff.objects.get(admin__username=fee['teacher_id'])
@@ -679,7 +678,10 @@ def STAFF_SALARY(request):
         teacher_total_cash = fee['total_cash']
         teacher_total_plastic = fee['total_plastic']
         teacher_commission = Decimal('0.39') * teacher_total_fees
-        administrator_bonus = Decimal('0.01') * teacher_total_fees
+        administrator_bonus = Decimal('0.01') * teacher_commission  # Calculate bonus based on teacher_commission
+        teacher_fine = teacher.fines  # Get the fines for the teacher from the 'Staff' model's 'fines' column
+        teacher_bonus = teacher.bonus  # Get the teacher_bonus for the teacher from the 'Staff' model's 'bonus' column
+        teacher_tax = teacher.tax  # Get the tax for the teacher from the 'Staff' model's 'tax' column
         teacher_fees.append({
             'first_name': teacher.admin.first_name,
             'last_name': teacher.admin.last_name,
@@ -689,6 +691,9 @@ def STAFF_SALARY(request):
             'total_plastic': teacher_total_plastic,
             'commission': teacher_commission,
             'bonus': administrator_bonus,
+            'fines': teacher_fine,  # Include the fines in the dictionary
+            'teacher_bonus': teacher_bonus,  # Include the teacher_bonus in the dictionary
+            'tax': teacher_tax,  # Include the tax in the dictionary
         })
 
     context = {
@@ -697,6 +702,9 @@ def STAFF_SALARY(request):
     }
 
     return render(request, 'Hod/view_salary.html', context)
+
+
+
 
 
 def VIEW_WAITLIST(request):
@@ -884,3 +892,33 @@ def DOWNLOAD_CSV(request):
     writer.writerows(model_data)
 
     return response
+
+# def EDIT_CORPORATETAX(request, id):
+#     corporatetax = get_object_or_404(CorporateTax, id=id)
+#     context = {
+#         'corporatetax': corporatetax,
+#     }
+#     return render(request, 'Hod/edit_corporate_tax.html', context)
+#
+# @login_required(login_url='/')
+# def UPDATE_CORPORATETAX(request, id):
+#     corporatetax = get_object_or_404(CorporateTax, id=id)
+#     if request.method == "POST":
+#         corporatetax.bills = request.POST.get('bills')
+#         corporatetax.plastic = request.POST.get('plastic')
+#         corporatetax.avans = request.POST.get('avans')
+#         corporatetax.save()
+#         messages.success(request, "Corporate Tax information updated successfully.")
+#         return redirect('view_corporatetax')
+#     context = {
+#         'corporatetax': corporatetax,
+#     }
+#     return render(request, 'Hod/edit_corporate_tax.html', context)
+
+
+def VIEW_EXISTTAX(request):
+    corporatetax = CorporateTax.objects.all()
+    context = {
+        'corporatetax': corporatetax
+    }
+    return render(request, 'Hod/view_exist_tax.html', context)

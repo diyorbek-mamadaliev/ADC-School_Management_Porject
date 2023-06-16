@@ -13,6 +13,7 @@ admin.site.register(Student)
 admin.site.register(Staff)
 admin.site.register(Payments)
 admin.site.register(ExistingStudent)
+admin.site.register(CorporateTax)
 
 class ArchivedUserAdmin(admin.ModelAdmin):
     list_display = ('username', 'email', 'date_archived') # fields to display in the list

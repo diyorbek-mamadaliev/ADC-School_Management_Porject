@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-body">
+                    <form method="post" action="{% url 'update_corporatetax' corporatetax.id %}">
+                        {% csrf_token %}
+                        <div class="row">
+                            <div class="col-12">
+                                <h5 class="form-title"><span>Edit Corporate Tax</span></h5>
+                            </div>
+                            <div class="col-12 col-sm-6">
+                                <div class="form-group">
+                                    <label>Bills</label>
+                                    <input type="text" class="form-control" name="bills" value="{{ corporatetax.bills }}" required>
+                                </div>
+                            </div>
+                            <div class="col-12 col-sm-6">
+                                <div class="form-group">
+                                    <label>Plastic</label>
+                                    <input type="text" class="form-control" name="plastic" value="{{ corporatetax.plastic }}" required>
+                                </div>
+                            </div>
+                            <div class="col-12 col-sm-6">
+                                <div class="form-group">
+                                    <label>Avans</label>
+                                    <input type="text" class="form-control" name="avans" value="{{ corporatetax.avans }}" required>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <button type="submit" class="btn btn-primary">Update</button>
+                            </div>
+                            <br>
+                            <br>
+                            <div class="col-12">
+                                {% include 'includes/messages.html' %}
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

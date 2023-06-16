@@ -111,3 +111,11 @@ class ExistingStudent(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     def __str__(self):
         return f"{self.student_id}"
+
+class CorporateTax(models.Model):
+    bills = models.CharField(max_length=50, blank=True, null=True)
+    plastic = models.CharField(max_length=50, blank=True, null=True)
+    avans = models.CharField(max_length=50, blank=True, null=True)
+
+    def __str__(self):
+        return self.bills
