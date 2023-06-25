@@ -38,13 +38,10 @@ The Education CRM Django project provides a robust platform for school managemen
 1. **User Management**: The system provides different user roles such as administrators, teachers, and parents, each with specific privileges and access levels.
 2. **Student Information**: Easily manage student data, including personal details, attendance records, academic performance, and disciplinary actions.
 3. **Classroom Management**: Create and manage classes, assign teachers, and track student enrollment.
-4. **Grading System**: Record and calculate grades, generate progress reports, and provide insights into student performance.
-5. **Attendance Tracking**: Track and manage student attendance, generate reports, and identify patterns or issues.
-6. **Communication**: Enable communication between teachers, students, and parents through messaging features, announcements, and notifications.
-7. **Timetable Management**: Create and manage school timetables, including class schedules, teacher assignments, and room allocations.
-8. **Library Management**: Manage the school library, including book cataloging, check-in/check-out system, and overdue reminders.
-9. **Finance and Fee Management**: Track fee payments, generate invoices, and manage financial records.
-10. **Events and Activities**: Plan, schedule, and manage school events, extracurricular activities, and important dates.
+4. **Communication**: Enable communication between teachers, students, and parents through messaging features, announcements, and notifications.
+5. **Timetable Management**: Create and manage school timetables, including class schedules, teacher assignments, and room allocations.
+6. **Finance and Fee Management**: Track fee payments, generate invoices, and manage financial records.
+7. **Events and Activities**: Plan, schedule, and manage school events, extracurricular activities, and important dates.
 
 ## Installation
 
