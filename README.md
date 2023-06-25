@@ -12,7 +12,7 @@
 
 ###
 
-<h1 align="center">Student Management CRM System of Andijan Development Sysetem</h1>
+<h1 align="center">Student Management CRM System of Andijan Development Centre</h1>
 
 ###
 
