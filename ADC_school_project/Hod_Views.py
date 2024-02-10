@@ -5,13 +5,10 @@ from app.models import Course, customUser, Student, Staff, Payments, ExistingStu
 from django.contrib import messages
 from django.shortcuts import redirect
 from django.db.models import Max, Count, Q
-from django.utils import timezone
-from django.db.models import Sum
 import datetime
-from datetime import datetime, date
+from datetime import datetime
 from decimal import Decimal
 from django.db.models import Sum
-from django.shortcuts import get_object_or_404
 import csv
 from django.http import HttpResponse
 from app.models import Payments

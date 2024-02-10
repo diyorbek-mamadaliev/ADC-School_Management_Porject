@@ -1,5 +1,36 @@
 {% load static %}
+<style>
 
+.space {
+        display: inline-block;
+        width: 10px; /* Adjust the width as per your desired spacing */
+    }
+
+
+    .submenu a {
+        color: white;
+    }
+
+    .submenu ul li a {
+        color: black;
+    }
+     .submenu ul li:hover a {
+        color: red; /* Change color on hover */
+    }
+   .space {
+  display: inline-block;
+  width: 10px; /* Adjust the width as per your desired spacing */
+}
+.submenu {
+        border: 1px solid grey;
+        border-radius: 10px;
+        transition: transform 0.3s ease;
+        color: black;
+        background: white;
+    }
+
+
+</style>
 <div class="sidebar toggled" id="sidebar">
             {% if user.is_authenticated and 'admin' in user.email|lower %}
                 <div class="sidebar-inner slimscroll">
@@ -77,6 +108,17 @@
                            <li><a href="{% url 'archive_student' %}">Archived Students</a></li>
                            <li><a href="{% url 'archive_staff' %}">Archived Employees</a></li>
                            <li><a href="{% url 'archive_course' %}">Archived Groups</a></li>
+                        </ul>
+                     </li>
+                      <li class="menu-title">
+                        <span>Library</span>
+                     </li>
+                      <li class="submenu">
+                        <a style="color: orange" href="#" href="#"><i class="fas fa-book"></i> <span> Library</span> <span class="menu-arrow"></span></a>
+                        <ul>
+                           <li><a href="{% url 'view_waiting' %}">Existing Books</a></li>
+                           <li><a href="{% url 'view_student' %}">Borrowed Books</a></li>
+                            <li><a href="{% url 'view_student' %}">Expired Students</a></li>
                         </ul>
                      </li>
                       <li class="menu-title">
