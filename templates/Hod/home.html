@@ -51,88 +51,142 @@
 
                <div class="row">
                   <div class="col-md-12 col-lg-6">
-                     <div class="card flex-fill">
-                        <div style="background-color: lightskyblue;" class="card-header">
-                           <h5 class="card-title">Student Shares Per Subject</h5>
-                        </div>
-                        <div class="card-body">
-                           <div class="table-responsive">
-                              <table class="table table-hover table-center">
-                                 <thead class="thead-light">
-                                    <tr>
-                                        <th>Subjects</th>
-                                       <th>Total Students</th>
-                                    </tr>
-                                 </thead>
-                                 <tbody>
-                                    {% for course in course_with_student_counts %}
-                                        <tr>
-                                          <td>{{ course.subject }}</td>
-                                          <td>{{ course.student_count }}</td>
-                                        </tr>
-                                      {% endfor %}
-                                 </tbody>
-                              </table>
-                           </div>
-                        </div>
-                     </div>
-                  </div>
+        <div class="card flex-fill">
+            <div style="background-color: black;" class="card-header">
+                <h5 class="card-title" style="color: white;">Students Per Subject</h5>
+            </div>
+            <div class="card-body">
+                <canvas id="studentSharesChart" width="400" height="400"></canvas>
+            </div>
+        </div>
+    </div>
 
                <div class="col-md-12 col-lg-6">
-                     <div class="card flex-fill">
-                        <div style="background-color: lightpink" class="card-header">
-                           <h5>Waiting Shares Per Subject</h5>
-                        </div>
-                        <div class="card-body">
-                           <div class="table-responsive">
-                              <table class="table table-hover table-center">
-                                 <thead class="thead-light">
-                                    <tr>
-                                        <th>Subjects</th>
-                                       <th>Total Students</th>
-                                    </tr>
-                                 </thead>
-                                 <tbody>
-                                    {% for student in course_with_waiting_counts %}
-                                        <tr>
-                                          <td>{{ student.preferred_course }}</td>
-                                          <td>{{ student.waiting_count }}</td>
-                                        </tr>
-                                      {% endfor %}
-                                 </tbody>
-                              </table>
-                           </div>
-                        </div>
-                     </div>
-                  </div>
-
-               <div class="col-md-12 col-lg-12">
-                     <div class="card flex-fill">
-                        <div style="background-color: lightgreen" class="card-header">
-                           <h5>Waiting Shares Per Existing Students</h5>
-                        </div>
-                        <div class="card-body">
-                           <div class="table-responsive">
-                              <table class="table table-hover table-center">
-                                 <thead class="thead-light">
-                                    <tr>
-                                        <th>Subjects</th>
-                                       <th>Total Students</th>
-                                    </tr>
-                                 </thead>
-                                 <tbody>
-                                    {% for student in course_with_existing_counts %}
-                                        <tr>
-                                          <td>{{ student.preferred_course }}</td>
-                                          <td>{{ student.existing_waiting }}</td>
-                                        </tr>
-                                      {% endfor %}
-                                 </tbody>
-                              </table>
-                           </div>
-                        </div>
-                     </div>
-                  </div>
+        <div class="card flex-fill">
+            <div style="background-color: black;" class="card-header">
+                <h5 class="card-title" style="color: white;">Waiting Students Per Subject</h5>
+            </div>
+            <div class="card-body">
+                <canvas id="sharesChart" width="400" height="400"></canvas>
+            </div>
+        </div>
+    </div>
 
                </div>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    // Get the data from Django template
+    var subjects = [];
+    var studentCounts = [];
+
+    {% for course in course_with_student_counts %}
+        subjects.push("{{ course.subject }}");
+        studentCounts.push({{ course.student_count }});
+    {% endfor %}
+
+    // Create the pie chart
+    var ctx = document.getElementById('studentSharesChart').getContext('2d');
+    var studentSharesChart = new Chart(ctx, {
+        type: 'pie',
+        data: {
+            labels: subjects,
+            datasets: [{
+                label: 'Student Shares Per Subject',
+                data: studentCounts,
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                    'rgba(255, 159, 64, 0.2)'
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)',
+                    'rgba(255, 159, 64, 1)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+
+    var subjectsWaiting = {};
+    var subjectsExisting = {};
+
+    // Extract data for waiting counts per subject
+    {% for student in course_with_waiting_counts %}
+        var subject = "{{ student.preferred_course }}";
+        subjectsWaiting[subject] = {{ student.waiting_count }};
+    {% endfor %}
+
+    // Extract data for existing counts per subject
+    {% for student in course_with_existing_counts %}
+        var subject = "{{ student.preferred_course }}";
+        subjectsExisting[subject] = {{ student.existing_waiting }};
+    {% endfor %}
+
+    // Combine subjects from both sections
+    var allSubjects = [...new Set([...Object.keys(subjectsWaiting), ...Object.keys(subjectsExisting)])];
+
+    // Combine waitingCounts and existingCounts for all subjects
+    var totalCounts = allSubjects.map(function(subject) {
+        var waitingCount = subjectsWaiting[subject] || 0;
+        var existingCount = subjectsExisting[subject] || 0;
+        return waitingCount + existingCount;
+    });
+
+    // Create the pie chart
+    var ctx = document.getElementById('sharesChart').getContext('2d');
+    var sharesChart = new Chart(ctx, {
+        type: 'pie',
+        data: {
+            labels: allSubjects,
+            datasets: [{
+                label: 'Shares Per Subject',
+                data: totalCounts,
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                    'rgba(255, 159, 64, 0.2)'
+                    // Add more colors if needed
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)',
+                    'rgba(255, 159, 64, 1)'
+                    // Add more colors if needed
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+</script>
 {% endblock %}

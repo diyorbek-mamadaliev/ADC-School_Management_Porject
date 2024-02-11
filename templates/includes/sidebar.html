@@ -28,6 +28,13 @@
         color: black;
         background: white;
     }
+.menumenu {
+        border: 1px solid white;
+        border-radius: 10px;
+        transition: transform 0.3s ease;
+        color: white;
+        background: black;
+    }
 
 
 </style>
@@ -39,12 +46,12 @@
                      <li class="menu-title">
                         <span>Main</span>
                      </li>
-                     <li>
-                        <a href="{% url 'hod_home' %}"><i class="fas fa-holly-berry"></i> <span>Analytics</span></a>
+                     <li class="menumenu">
+                        <a style="color: white" href="{% url 'hod_home' %}"><i class="fas fa-chart-line"></i> <span style="color: white;">Analytics</span></a>
                      </li>
-                      <li>
-                        <a style="color: black" href="http://127.0.0.1:8000/admin/"><i class="fas fa-user-edit"></i> <span>Super-Admin Panel</span></a>
-                     </li>
+<!--                      <li>-->
+<!--                        <a style="color: black" href="http://127.0.0.1:8000/admin/"><i class="fas fa-user-edit"></i> <span>Super-Admin Panel</span></a>-->
+<!--                     </li>-->
                      <li class="submenu">
                         <a href="#"><i class="fas fa-user-graduate"></i> <span> Students</span> <span class="menu-arrow"></span></a>
                         <ul>
