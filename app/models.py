@@ -26,7 +26,7 @@ class Staff(models.Model):
     bonus = models.CharField(max_length=30, blank=True, null=True)
     tax = models.CharField(max_length=30, blank=True, null=True)
     salary_type = models.CharField(max_length=30)
-    branch = models.CharField(max_length=30, blank=True, null=True)
+    branch = models.ForeignKey('Branch', on_delete=models.SET_NULL, blank=True, null=True)
     work_format = models.CharField(max_length=30)
     salary_amount = models.CharField(max_length=30)
     birth_date = models.DateTimeField(blank=True, null=True)
@@ -38,14 +38,14 @@ class Staff(models.Model):
     updated_date = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return self.admin.username
+        return f"Name: {self.admin.first_name} {self.admin.last_name} | Role: {self.role} | Branch: {self.branch}"
 
 
 # Stores Course by this view
 class Course(models.Model):
     subject = models.CharField(max_length=100)
     level = models.CharField(max_length=150)
-    branch = models.CharField(max_length=30, blank=True, null=True)
+    branch = models.ForeignKey('Branch', on_delete=models.SET_NULL, blank=True, null=True)
     username = models.CharField(max_length=50, blank=True, null=True)
     teacher_id = models.ForeignKey(Staff, on_delete=models.DO_NOTHING, blank=True, null=True)
     status = models.CharField(max_length=30, blank=True, null=True)
@@ -80,6 +80,7 @@ class Student(models.Model):
     course_id = models.ForeignKey(Course, on_delete=models.DO_NOTHING, blank=True, null=True)
     birth_date = models.DateTimeField()
     status = models.CharField(max_length=20, blank=True, null=True)
+    branch = models.ForeignKey('Branch', on_delete=models.SET_NULL, blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now_add=True)
     def __str__(self):
@@ -101,7 +102,7 @@ class Payments(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"{self.first_name} {self.last_name}"
+        return f"{self.first_name} | {self.last_name} | {self.group_id} | {self.payment_type} | {self.student_id} | {self.teacher_id} | {self.author}"
 
 
 # Stores a waiting list the exiting student fetching from Student model
@@ -126,4 +127,13 @@ class CorporateTax(models.Model):
     avans = models.CharField(max_length=50, blank=True, null=True)
 
     def __str__(self):
-        return self.bills
+        return f"{self.bills} | {self.plastic} | {self.avans}"
+
+class Branch(models.Model):
+    profile_pic = models.ImageField(upload_to='media/profile_pic', blank=True, null=True)
+    name = models.CharField(max_length=100)
+    address = models.CharField(max_length=255)
+    phone_number = models.CharField(max_length=20)
+
+    def __str__(self):
+        return f"{self.name} | {self.address} | {self.phone_number}"

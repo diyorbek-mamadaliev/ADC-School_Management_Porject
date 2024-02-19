@@ -46,12 +46,20 @@
                      <li class="menu-title">
                         <span>Main</span>
                      </li>
-                     <li class="menumenu">
-                        <a style="color: white" href="{% url 'hod_home' %}"><i class="fas fa-chart-line"></i> <span style="color: white;">Analytics</span></a>
+
+                      <li class="submenu">
+                        <a href="#"><i class="fas fa-building"></i> <span>Manage Shool</span> <span class="menu-arrow"></span></a>
+                        <ul>
+                            <li>
+                        <a href="{% url 'hod_home' %}"><span>Analytics</span></a>
                      </li>
-<!--                      <li>-->
-<!--                        <a style="color: black" href="http://127.0.0.1:8000/admin/"><i class="fas fa-user-edit"></i> <span>Super-Admin Panel</span></a>-->
-<!--                     </li>-->
+                           <li><a href="{% url 'view_branch' %}">Manage Branches</a></li>
+                            <li>
+                        <a style="color: black" href="http://127.0.0.1:8000/admin/"><span>Super-Admin Panel</span></a>
+                     </li>
+                        </ul>
+                     </li>
+
                      <li class="submenu">
                         <a href="#"><i class="fas fa-user-graduate"></i> <span> Students</span> <span class="menu-arrow"></span></a>
                         <ul>
@@ -71,13 +79,6 @@
                            <li><a href="{% url 'view_staff' %}">Employee List</a></li>
                             <li><a href="{% url 'view_teacher' %}">Teachers</a></li>
                             <li><a href="{% url 'add_staff' %}">Add Employee</a></li>
-                        </ul>
-                     </li>
-                     <li class="submenu">
-                        <a href="#"><i class="fas fa-building"></i> <span> Branches</span> <span class="menu-arrow"></span></a>
-                        <ul>
-                           <li><a href="add-department.html">Filial 1</a></li>
-                           <li><a href="edit-department.html">Filial 2</a></li>
                         </ul>
                      </li>
 

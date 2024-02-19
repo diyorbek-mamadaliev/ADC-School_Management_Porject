@@ -1,3 +1,22 @@
+<style>
+         .card {
+        border-radius: 15px;
+        transition: transform 0.3s ease-in-out;
+        overflow: hidden;
+    }
+
+    .card:hover {
+        transform: scale(1.05);
+    }
+
+    .card .card-img-top {
+        width: 100%;
+        height: 200px; /* Adjust height as needed */
+        object-fit: cover;
+        border-bottom: 1px solid #dee2e6; /* Add border to separate image from content */
+    }
+    </style>
+
 {% extends 'base.html' %}
 {% block content %}
 
@@ -10,7 +29,7 @@
                </div>
                <div class="row">
                   <div class="col-xl-3 col-sm-6 col-12 d-flex">
-                      <div class="card flex-fill insta sm-box" style="background-color: #618264; color: white; border: 1px solid #618264;">
+                      <div class="card flex-fill insta sm-box" style="background: linear-gradient(90deg, hsla(333, 100%, 53%, 1) 0%, hsla(33, 94%, 57%, 1) 100%);">
                     <h6>{{ student_count }}</h6>
                     <p>Students<i class="fas fa-user-graduate" style="color: white; float: right; height: 60%;"></i></p>
                 </div>
@@ -30,21 +49,21 @@
 {#                     </div>#}
                   </div>
                   <div class="col-xl-3 col-sm-6 col-12 d-flex">
-                      <div class="card flex-fill insta sm-box" style="background-color: #79AC78; color: white; border: 1px solid #618264;">
+                      <div class="card flex-fill insta sm-box" style="background: linear-gradient(90deg, hsla(333, 100%, 53%, 1) 0%, hsla(33, 94%, 57%, 1) 100%);">
                     <h6>{{ groups }}</h6>
                     <p>Groups<i class="fas fa-book-reader" style="color: white; float: right; height: 60%;"></i></p>
                 </div>
                   </div>
                   <div class="col-xl-3 col-sm-6 col-12 d-flex">
-                      <div class="card flex-fill insta sm-box" style="background-color: #B0D9B1; color: #618264; border: 1px solid #618264;">
-                    <h6 style="color: #618264">{{ teachers }}</h6>
-                    <p style="color: #618264">Teachers<i class="fas fa-chalkboard-teacher" style="color: #618264; float: right; height: 60%;"></i></p>
+                      <div class="card flex-fill insta sm-box" style="background: linear-gradient(90deg, hsla(333, 100%, 53%, 1) 0%, hsla(33, 94%, 57%, 1) 100%);">
+                    <h6 style="color: white">{{ teachers }}</h6>
+                    <p>Teachers<i class="fas fa-chalkboard-teacher" style="color: white; float: right; height: 60%;"></i></p>
                 </div>
                   </div>
                   <div class="col-xl-3 col-sm-6 col-12 d-flex">
-                     <div class="card flex-fill insta sm-box" style="background-color: #D0E7D2; color: #618264; border: 1px solid #618264;">
-                    <h6 style="color: #618264">{{ payments }}</h6>
-                    <p style="color: #618264">Payments<i class="fas fa-file-invoice-dollar" style="float: right; height: 60%;"></i></p>
+                     <div class="card flex-fill insta sm-box" style="background: linear-gradient(90deg, hsla(333, 100%, 53%, 1) 0%, hsla(33, 94%, 57%, 1) 100%);">
+                    <h6 style="color: white">{{ payments }}</h6>
+                    <p>Payments<i class="fas fa-file-invoice-dollar" style="float: right; height: 60%;"></i></p>
                 </div>
                   </div>
                </div>
@@ -52,7 +71,7 @@
                <div class="row">
                   <div class="col-md-12 col-lg-6">
         <div class="card flex-fill">
-            <div style="background-color: #618264;" class="card-header">
+            <div style="background: linear-gradient(45deg, hsla(0, 100%, 27%, 1) 0%, hsla(333, 100%, 53%, 1) 100%); color: white; border: 1px solid #8B0000;" class="card-header">
                 <h5 class="card-title" style="color: white;">Students Per Subject</h5>
             </div>
             <div class="card-body">
@@ -63,7 +82,7 @@
 
                <div class="col-md-12 col-lg-6">
         <div class="card flex-fill">
-            <div style="background-color: #79AC78;" class="card-header">
+            <div style="background: linear-gradient(45deg, hsla(0, 100%, 27%, 1) 0%, hsla(333, 100%, 53%, 1) 100%); color: white; border: 1px solid #8B0000;" class="card-header">
                 <h5 class="card-title" style="color: white;">Waiting Students Per Subject</h5>
             </div>
             <div class="card-body">

@@ -1,7 +1,7 @@
 from django.db.models.functions import Now
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
-from app.models import Course, customUser, Student, Staff, Payments, ExistingStudent, CorporateTax
+from app.models import Course, customUser, Student, Staff, Payments, ExistingStudent, CorporateTax, Branch
 from django.contrib import messages
 from django.shortcuts import redirect
 from django.db.models import Max, Count, Q
@@ -293,7 +293,8 @@ def ADD_COURSE(request):
         course_status = request.POST.get('status')
         days = request.POST.get('days')
         hours = request.POST.get('hours')
-        branch = request.POST.get('branch')
+        branch_name = request.POST.get('branch_name')
+        branch = Branch.objects.get(name=branch_name)
         teacher_id = request.POST.get('teacher_id')
         teacher = Staff.objects.get(id=teacher_id)
 
@@ -305,13 +306,14 @@ def ADD_COURSE(request):
             teacher_id=teacher,
             days=days,
             hours=hours,
-            branch=branch
+            branch_name=branch
         )
         course.save()
         messages.success(request, "Yangi Gruppa Qo'shildi")
         return redirect('add_course')
     staff = Staff.objects.all()
-    context = {'staff': staff}
+    branch = Branch.objects.all()
+    context = {'staff': staff, 'branch' : branch}
 
     return render(request, 'Hod/add_course.html', context)
 
@@ -402,7 +404,8 @@ def ADD_STAFF(request):
         username = f"{first_name.lower()}_{next_username_number}"
         department = request.POST.get('department')
         role = request.POST.get('role')
-        branch = request.POST.get('branch')
+        branch_name = request.POST.get('branch_name')
+        branch = Branch.objects.get(name=branch_name)
         salary_type = request.POST.get('salary_type')
         status = request.POST.get('status')
         salary_amount = request.POST.get('salary_amount')
@@ -426,7 +429,7 @@ def ADD_STAFF(request):
                       salary_type=salary_type,
                       salary_amount=salary_amount,
                       work_format=work_format,
-                      branch=branch,
+                      branch_name=branch,
                       status=status,
                       birth_date=birth_date,
                       address=address,
@@ -435,8 +438,10 @@ def ADD_STAFF(request):
         staff.save()
         messages.success(request, "Hodim Kiritildi")
         return redirect('add_staff')
+    branch = Branch.objects.all()
+    context = {'branch': branch}
 
-    return render(request, 'Hod/add_staff.html')
+    return render(request, 'Hod/add_staff.html', context)
 
 @login_required(login_url='/')
 def VIEW_STAFF(request):
@@ -919,3 +924,27 @@ def VIEW_EXISTTAX(request):
         'corporatetax': corporatetax
     }
     return render(request, 'Hod/view_exist_tax.html', context)
+
+
+def VIEW_BRANCH(request):
+    branch = Branch.objects.all()
+    branch_count = Branch.objects.all().count()
+    teacher_count = Staff.objects.filter(department='Teacher').count()
+    managers_count = Staff.objects.exclude(department='Teacher').count()
+
+    context = {
+        'branch': branch,
+        'branches_count': branch_count,
+        'teachers_count': teacher_count,
+        'managing_staff': managers_count
+    }
+    return render(request, 'Hod/view_branches.html', context)
+
+
+def VIEW_BRANCHES(request, id):
+    branch = Branch.objects.filter(id=id)
+
+    context = {
+        'branch': branch,
+    }
+    return render(request, 'Hod/view_branch.html', context)

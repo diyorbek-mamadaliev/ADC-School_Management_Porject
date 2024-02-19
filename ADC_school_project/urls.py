@@ -20,6 +20,8 @@ urlpatterns = [
     #This is HOD home panel Url
     path('Hod/Home', Hod_Views.HOME, name='hod_home'),
     path('Hod/Welcome', Hod_Views.WELCOME, name="welcome"),
+    path('Hod/Branch/', Hod_Views.VIEW_BRANCH, name="view_branch"),
+    path('Hod/Branches/<str:id>', Hod_Views.VIEW_BRANCHES, name="view_branches"),
     path('Hod/Student/Add', Hod_Views.ADD_STUDENT, name="add_student"),
     path('Hod/Student/View', Hod_Views.VIEW_STUDENT, name="view_student"),
     path('Hod/Student/Edit/<str:id>', Hod_Views.EDIT_STUDENT, name="edit_student"),

@@ -1,0 +1,55 @@
+<style>
+    .card {
+        border-radius: 15px;
+        transition: transform 0.3s ease-in-out;
+        overflow: hidden;
+    }
+
+    .card:hover {
+        transform: scale(1.05);
+    }
+
+    .card .card-img-top {
+        width: 100%;
+        height: 200px; /* Adjust height as needed */
+        object-fit: cover;
+        border-bottom: 1px solid #dee2e6; /* Add border to separate image from content */
+    }
+    </style>
+
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="page-header">
+                  <div class="row">
+                     <div class="col-sm-12">
+                        <h3 class="page-title">Manage all Branches</h3>
+                        <ul class="breadcrumb">
+                           <li class="breadcrumb-item active">Dashboard</li>
+                        </ul>
+                     </div>
+                  </div>
+               </div>
+
+<div class="row">
+    <!-- First Card -->
+    {% for branches in branch %}
+<div class="col-xl-3 col-sm-6 col-12 d-flex">
+    <div class="card" style="width: 18rem; border-radius: 15px; overflow: hidden; transition: transform 0.3s ease-in-out;">
+        <img src="{{ branches.profile_pic.url }}" class="card-img-top" alt="{{ branch.name }}" style="width: 100%; height: 200px; object-fit: cover; border-bottom: 1px solid #dee2e6;">
+        <div class="card-body">
+            <h5 class="card-title">{{ branches.name }}</h5>
+            <p class="card-text">{{ branches.address }} <br> {{ branches.phone_number }}</p>
+            <a href="{% url 'view_branches' branches.id %}" class="btn btn-primary go-somewhere" style="width: 100%; background-color: #8b0000; color: #ffffff; border: 1px solid #8b0000; transition: all 0.3s ease;" onmouseover="this.style.backgroundColor='#ffffff'; this.style.color='#8b0000'; this.style.borderColor='#8b0000';" onmouseout="this.style.backgroundColor='#8b0000'; this.style.color='#ffffff'; this.style.borderColor='#8b0000';">Open</a>
+        </div>
+    </div>
+</div>
+{% endfor %}
+
+
+
+    <!-- Repeat the above code block for the remaining cards -->
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,153 @@
+<style>
+    .card {
+        border-radius: 15px;
+        transition: transform 0.3s ease-in-out;
+        overflow: hidden;
+    }
+
+    .card:hover {
+        transform: scale(1.05);
+    }
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+        }
+        .container {
+            margin-top: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+        }
+        .time {
+            font-weight: bold;
+            text-align: right;
+            padding: 10px;
+
+        }
+        .slot {
+            border: 0.5px solid #dee2e6;
+            padding: 10px;
+            min-height: 100px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .slot.reserved {
+
+            border-radius: 8px;
+            background: linear-gradient(45deg, hsla(0, 100%, 27%, 1) 0%, hsla(333, 100%, 53%, 1) 100%); color: white; border: 1px solid #8B0000; /* Light green background */
+            color: white;
+        }
+        .slot.reserved:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+        }
+        .slot.reserved:not(:first-child) {
+            border-left: 1px solid #dee2e6;
+        }
+        .slot-header {
+            background-color: #fff;
+            color: black;
+            font-weight: bold;
+            text-align: center;
+            padding: 10px;
+        }
+        .slot-header-container {
+            overflow-x: auto; /* Horizontal scrollbar */
+        }
+    </style>
+
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="page-header">
+                  <div class="row">
+                     <div class="col-sm-12">
+                         {% for i in branch %}
+                        <h3 class="page-title">{{ i.name }} Page</h3>
+                         {% endfor %}
+                        <ul class="breadcrumb">
+                           <li class="breadcrumb-item active">Dashboard</li>
+                        </ul>
+                     </div>
+                  </div>
+               </div>
+               <div class="row">
+                  <div class="col-xl-3 col-sm-6 col-12 d-flex">
+                      <div class="card flex-fill insta sm-box" style="background: linear-gradient(90deg, hsla(333, 100%, 53%, 1) 0%, hsla(33, 94%, 57%, 1) 100%);">
+                    <h6>276</h6>
+                    <p>Students<i class="fas fa-building" style="color: white; float: right; height: 60%;"></i></p>
+                </div>
+
+
+                  </div>
+                  <div class="col-xl-3 col-sm-6 col-12 d-flex">
+                      <div class="card flex-fill insta sm-box" style="background: linear-gradient(90deg, hsla(333, 100%, 53%, 1) 0%, hsla(33, 94%, 57%, 1) 100%);">
+                    <h6>14</h6>
+                    <p>Groups<i class="fas fa-book-reader" style="color: white; float: right; height: 60%;"></i></p>
+                </div>
+                  </div>
+                  <div class="col-xl-3 col-sm-6 col-12 d-flex">
+                      <div class="card flex-fill insta sm-box" style="background: linear-gradient(90deg, hsla(333, 100%, 53%, 1) 0%, hsla(33, 94%, 57%, 1) 100%);">
+                    <h6 style="color: white">11</h6>
+                    <p>Staff<i class="fas fa-chalkboard-teacher" style="color: white; float: right; height: 60%;"></i></p>
+                </div>
+                  </div>
+                  <div class="col-xl-3 col-sm-6 col-12 d-flex">
+                     <div class="card flex-fill insta sm-box" style="background: linear-gradient(90deg, hsla(333, 100%, 53%, 1) 0%, hsla(33, 94%, 57%, 1) 100%);">
+                    <h6 style="color: white">9</h6>
+                    <p>Rooms<i class="fas fa-file-invoice-dollar" style="float: right; height: 60%;"></i></p>
+                </div>
+                  </div>
+               </div>
+<div class="row">
+    <!-- First Card -->
+<div class="container" style="max-width: 100%; width: 1300px;">
+        <h1 class="text-center mb-4">Today's Schedule</h1>
+        <div class="row">
+            <div class="col time"></div>
+            <div class="col slot-header">Teacher 1</div>
+            <div class="col slot-header">Teacher 2</div>
+            <div class="col slot-header">Teacher 3</div>
+            <div class="col slot-header">Teacher 4</div>
+            <div class="col slot-header">Teacher 5</div>
+            <div class="col slot-header">Teacher 6</div>
+            <div class="col slot-header">Teacher 7</div>
+            <div class="col slot-header">Teacher 8</div>
+            <div class="col slot-header">Teacher 9</div>
+            <div class="col slot-header">Teacher X</div>
+        </div>
+        <div class="row">
+            <div class="col time">9:00 AM</div>
+            <div class="col slot reserved" onclick="alert('⏳ Maths Course - 9:00 AM \n👨‍🏫 Teacher - Nodirjon Isakov')">Maths</div>
+            <div class="col slot"></div>
+            <div class="col slot"></div>
+            <div class="col slot"></div>
+            <div class="col slot"></div>
+            <div class="col slot"></div>
+            <div class="col slot"></div>
+            <div class="col slot"></div>
+            <div class="col slot"></div>
+            <div class="col slot"></div>
+        </div>
+        <div class="row">
+            <div class="col time">10:00 AM</div>
+            <div class="col slot"></div>
+            <div class="col slot"></div>
+            <div class="col slot"></div>
+            <div class="col slot reserved" onclick="alert('⏳ IELTS - 9:00 AM \n👨‍🏫 Teacher - Zebo Azizovna')">IELTS</div>
+            <div class="col slot"></div>
+            <div class="col slot"></div>
+            <div class="col slot"></div>
+            <div class="col slot"></div>
+            <div class="col slot"></div>
+            <div class="col slot"></div>
+        </div>
+        <!-- Add more rows and columns as needed -->
+    </div>
+
+    <!-- Repeat the above code block for the remaining cards -->
+
+</div>
+
+{% endblock %}
