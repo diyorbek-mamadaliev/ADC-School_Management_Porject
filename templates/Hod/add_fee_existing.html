@@ -47,7 +47,7 @@
                         <div class="col-12 col-sm-6">
                            <div class="form-group">
                               <label>Teacher</label>
-                              <input type="text" style="color: gray" name="teacher_id" class="form-control" value="{% for i in existing %}{{ i.course_id.teacher_id }}{% endfor %}" readonly>
+                              <input type="text" style="color: gray" name="teacher_id" class="form-control" value="{% for i in existing %}{{ i.course_id.teacher_id.admin.first_name }} {{ i.course_id.teacher_id.admin.last_name }}{% endfor %}" readonly>
                            </div>
                         </div>
                      <div class="col-12 col-sm-6">

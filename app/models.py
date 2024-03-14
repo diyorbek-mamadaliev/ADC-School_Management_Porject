@@ -115,6 +115,14 @@ class ExistingStudent(models.Model):
     preferred_level = models.CharField(max_length=30)
     preferred_days = models.CharField(max_length=30)
     preferred_time = models.CharField(max_length=30)
+    last_payment = models.ForeignKey(
+        'Payments',
+        on_delete=models.SET_NULL,
+        blank=True,
+        null=True,
+        related_name='last_payment_for_existing_student',
+        help_text='Last payment made by the student',
+    )
     course_id = models.ForeignKey(Course, on_delete=models.DO_NOTHING, blank=True, null=True)
     status = models.CharField(max_length=20, blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -134,6 +142,7 @@ class Branch(models.Model):
     name = models.CharField(max_length=100)
     address = models.CharField(max_length=255)
     phone_number = models.CharField(max_length=20)
+    rooms = models.CharField(max_length=20, blank=True, null=True)
 
     def __str__(self):
         return f"{self.name} | {self.address} | {self.phone_number}"

@@ -12,6 +12,7 @@ from django.db.models import Sum
 import csv
 from django.http import HttpResponse
 from app.models import Payments
+from django.db.models import Max, F
 
 
 
@@ -306,7 +307,7 @@ def ADD_COURSE(request):
             teacher_id=teacher,
             days=days,
             hours=hours,
-            branch_name=branch
+            branch=branch
         )
         course.save()
         messages.success(request, "Yangi Gruppa Qo'shildi")
@@ -368,7 +369,8 @@ def UPDATE_COURSE(request):
     if request.method == "POST":
         subject = request.POST.get('subject')
         level = request.POST.get('level')
-        branch = request.POST.get('branch')
+        branch_name = request.POST.get('branch')
+        branch_instance = Branch.objects.get(name=branch_name)
         course_id = request.POST.get('course_id')
         days = request.POST.get('days')
         hours = request.POST.get('hours')
@@ -381,7 +383,7 @@ def UPDATE_COURSE(request):
 
         course.subject = subject
         course.level = level
-        course.branch = branch
+        course.branch = branch_instance
         course.days = days
         course.hours = hours
         course.status = course_status
@@ -429,7 +431,7 @@ def ADD_STAFF(request):
                       salary_type=salary_type,
                       salary_amount=salary_amount,
                       work_format=work_format,
-                      branch_name=branch,
+                      branch=branch,
                       status=status,
                       birth_date=birth_date,
                       address=address,
@@ -454,9 +456,11 @@ def VIEW_STAFF(request):
 @login_required(login_url='/')
 def EDIT_STAFF(request, id):
     staff = Staff.objects.get(id=id)
+    branches = Branch.objects.all()
 
     context = {
         'staff': staff,
+        'branches': branches
     }
     return render(request, 'Hod/edit_staff.html', context)
 
@@ -475,7 +479,8 @@ def UPDATE_STAFF(request):
         salary_type = request.POST.get('salary_type')
         salary_amount = request.POST.get('salary_amount')
         work_format = request.POST.get('work_format')
-        branch = request.POST.get('branch')
+        branch_name = request.POST.get('branch_name')
+        branch = Branch.objects.get(id=branch_name)
         status = request.POST.get('status')
         birth_date = request.POST.get('birth_date')
         address = request.POST.get('address')
@@ -503,7 +508,7 @@ def UPDATE_STAFF(request):
         staff.status = status
         staff.bonus = bonus
         staff.tax = tax
-        staff.branch = branch
+        staff.branch_name = branch
         staff.address = address
         staff.mobile = mobile
         staff.mobiletwo = mobiletwo
@@ -511,6 +516,7 @@ def UPDATE_STAFF(request):
         staff.save()
         messages.success(request, "Updated Successfully")
         return redirect('view_staff')
+
 
     return render(request, 'Hod/edit_staff.html')
 
@@ -548,11 +554,9 @@ def VIEW_STUDENTS(request, id):
     now_month = datetime.now().month
     course = Course.objects.get(id=id)
     student = Student.objects.filter(course_id=id)
-    payments = Payments.objects.filter(group_id=id,
-                                       created_at__month=now_month,
-                                       created_at__year=datetime.now().year
-                                       )
     existing_students = ExistingStudent.objects.filter(course_id=id)
+    payments = Payments.objects.filter(group_id=id, created_at__month=now_month, created_at__year=datetime.now().year).values('student_id').annotate(last_payment_date=Max('created_at')).order_by()
+
     context = {
         'course': course,
         'student': student,
@@ -564,7 +568,9 @@ def VIEW_STUDENTS(request, id):
 @login_required(login_url='/')
 def ADD_FEE(request, id):
     student = Student.objects.filter(id=id)
+    student_get = Student.objects.get(id=id)
     course = Course.objects.all()
+
     if request.method == 'POST':
         first_name = request.POST.get('first_name')
         last_name = request.POST.get('last_name')
@@ -575,6 +581,7 @@ def ADD_FEE(request, id):
         comment = request.POST.get('comment')
         fee_amount = request.POST.get('fee_amount')
         author = request.user
+
         payment = Payments(
             first_name=first_name,
             last_name=last_name,
@@ -587,12 +594,18 @@ def ADD_FEE(request, id):
             author=author
         )
         payment.save()
+
+        # Update the last_payment field of the associated Student instance
+        student_get.last_payment = payment
+        student_get.save()
+
         return redirect('payment_preview')
-    else:
-        context = {
-            'course': course,
-            'student': student,
-        }
+
+    context = {
+        'course': course,
+        'student': student,
+    }
+
     return render(request, 'Hod/add_fee.html', context)
 
     # if request.method == 'POST':
@@ -654,7 +667,7 @@ def VIEW_PAYMENT_HISTORY(request):
 #         return redirect('Hod/payment_history')
 #
 
-
+@login_required(login_url='/')
 def STAFF_SALARY(request):
     teachers = Staff.objects.filter(department='Teacher')
 
@@ -942,9 +955,49 @@ def VIEW_BRANCH(request):
 
 
 def VIEW_BRANCHES(request, id):
-    branch = Branch.objects.filter(id=id)
+    branch = Branch.objects.get(id=id)
+    group_count = Course.objects.filter(branch__name=branch.name).distinct().count()
+    teacher_count = Staff.objects.filter(department='Teacher').count()
+    staff_list = Staff.objects.filter(branch__name=branch.name).exclude(department='Teacher').distinct().count()
+    days_to_check = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
+    tts = Course.objects.filter(days="Tuesday, Thursday, Saturday", branch__name=branch.name)
+    mwf = Course.objects.filter(days="Monday, Wednesday, Friday", branch__name=branch.name)
+    courses = Course.objects.exclude(subject="Not_Selected_1").all()
+    student_count = Student.objects.filter(course_id__branch=branch).distinct().count()
+    today_date = datetime.now().strftime("%A")
+    staff = Staff.objects.filter(department="Teacher")
 
     context = {
+        'group_count': group_count,
+        'student_count': student_count,
+        'teacher_count': teacher_count,
+        'staff_count': staff_list,
         'branch': branch,
+        'today_date': today_date,
+        'courses': courses,
+        'staff': staff,
+        'tts': tts,
+        'mwf': mwf
     }
     return render(request, 'Hod/view_branch.html', context)
+
+
+def ADD_BRANCH(request):
+    if request.method == 'POST':
+        name = request.POST.get('name')
+        address = request.POST.get('address')
+        phone_number = request.POST.get('phone_number')
+        rooms = request.POST.get('rooms')
+        profile_pic = request.FILES.get('photo')  # Get the uploaded photo
+        branch = Branch(
+            name=name,
+            address=address,
+            phone_number=phone_number,
+            rooms=rooms,
+            profile_pic=profile_pic,  # Assign the photo to the branch instance
+        )
+        branch.save()
+        return redirect('view_branch')
+    else:
+        return render(request, 'Hod/add_branch.html')
+

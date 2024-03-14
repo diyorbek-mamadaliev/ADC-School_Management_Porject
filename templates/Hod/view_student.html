@@ -40,10 +40,10 @@
         <a href="{% url 'edit_student' i.id %}">{{ i.admin.first_name }}&nbsp;{{ i.admin.last_name }}</a>
       </td>
       <td style="color: lightslategray; font-size: 14px">{{ i.admin.username }}</td>
-      <td style="color: lightslategray; font-size: 14px">{{ i.course_id.branch }}</td>
+      <td style="color: lightslategray; font-size: 14px">{{ i.course_id.branch.name }}</td>
       <td style="color: lightslategray; font-size: 14px">{{ i.course_id.username }}</td>
         <td style="color: lightslategray; font-size: 14px">{{ i.course_id.subject }} {{ i.course_id.level }}</td>
-      <td style="color: lightslategray; font-size: 14px">{{ i.course_id.teacher_id }}</td>
+      <td style="color: lightslategray; font-size: 14px">{{ i.course_id.teacher_id.admin.first_name }}</td>
       <td style="font-size: 14px">{{ i.mobile }}</td>
       <td style="color: lightslategray; font-size: 14px">{{ i.created_at.date }}</td>
       <td class="text-right">
@@ -70,10 +70,10 @@
         <a href="{% url 'edit_existing' j.id %}">{{ j.first_name }} {{ j.last_name }}</a>
       </td>
       <td style="color: lightslategray; font-size: 14px">{{ j.student_id }}</td>
-      <td style="color: lightslategray; font-size: 14px">{{ j.course_id.branch }}</td>
+      <td style="color: lightslategray; font-size: 14px">{{ j.course_id.branch.name }}</td>
       <td style="color: lightslategray; font-size: 14px">{{ j.course_id.username }}</td>
         <td style="color: lightslategray; font-size: 14px">{{ j.course_id.subject }} {{ j.course_id.level }}</td>
-      <td style="color: lightslategray; font-size: 14px">{{ j.course_id.teacher_id }}</td>
+      <td style="color: lightslategray; font-size: 14px">{{ j.course_id.teacher_id.admin.first_name }}</td>
       <td style="font-size: 14px">{{ j.mobile }}</td>
       <td style="color: lightslategray; font-size: 14px">{{ j.created_at.date }}</td>
       <td class="text-right">

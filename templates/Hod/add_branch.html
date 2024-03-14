@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-body">
+                    <form method="post" action="{% url 'add_branch' %}" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="row">
+        <div class="col-12">
+            <h5 class="form-title"><span>Add New Branch</span></h5>
+        </div>
+        <div class="col-12 col-sm-6">
+            <div class="form-group">
+                <label>Name</label>
+                <input type="text" class="form-control" name="name" required>
+            </div>
+        </div>
+        <div class="col-12 col-sm-6">
+            <div class="form-group">
+                <label>Address</label>
+                <textarea class="form-control" name="address" required></textarea>
+            </div>
+        </div>
+        <div class="col-12 col-sm-6">
+            <div class="form-group">
+                <label>Phone Number</label>
+                <input type="text" class="form-control" name="phone_number" required>
+            </div>
+        </div>
+        <div class="col-12 col-sm-6">
+            <div class="form-group">
+                <label>Rooms</label>
+                <input type="text" class="form-control" name="rooms" required>
+            </div>
+        </div>
+        <div class="col-12 col-sm-6">
+            <div class="form-group">
+                <label>Photo</label>
+                <input type="file" class="form-control" name="photo">
+            </div>
+        </div>
+        <div class="col-12">
+            <button type="submit" class="btn btn-primary" style="width: 100%">Add Branch</button>
+        </div>
+        <br>
+        <br>
+        <div class="col-12">
+            {% include 'includes/messages.html' %}
+        </div>
+    </div>
+</form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

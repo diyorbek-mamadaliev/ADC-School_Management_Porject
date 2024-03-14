@@ -54,18 +54,46 @@
                                     </div>
                                  </div>
                               <div class="col-12 col-sm-6">
-                                    <div class="form-group">
-                                       <label>Days</label>
-                                       <select class="form-control" name="days">
-                                          <option value="MWF">MWF</option>
-                                            <option value="TTS">TTS</option>
-                                       </select>
-                                    </div>
-                                 </div>
+    <div class="form-group">
+        <label>Days</label>
+        <div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox" id="monday" name="days" value="Monday">
+                <label class="form-check-label" for="monday">Monday</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox" id="tuesday" name="days" value="Tuesday">
+                <label class="form-check-label" for="tuesday">Tuesday</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox" id="wednesday" name="days" value="Wednesday">
+                <label class="form-check-label" for="wednesday">Wednesday</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox" id="thursday" name="days" value="Thursday">
+                <label class="form-check-label" for="thursday">Thursday</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox" id="friday" name="days" value="Friday">
+                <label class="form-check-label" for="friday">Friday</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox" id="saturday" name="days" value="Saturday">
+                <label class="form-check-label" for="saturday">Saturday</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox" id="sunday" name="days" value="Sunday">
+                <label class="form-check-label" for="sunday">Sunday</label>
+            </div>
+            <input type="hidden" id="selectedDays" name="days">
+        </div>
+    </div>
+</div>
+
                               <div class="col-12 col-sm-6">
                                     <div class="form-group">
                                        <label>Hours</label>
-                                       <select class="form-control" name="days">
+                                       <select class="form-control" name="hours">
                                           <option value="9:00">9:00</option>
                                             <option value="10:30">10:30</option>
                                             <option value="14:00">14:00</option>
@@ -124,4 +152,22 @@
                      </div>
                   </div>
                </div>
+
+<script>
+        // JavaScript to concatenate selected days into a comma-separated string
+        const checkboxes = document.querySelectorAll('input[name="days"]');
+        const selectedDaysInput = document.getElementById('selectedDays');
+
+        checkboxes.forEach((checkbox) => {
+            checkbox.addEventListener('change', function () {
+                let selectedDays = [];
+                checkboxes.forEach((checkbox) => {
+                    if (checkbox.checked) {
+                        selectedDays.push(checkbox.value);
+                    }
+                });
+                selectedDaysInput.value = selectedDays.join(', ');
+            });
+        });
+    </script>
 {% endblock %}
