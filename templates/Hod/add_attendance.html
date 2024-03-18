@@ -1,0 +1,171 @@
+{% extends 'base.html' %}
+{% block content %}
+<style>
+  .status-circle {
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: 5px;
+  }
+
+  .form-check-input[type="checkbox"] {
+        width: 25px;
+        height: 25px;
+        border-radius: 5px;
+    }
+
+  .paid-circle {
+    background-color: green;
+  }
+
+  .debt-circle {
+    background-color: red;
+  }
+</style>
+
+<div class="content container-fluid">
+  <div class="page-header">
+    <div class="row align-items-center">
+      <div class="col">
+        <h3 class="page-title">{{ course.subject }} {{ course.level }}</h3>
+        <br>
+        <h6 style="color: gray">{{ course.subject }} - {{ course.level }} ({{ course.username }})</h6>
+        <br>
+        <h6 style="color: black">Branch: {{ course.branch }}</h6>
+        <hr>
+        <h5>Teacher: </h5>
+        <h5 style="color: gray">{{ course.teacher_id.admin.first_name }} {{ course.teacher_id.admin.last_name }}</h5>
+      </div>
+      {% include 'includes/messages.html' %}
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-12">
+      <div class="card card-table">
+        <div class="card-body">
+          <form method="POST">
+            {% csrf_token %}
+            <div class="row">
+              <div class="col-12 col-sm-6">
+                <div class="form-group">
+                  <label for="lesson_topic">Lesson Topic:</label>
+                  <input type="text" class="form-control" id="lesson_topic" name="lesson_topic" required>
+                </div>
+              </div>
+              <div class="col-12 col-sm-6">
+                <div class="form-group">
+                  <label for="group_id">Group ID:</label>
+                  <input type="text" class="form-control" id="group_id" name="group_id" value="{{ course.username }}" required>
+                  <input type="text" class="form-control" name="group_id" value="{{ course.username }}" hidden>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-12 col-sm-6">
+                <div class="form-group">
+                  <label for="group_subject">Group Subject:</label>
+                  <input type="text" class="form-control" id="group_subject" name="group_subject" value="{{ course.subject }}" required>
+                  <input type="text" class="form-control" name="group_subject" value="{{ course.subject }}" hidden>
+                </div>
+              </div>
+              <div class="col-12 col-sm-6">
+                <div class="form-group">
+                  <label for="group_level">Group Level:</label>
+                  <input type="text" class="form-control" id="group_level" name="group_level" value="{{ course.level }}" required>
+                  <input type="text" class="form-control" name="group_level" value="{{ course.level }}" hidden>
+                </div>
+              </div>
+            </div>
+            <input type="hidden" name="teacher_id" value="{{ course.teacher_id.admin.username }}">
+            <input type="hidden" name="teacher_first_name" value="{{ course.teacher_id.admin.first_name }}">
+            <input type="hidden" name="teacher_last_name" value="{{ course.teacher_id.admin.last_name }}">
+            <!-- Your existing HTML code -->
+
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover">
+                    <thead>
+                        <tr>
+                            <th>Select</th>
+                            <th>First Name</th>
+                            <th>Last Name</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for student in student_list %}
+                        <tr>
+                            <td>
+                                <div class="form-check">
+                                    <input class="form-check-input student-checkbox" type="checkbox" id="{{ student.admin.username }}" name="students" value="{{ student.admin.username }}">
+                                    <label class="form-check-label" for="{{ student.admin.username }}"></label>
+                                </div>
+                            </td>
+                            <td>{{ student.admin.first_name }}</td>
+                            <td>{{ student.admin.last_name }}</td>
+                        </tr>
+                        {% endfor %}
+              {% for i in existing_students %}
+                  <tr>
+                            <td>
+                                <div class="form-check">
+                                    <input class="form-check-input student-checkbox" type="checkbox" id="{{ i.student_id }}" name="students" value="{{ i.student_id }}">
+                                    <label class="form-check-label" for="{{ i.student_id }}"></label>
+                                </div>
+                            </td>
+                            <td>{{ i.first_name }}</td>
+                            <td>{{ i.last_name }}</td>
+                        </tr>
+                {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Your existing HTML code -->
+
+            <button type="submit" class="btn btn-primary mt-3" style="width: 100%">Submit</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Get the form
+    const form = document.querySelector('form');
+
+    // Add an event listener for form submission
+    form.addEventListener('submit', function(event) {
+        // Check if the hidden input field already exists
+        const studentsInput = document.querySelector('input[name="students"]');
+        if (!studentsInput) {
+            // Get all checked checkboxes
+            const checkboxes = document.querySelectorAll('.student-checkbox:checked');
+
+            // Initialize an empty array to store checked student usernames
+            const checkedStudents = [];
+
+            // Iterate through checked checkboxes and push their values (student usernames) to the array
+            checkboxes.forEach(function(checkbox) {
+                checkedStudents.push(checkbox.value);
+            });
+
+            // Join the array elements with comma to create a comma-separated string
+            const studentsString = checkedStudents.join(',');
+
+            // Create a hidden input field to hold the comma-separated string
+            const studentsInput = document.createElement('input');
+            studentsInput.type = 'hidden';
+            studentsInput.name = 'students';
+            studentsInput.value = studentsString;
+
+            // Append the hidden input field to the form
+            form.appendChild(studentsInput);
+        }
+    });
+});
+</script>
+
+{% endblock %}

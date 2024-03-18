@@ -1,3 +1,5 @@
+from datetime import timezone
+
 from django.db import models
 from django.conf import settings
 from django.contrib.auth.models import AbstractUser
@@ -146,3 +148,18 @@ class Branch(models.Model):
 
     def __str__(self):
         return f"{self.name} | {self.address} | {self.phone_number}"
+
+
+class Attendance(models.Model):
+    students = models.CharField(max_length=500, blank=True, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    group_id = models.CharField(max_length=50)
+    group_subject = models.CharField(max_length=100)
+    group_level = models.CharField(max_length=150)
+    teacher_id = models.CharField(max_length=50)
+    teacher_first_name = models.CharField(max_length=40)
+    teacher_last_name = models.CharField(max_length=40)
+    lesson_topic = models.CharField(max_length=100)
+
+    def __str__(self):
+        return f"{self.group_subject} {self.teacher_first_name} {self.created_at}"

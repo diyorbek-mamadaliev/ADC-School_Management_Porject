@@ -1,7 +1,9 @@
+import ast
+
 from django.db.models.functions import Now
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
-from app.models import Course, customUser, Student, Staff, Payments, ExistingStudent, CorporateTax, Branch
+from app.models import Course, customUser, Student, Staff, Payments, ExistingStudent, CorporateTax, Branch, Attendance
 from django.contrib import messages
 from django.shortcuts import redirect
 from django.db.models import Max, Count, Q
@@ -310,7 +312,7 @@ def ADD_COURSE(request):
             branch=branch
         )
         course.save()
-        messages.success(request, "Yangi Gruppa Qo'shildi")
+        messages.success(request, "New Group Added Successfully!")
         return redirect('add_course')
     staff = Staff.objects.all()
     branch = Branch.objects.all()
@@ -438,7 +440,7 @@ def ADD_STAFF(request):
                       mobile=mobile,
                       mobiletwo=mobiletwo)
         staff.save()
-        messages.success(request, "Hodim Kiritildi")
+        messages.success(request, "New Staff Created Successfully!")
         return redirect('add_staff')
     branch = Branch.objects.all()
     context = {'branch': branch}
@@ -514,7 +516,7 @@ def UPDATE_STAFF(request):
         staff.mobiletwo = mobiletwo
 
         staff.save()
-        messages.success(request, "Updated Successfully")
+        messages.success(request, "Updated Successfully!")
         return redirect('view_staff')
 
 
@@ -1001,3 +1003,64 @@ def ADD_BRANCH(request):
     else:
         return render(request, 'Hod/add_branch.html')
 
+
+def ADD_ATTENDANCE(request, id):
+
+    course = Course.objects.get(id=id)
+    student_list = Student.objects.filter(course_id__username=course.username)
+    existing_students = ExistingStudent.objects.filter(course_id=id)
+
+
+    if request.method == 'POST':
+        students = request.POST.getlist('students')
+        group_id = request.POST.get('group_id')
+        group_subject = request.POST.get('group_subject')
+        group_level = request.POST.get('group_level')
+        teacher_id = request.POST.get('teacher_id')
+        teacher_first_name = request.POST.get('teacher_first_name')
+        teacher_last_name = request.POST.get('teacher_last_name')
+        lesson_topic = request.POST.get('lesson_topic')
+
+        # Create an Attendance instance
+        attendance = Attendance(
+            students=students,
+            group_id=group_id,
+            group_subject=group_subject,
+            group_level=group_level,
+            teacher_id=teacher_id,
+            teacher_first_name=teacher_first_name,
+            teacher_last_name=teacher_last_name,
+            lesson_topic=lesson_topic
+        )
+        attendance.save()
+
+        return redirect('view_attendance', id=id)
+
+    context = {'student_list': student_list, 'course': course, 'existing_students': existing_students}
+    return render(request, 'Hod/add_attendance.html', context)
+
+
+def VIEW_ATTENDANCE(request, id):
+    course = Course.objects.get(id=id)
+    attendance = Attendance.objects.filter(group_id=course.username)
+
+
+    context = {
+        'attendance': attendance,
+        'course': course,
+    }
+    return render(request, 'Hod/view_attendance.html', context)
+
+
+def VIEW_ATTENDANCE_DAY(request, id):
+    attendance = Attendance.objects.get(id=id)
+    if attendance.students:
+        students_list = ast.literal_eval(attendance.students)
+    else:
+        students_list = []
+
+    context = {
+        'attendance': attendance,
+        'student_list': students_list
+    }
+    return render(request, 'Hod/view_attendance_day.html', context)

@@ -5,12 +5,12 @@
                <div class="page-header">
                   <div class="row align-items-center">
                      <div class="col">
+                         <div class="col-auto text-right float-right ml-auto">
+                        <a href="{% url 'add_student' %}" class="btn btn-outline-primary mr-2"><i class="fas fa-plus"></i> Add New Student</a>
+                     </div>
                         <h3 class="page-title">Students</h3>
                      </div>
                       {% include 'includes/messages.html' %}
-                     <div class="col-auto text-right float-right ml-auto">
-                        <a href="{% url 'add_student' %}" class="btn btn-primary"><i class="fas fa-plus"></i></a>
-                     </div>
                   </div>
                </div>
                <div class="row">
@@ -29,8 +29,8 @@
         <th style="color: darkred">Teacher</th>
       <th style="color: darkred">Mobile</th>
       <th style="color: darkred">Date</th>
-        <th style="color: darkred">Payment</th>
-        <th style="color: darkred">Add to Course</th>
+        <th style="color: darkred"></th>
+        <th style="color: darkred"></th>
     </tr>
   </thead>
   <tbody>

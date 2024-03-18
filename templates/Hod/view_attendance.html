@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+{% block content %}
+<style>
+  .status-circle {
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: 5px;
+  }
+
+  .paid-circle {
+    background-color: green;
+  }
+
+  .debt-circle {
+    background-color: red;
+  }
+</style>
+
+
+    <div class="content container-fluid">
+  <div class="page-header">
+    <div class="row align-items-center">
+      <div class="col">
+          <div class="col-auto text-right float-right ml-auto">
+                        <a href="{% url 'add_attendance' course.id %}" class="btn btn-outline-primary mr-2"><i class="fas fa-check"></i> Create New Attendance</a>
+                     </div>
+        <h3 class="page-title">{{ course.subject }} {{ course.level }}</a></h3>
+        <br>
+        <h6 style="color: gray">{{course.subject}} - {{course.level}} ({{ course.username }})</h6>
+          <br>
+        <h6 style="color: black">Branch: {{ course.branch }}</h6>
+        <hr>
+        <h5>Teacher: </h5>
+        <h5 style="color: gray">{{ course.teacher_id.admin.first_name }} {{ course.teacher_id.admin.last_name }}</h5>
+      </div>
+      {% include 'includes/messages.html' %}
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="card card-table">
+        <div class="card-body">
+          <div class="table-responsive table-bordered table-hover">
+            <table class="table" style="table-layout: fixed;">
+              <thead>
+                <tr>
+                  <th style="color: darkred; width: 30%;">Lesson Topic</th>
+                  <th style="color: darkred; width: 20%;">Day</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for i in attendance %}
+                  <tr>
+                    <td>
+                      <a href="{% url 'view_attendance_day' i.id %}">{{ i.lesson_topic }}</a>
+                    </td>
+                    <td>{{ i.created_at }}</td>
+
+                  </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+{% endblock %}
