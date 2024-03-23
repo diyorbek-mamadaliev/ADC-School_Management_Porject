@@ -16,6 +16,7 @@ admin.site.register(ExistingStudent)
 admin.site.register(CorporateTax)
 admin.site.register(Branch)
 admin.site.register(Attendance)
+admin.site.register(Book)
 
 class ArchivedUserAdmin(admin.ModelAdmin):
     list_display = ('username', 'email', 'date_archived') # fields to display in the list

@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card">
+            <div class="card-body">
+                <form method="post" action="{% url 'update_book' %}" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="col-12">
+                            <h5 class="form-title"><span>Edit Book Information</span></h5>
+                        </div>
+                        {% for book in books %}
+                        <div class="col-12 col-sm-6">
+                            <div class="form-group">
+                                <label>Book Name</label>
+                                <input type="text" style="color: gray" class="form-control" name="book_name" value="{{ book.book_name }}">
+                                <input type="hidden" name="book_id" value="{{ book.id }}">
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-6">
+                            <div class="form-group">
+                                <label>Author</label>
+                                <input type="text" style="color: gray" class="form-control" name="author" value="{{ book.author }}">
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-6">
+                            <div class="form-group">
+                                <label>Published Date</label>
+                                <input type="text" style="color: gray" class="form-control" name="published_date" value="{{ book.published_date }}">
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-6">
+                            <div class="form-group">
+                                <label>Genre</label>
+                                <input type="text" style="color: gray" class="form-control" name="genre" value="{{ book.genre }}">
+                            </div>
+                        </div>
+                        {% endfor %}
+                        <div class="col-12 col-sm-6">
+                                    <div class="form-group">
+                                       <label>Status</label>
+                                       <select class="form-control" name="given_status">
+                                          <option>Given</option>
+                                          <option>Received</option>
+                                       </select>
+                                    </div>
+                                 </div>
+                        <div class="col-12 col-sm-6">
+                                    <div class="form-group">
+                                       <label>Member</label>
+                                       <select class="form-control" name="given_member_id">
+                                           {% for i in members %}
+                                                <option value="{{ i.member_id }}">{{ i.first_name }} {{ i.last_name }} ({{ i.member_id }})</option>
+                                           {% endfor %}
+                                       </select>
+                                    </div>
+                                 </div>
+                        <div class="col-12 col-sm-6">
+                                    <div class="form-group">
+                                       <label>Due Date</label>
+                                       <div>
+                                          <input type="date" class="form-control" name="due_date" required>
+                                       </div>
+                                    </div>
+                                 </div>
+                        <div class="col-12">
+                            <button type="submit" class="btn btn-primary" style="width: 100%">Update</button>
+                        </div>
+                        {% include 'includes/messages.html' %}
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -46,11 +46,16 @@
               <thead>
                 <tr>
                   <th style="color: darkred; width: 30%;">Names</th>
+                  <th style="color: darkred; width: 30%;">ID</th>
                 </tr>
               </thead>
               <tbody>
                 {% for i in student_list %}
                   <tr>
+                    <td>
+                      {% for j in students %} {% if i == j.admin.username %} {{ j.admin.first_name }} {{ j.admin.last_name }} {% endif %} {% endfor %}
+                    </td>
+
                     <td>
                       {{ i }}
                     </td>

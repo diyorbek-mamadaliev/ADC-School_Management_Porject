@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% block content %}
+
+    <div class="content container-fluid">
+               <div class="page-header">
+                  <div class="row align-items-center">
+                     <div class="col">
+
+
+                        <h3 class="page-title">ADC Library: Given Books</h3>
+                     </div>
+                      {% include 'includes/messages.html' %}
+                  </div>
+               </div>
+               <div class="row">
+                  <div class="col-sm-12">
+                     <div class="card card-table">
+                        <div class="card-body">
+                           <div class="table-responsive table-hover">
+                              <table class="data-table table" style="table-layout: auto;">
+  <thead class="thead-light">
+    <tr>
+      <th style="color: darkred">Genre</th>
+      <th style="color: darkred">Title</th>
+        <th style="color: darkred">Author</th>
+      <th style="color: darkred">Published</th>
+        <th style="color: darkred">Given</th>
+        <th style="color: darkred">Due Date</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for book in books %}
+    <tr>
+      <td style="font-size: 14px">
+        {{ book.genre }}
+      </td>
+      <td style="font-size: 14px"><a href="{% url 'register_book' book.id %}">{{ book.book_name }}</a></td>
+      <td style="color: lightslategray; font-size: 14px">{{ book.author }}</td>
+      <td style="color: lightslategray; font-size: 14px">{{ book.published_date }}</td>
+        <td style="color: lightslategray; font-size: 14px">{{ book.given_member_id }}</td>
+        <td style="color: lightslategray; font-size: 14px">{{ book.due_date }}</td>
+    </tr>
+{% endfor %}
+
+  </tbody>
+</table>
+
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+{% endblock %}

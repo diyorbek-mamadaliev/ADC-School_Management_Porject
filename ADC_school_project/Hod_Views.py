@@ -3,7 +3,8 @@ import ast
 from django.db.models.functions import Now
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
-from app.models import Course, customUser, Student, Staff, Payments, ExistingStudent, CorporateTax, Branch, Attendance
+from app.models import Course, customUser, Student, Staff, Payments, ExistingStudent, CorporateTax, Branch, Attendance, \
+    Book, LibraryMembers
 from django.contrib import messages
 from django.shortcuts import redirect
 from django.db.models import Max, Count, Q
@@ -713,6 +714,8 @@ def STAFF_SALARY(request):
             'tax': teacher_tax,  # Include the tax in the dictionary
         })
 
+    print(teacher_fees)
+
     context = {
         'teacher_fees': teacher_fees,
         'total_fees': total_fees,
@@ -1054,6 +1057,7 @@ def VIEW_ATTENDANCE(request, id):
 
 def VIEW_ATTENDANCE_DAY(request, id):
     attendance = Attendance.objects.get(id=id)
+    students = Student.objects.all()
     if attendance.students:
         students_list = ast.literal_eval(attendance.students)
     else:
@@ -1061,6 +1065,151 @@ def VIEW_ATTENDANCE_DAY(request, id):
 
     context = {
         'attendance': attendance,
-        'student_list': students_list
+        'student_list': students_list,
+        'students': students
     }
-    return render(request, 'Hod/view_attendance_day.html', context)
+    return render(request, 'Hod/register_book.html', context)
+
+
+def VIEW_BOOKS(request):
+    books = Book.objects.all().exclude(given_status="Given")
+
+    context = {
+        'books': books
+    }
+    return render(request, 'Hod/view_books.html', context)
+
+
+def ADD_BOOK(request):
+    if request.method == 'POST':
+        # Retrieve data from the form
+        book_name = request.POST.get('book_name')
+        author = request.POST.get('author')
+        published_date = request.POST.get('published_date')
+        genre = request.POST.get('genre')
+
+        # Create a new Book instance
+        book = Book.objects.create(
+            book_name=book_name,
+            author=author,
+            published_date=published_date,
+            genre=genre
+        )
+        messages.success(request,'New Book Added Successfully!')
+
+        # Redirect to a success page or wherever appropriate
+        return redirect('view_books')  # Replace 'success_page' with the URL name of your success page
+
+    return render(request, 'Hod/add_book.html')
+
+
+def ADD_NEW_MEMBER(request):
+    if request.method == 'POST':
+
+        # Retrieve member data
+        first_name = request.POST.get('first_name')
+        last_name = request.POST.get('last_name')
+        member_id = request.POST.get('member_id')
+        passport_series = request.POST.get('passport_series')
+        # Assuming you're also uploading an image for passport_scan
+        passport_scan = request.FILES.get('passport_scan')
+
+        # Create a new LibraryMember instance
+        member = LibraryMembers.objects.create(
+            first_name=first_name,
+            last_name=last_name,
+            member_id=member_id,
+            passport_series=passport_series,
+            passport_scan=passport_scan,
+        )
+
+        messages.success(request, 'New Library Member Added Successfully!')
+
+        # Redirect to a success page or wherever appropriate
+        return redirect('view_books')  # Replace 'view_books' with the URL name of your book view
+
+    return render(request, 'Hod/add_new_member.html')
+
+
+def VIEW_LIBRARY_MEMBERS(request):
+    members = LibraryMembers.objects.all()
+
+    context = {
+        'members': members
+    }
+    return render(request, 'Hod/view_library_members.html', context)
+
+def REGISTER_BOOK(request, id):
+    books = Book.objects.filter(id=id)
+    members = LibraryMembers.objects.all()
+    context = {
+        'books': books,
+        'members': members,
+    }
+    return render(request, 'Hod/register_book.html', context)
+
+# def REGISTER_BOOK(request):
+#     if request.method == "POST":
+#         book_name = request.POST.get('book_name')
+#         author = request.POST.get('author')
+#         published_date = request.POST.get('published_date')
+#         genre = request.POST.get('genre')
+#         given_status = request.POST.get('given_status')
+#         given_member_id = request.POST.get('given_member_id')
+#         given_book_name = request.POST.get('given_book_name')
+#         existing_id = request.POST.get('id')
+#
+#         try:
+#             existing_book = Book.objects.get(id=existing_id)
+#             existing_book.book_name = book_name
+#             existing_book.author = author
+#             existing_book.published_date = published_date
+#             existing_book.genre = genre
+#             existing_book.given_status = given_status
+#             existing_book.given_member_id = given_member_id
+#             existing_book.given_book_name = given_book_name
+#             existing_book.save()
+#             messages.success(request, "Book Registered Successfully!")
+#         except Book.DoesNotExist:
+#             messages.error(request, "Book with given ID does not exist")
+
+    #     return redirect('view_books')  # Redirect to a view where you display all books
+    #
+    # return render(request, 'Hod/register_book.html')
+def UPDATE_BOOK(request):
+    if request.method == "POST":
+        book_name = request.POST.get('book_name')
+        author = request.POST.get('author')
+        published_date = request.POST.get('published_date')
+        genre = request.POST.get('genre')
+        given_status = request.POST.get('given_status')
+        given_member_id = request.POST.get('given_member_id')
+        due_date = request.POST.get('due_date')
+        book_id = request.POST.get('book_id')  # Assuming there's an input field with name 'book_id' in your form
+
+        book = Book.objects.get(id=book_id)
+        book.book_name = book_name
+        book.author = author
+        book.published_date = published_date
+        book.genre = genre
+        book.due_date = due_date
+        book.given_status = given_status
+        book.given_member_id = given_member_id
+
+        book.save()
+
+        messages.success(request, "Book updated successfully")
+        return redirect('view_books')  # Redirect to view_books or any appropriate URL after updating
+
+    return render(request, 'Hod/register_book.html')
+
+
+def VIEW_GIVEN_BOOKS(request):
+    books = Book.objects.filter(given_status="Given")
+    members = LibraryMembers.objects.all()
+
+    context = {
+        'books': books,
+        'members': members
+    }
+    return render(request, 'Hod/view_given_books.html', context)

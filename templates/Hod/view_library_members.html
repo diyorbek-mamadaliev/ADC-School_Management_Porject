@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+{% block content %}
+
+    <div class="content container-fluid">
+               <div class="page-header">
+                  <div class="row align-items-center">
+                     <div class="col">
+                         <div class="col-auto text-right float-right ml-auto">
+                        <a href="{% url 'add_new_member' %}" class="btn btn-outline-primary mr-2"><i class="fas fa-plus"></i> Add New Member</a>
+                     </div>
+                         <div class="col-auto text-right float-right ml-auto">
+                        <a href="{% url 'view_books' %}" class="btn btn-outline-primary mr-2"><i class="fas fa-book"></i> Library Books</a>
+                     </div>
+                        <h3 class="page-title">ADC Library Members</h3>
+                     </div>
+                      {% include 'includes/messages.html' %}
+                  </div>
+               </div>
+               <div class="row">
+                  <div class="col-sm-12">
+                     <div class="card card-table">
+                        <div class="card-body">
+                           <div class="table-responsive table-hover">
+                              <table class="data-table table" style="table-layout: auto;">
+  <thead class="thead-light">
+    <tr>
+      <th style="color: darkred">Name</th>
+      <th style="color: darkred">Member ID</th>
+        <th style="color: darkred">Joined</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for member in members %}
+    <tr>
+      <td style="font-size: 14px">
+        {{ member.first_name }} {{ member.last_name }}
+      </td>
+      <td style="font-size: 14px">{{ member.member_id }}</td>
+        <td style="font-size: 14px">{{ member.created_at }}</td>
+    </tr>
+{% endfor %}
+
+{% for j in existing %}
+    <tr>
+      <td style="font-size: 14px">
+        <a href="{% url 'edit_existing' j.id %}">{{ j.first_name }} {{ j.last_name }}</a>
+      </td>
+      <td style="color: lightslategray; font-size: 14px">{{ j.student_id }}</td>
+      <td style="color: lightslategray; font-size: 14px">{{ j.course_id.branch.name }}</td>
+      <td style="color: lightslategray; font-size: 14px">{{ j.course_id.username }}</td>
+        <td style="color: lightslategray; font-size: 14px">{{ j.course_id.subject }} {{ j.course_id.level }}</td>
+      <td style="color: lightslategray; font-size: 14px">{{ j.course_id.teacher_id.admin.first_name }}</td>
+      <td style="font-size: 14px">{{ j.mobile }}</td>
+      <td style="color: lightslategray; font-size: 14px">{{ j.created_at.date }}</td>
+      <td class="text-right">
+        <div class="actions">
+
+        <a href="{% url 'add_fee_existing' j.id %}" class="btn btn-sm bg-success-light mr-2">
+            <i class="fas fa-money-bill"></i>
+          </a>
+        </div>
+      </td>
+      <td class="text-right">
+        <div class="actions">
+          <a href="#" class="btn btn-sm btn-dark mr-2">
+            <i class="fas fa-plus"></i>
+            to waitlist
+          </a>
+        </div>
+      </td>
+    </tr>
+{% endfor %}
+
+  </tbody>
+</table>
+
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+{% endblock %}

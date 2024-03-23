@@ -163,3 +163,27 @@ class Attendance(models.Model):
 
     def __str__(self):
         return f"{self.group_subject} {self.teacher_first_name} {self.created_at}"
+
+class Book(models.Model):
+    book_name = models.CharField(max_length=255)
+    author = models.CharField(max_length=255)
+    published_date = models.CharField(max_length=50)
+    genre = models.CharField(max_length=100)
+    given_status = models.CharField(max_length=50, blank=True, null=True)
+    given_member_id = models.CharField(max_length=100, blank=True, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    due_date = models.DateField(blank=True, null=True)
+
+    def __str__(self):
+        return self.book_name
+
+class LibraryMembers(models.Model):
+    first_name = models.CharField(max_length=255)
+    last_name = models.CharField(max_length=255)
+    member_id = models.CharField(max_length=255)
+    passport_series = models.CharField(max_length=20)
+    passport_scan = models.ImageField(upload_to='passport_scans/')
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.first_name} {self.last_name}"
