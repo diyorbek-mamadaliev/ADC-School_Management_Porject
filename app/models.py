@@ -70,14 +70,6 @@ class Student(models.Model):
     preferred_level = models.CharField(max_length=30, blank=True, null=True)
     preferred_days = models.CharField(max_length=30, blank=True, null=True)
     preferred_time = models.CharField(max_length=30, blank=True, null=True)
-    last_payment = models.ForeignKey(
-        'Payments',
-        on_delete=models.SET_NULL,
-        blank=True,
-        null=True,
-        related_name='last_payment_for_student',
-        help_text='Last payment made by the student',
-    )
     address = models.CharField(max_length=150, blank=True, null=True)
     course_id = models.ForeignKey(Course, on_delete=models.DO_NOTHING, blank=True, null=True)
     birth_date = models.DateTimeField()
@@ -117,14 +109,6 @@ class ExistingStudent(models.Model):
     preferred_level = models.CharField(max_length=30)
     preferred_days = models.CharField(max_length=30)
     preferred_time = models.CharField(max_length=30)
-    last_payment = models.ForeignKey(
-        'Payments',
-        on_delete=models.SET_NULL,
-        blank=True,
-        null=True,
-        related_name='last_payment_for_existing_student',
-        help_text='Last payment made by the student',
-    )
     course_id = models.ForeignKey(Course, on_delete=models.DO_NOTHING, blank=True, null=True)
     status = models.CharField(max_length=20, blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)

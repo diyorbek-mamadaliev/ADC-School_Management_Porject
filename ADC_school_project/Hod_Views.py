@@ -555,15 +555,32 @@ def VIEW_TEACHER(request):
 @login_required(login_url='/')
 def VIEW_STUDENTS(request, id):
     now_month = datetime.now().month
+    nows_month = datetime.now().strftime("%B")
     course = Course.objects.get(id=id)
     student = Student.objects.filter(course_id=id)
+    payments = Payments.objects.filter(group_id__icontains=course.username, created_at__month=now_month)
     existing_students = ExistingStudent.objects.filter(course_id=id)
-    payments = Payments.objects.filter(group_id=id, created_at__month=now_month, created_at__year=datetime.now().year).values('student_id').annotate(last_payment_date=Max('created_at')).order_by()
+    attendance = Attendance.objects.filter(group_id=course.username, created_at__month=now_month)
+
+    # Calculate attendance count for each student
+    attendance_counts = {}
+    for s in student:
+        count = attendance.filter(students__contains=s.admin.username).count()
+        attendance_counts[s.admin.username] = count
+
+    attendance_existing_counts = {}
+    for s in existing_students:
+        count = attendance.filter(students__contains=s.student_id).count()
+        attendance_existing_counts[s.student_id] = count
 
     context = {
         'course': course,
+        'nows_month': nows_month,
         'student': student,
+        'attendance_existing_counts': attendance_existing_counts,
+        'attendance': attendance,
         'payments': payments,
+        'attendance_counts': attendance_counts,
         'existing_students': existing_students
     }
     return render(request, 'Hod/view_students.html', context)
@@ -1068,7 +1085,7 @@ def VIEW_ATTENDANCE_DAY(request, id):
         'student_list': students_list,
         'students': students
     }
-    return render(request, 'Hod/register_book.html', context)
+    return render(request, 'Hod/view_attendance_day.html', context)
 
 
 def VIEW_BOOKS(request):
