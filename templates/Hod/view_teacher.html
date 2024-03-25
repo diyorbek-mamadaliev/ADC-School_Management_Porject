@@ -22,8 +22,9 @@
                                     <thead class="thead-light">
                                         <tr>
                                             <th style="color: darkred">Staff</th>
-                                            <th style="color: darkred">Login</th>
+                                            <th style="color: darkred">ID</th>
                                             <th style="color: darkred">Role</th>
+                                            <th style="color: darkred">Branch</th>
                                             <th style="color: darkred">Work Format</th>
                                             <th style="color: darkred">Mobile</th>
                                             <th style="color: darkred">Date</th>
@@ -38,6 +39,7 @@
                                             </td>
                                             <td>{{ i.admin.username }}</td>
                                             <td>{{ i.role }}</td>
+                                            <td>{{ i.branch.name }}</td>
                                             <td>{{ i.work_format }}</td>
                                             <td>{{ i.mobile }}</td>
                                             <td style="color: lightslategray">{{ i.created_date.date }}</td>

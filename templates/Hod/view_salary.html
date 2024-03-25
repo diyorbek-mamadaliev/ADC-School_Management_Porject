@@ -1,70 +1,135 @@
 {% extends 'base.html' %}
 {% block content %}
-    <div class="content container-fluid">
+<style>
+    .sticky-column {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  background-color: #fff; /* Ensure background color matches table background */
+}
+    /* CSS */
+.sticky-cell {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  background-color: #fff; /* Ensure background color matches table background */
+}
+
+</style>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        // Get all input fields for teacher financial data
+        var inputFields = document.querySelectorAll('.teacher-finance-input');
+
+        // Attach event listeners to input fields
+        inputFields.forEach(function(inputField) {
+            inputField.addEventListener('input', function() {
+                calculateSalary(this); // Calculate salary when input changes
+            });
+        });
+
+        // Calculate salary for input fields with default value of 60%
+        var defaultShareInput = document.querySelectorAll('.teacher-share-input.teacher-finance-input');
+        defaultShareInput.forEach(function(inputField) {
+            inputField.value = "60"; // Set default value to 60%
+            calculateSalary(inputField); // Calculate salary for default value
+        });
+    });
+
+    function calculateSalary(inputField) {
+        // Get the parent row
+        var parentRow = inputField.parentNode.parentNode;
+
+        // Get input values
+        var totalFees = parseFloat(parentRow.querySelector('.total-fees').value);
+        var teacherSharePercentage = parseFloat(parentRow.querySelector('.teacher-share-input').value);
+        var receptionistSharePercentage = parseFloat(parentRow.querySelector('.receptionist-share-input').value);
+        var finesPercentage = parseFloat(parentRow.querySelector('.fines-input').value);
+        var bonus = parseFloat(parentRow.querySelector('.bonus-input').value);
+        var plastic = parseFloat(parentRow.querySelector('.plastic-input').value);
+        var avans = parseFloat(parentRow.querySelector('.avans-input').value);
+
+        // Calculate values
+        var teacherShare = totalFees * (teacherSharePercentage / 100);
+        var receptionistShare = totalFees * (receptionistSharePercentage / 100);
+        var fines = totalFees * (finesPercentage / 100);
+        var deductions = teacherShare + receptionistShare + fines + plastic + avans;
+        var salaryLeft = bonus + (totalFees - deductions);
+
+        // Update the result
+        parentRow.querySelector('.salary-left-result').innerText = salaryLeft.toFixed(2);
+    }
+</script>
+
+
+<div class="content container-fluid">
   <div class="page-header">
     <div class="row align-items-center">
       <div class="col">
-                    <h3 class="page-title">Salary Calculator</h3>
-                </div>
-        <a href="javascript:void(0);" id="toggle_btn">
-                    <i class="fas fa-backward"></i>
-                </a>
+        <h3 class="page-title">Salary Calculator</h3>
+      </div>
+      <a href="javascript:void(0);" id="toggle_btn">
+        <i class="fas fa-backward"></i>
+      </a>
       {% include 'includes/messages.html' %}
     </div>
   </div>
 
   <div class="row">
     <div class="col-sm-12">
-    <h3 style="color: darkred">Hotel Branch</h3>
       <div class="card card-table">
         <div class="card-body">
           <div class="table-responsive table-bordered table-hover">
             <table class="table" style="table-layout: auto;">
-              <thead class="thead-light">
+            <thead class="thead-dark">
                 <tr>
-                  <th style="color: darkred;">Teacher</th>
-                  <th style="color: darkred;">Cash</th>
-                     <th style="color: darkred;">Plastic</th>
-                     <th style="color: darkred;">Total</th>
-                    <th style="color: darkred;">39%</th>
-                    <th style="color: darkred;">1% Comp</th>
-                    <th style="color: darkred;">Fines</th>
-                    <th style="color: darkred;">Bonus</th>
-                    <th style="color: darkred;">Bills</th>
-                    <th style="color: darkred;">Tax</th>
-                    <th style="color: darkred;">Plastic</th>
-                    <th style="color: darkred;">Avans</th>
-                    <th style="color: darkred;">Salary</th>
+                    <th class="sticky-column">Branch</th>
+                    <th class="sticky-column">Teacher Name</th>
+                    <th>Total Cash</th>
+                    <th>Total Plastic</th>
+                    <th>Total Fees</th>
+                    <th>Corporate Share (%)</th>
+                    <th>Receptionist's Share (%)</th>
+                    <th>Fines (%)</th>
+                    <th>Bonus</th>
+                    <th>Plastic</th>
+                    <th>Avans</th>
+                    <th>Salary Left</th>
                 </tr>
-              </thead>
-              <tbody>
-                {% for teacher in teacher_fees %}
-                  <tr>
-                    <td style="font-size: 14px">
-                      {{ teacher.first_name }}&nbsp;{{ teacher.last_name }}
-                    </td>
-                      <td style="color: lightslategray; font-size: 14px">{{ teacher.total_cash }}</td>
-                      <td style="color: lightslategray; font-size: 14px">{{ teacher.total_plastic }}</td>
-                    <td style="color: lightslategray; font-size: 14px">{{ teacher.total_fees }}</td>
-                  <td style="color: lightslategray; font-size: 14px">{{ teacher.commission }}</td>
-                  <td style="color: lightslategray; font-size: 14px">{{ teacher.bonus }}</td>
-                  <td style="color: lightslategray; font-size: 14px">{{ teacher.fines }}</td>
-                  <td style="color: lightslategray; font-size: 14px">{{ teacher.teacher_bonus }}</td>
-                  <td style="color: lightslategray; font-size: 14px"></td>
-                  <td style="color: lightslategray; font-size: 14px">{{ teacher.tax }}</td>
-                  <td style="color: lightslategray; font-size: 14px"></td>
-                  <td style="color: lightslategray; font-size: 14px"></td>
-                  <td style="color: lightslategray; font-size: 14px"></td>
-                  </tr>
+            </thead>
+            <tbody>
+                {% for teacher in teacher_fees|dictsort:"teacher.branch.name" %}
+                <tr>
+                    <td class="sticky-cell">{{ teacher.teacher.branch.name }}</td>
+                    <td class="sticky-cell">{{ teacher.teacher.admin.get_full_name }}</td>
+                    <td>{{ teacher.total_cash }}</td>
+                    <td>{{ teacher.total_plastic }}</td>
+                    <td><input type="number" class="total-fees teacher-finance-input" value="{{ teacher.total_fees }}"></td>
+                    <td><input type="number" class="teacher-share-input teacher-finance-input" value="60"></td>
+                    <td><input type="number" class="receptionist-share-input teacher-finance-input" value="0"></td>
+                    <td><input type="number" class="fines-input teacher-finance-input" value="0"></td>
+                    <td><input type="number" class="bonus-input teacher-finance-input" value="0"></td>
+                    <td><input type="number" class="plastic-input teacher-finance-input" value="0"></td>
+                    <td><input type="number" class="avans-input teacher-finance-input" value="0"></td>
+                    <td class="salary-left-result">0</td>
+                </tr>
                 {% endfor %}
-              </tbody>
-            </table>
+            </tbody>
+        </table>
           </div>
         </div>
       </div>
     </div>
   </div>
 
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="card">
+        <div class="card-body">
+          <h5>Total Income: {{ total_fees_across_all_teachers }} SUM</h5>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
-
 {% endblock %}

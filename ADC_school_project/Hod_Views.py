@@ -689,53 +689,44 @@ def VIEW_PAYMENT_HISTORY(request):
 
 @login_required(login_url='/')
 def STAFF_SALARY(request):
+    # Retrieve Teachers
     teachers = Staff.objects.filter(department='Teacher')
 
-    # Calculate total fees for each teacher by summing up all fees created by them
+    # Get current month
     current_month = datetime.now().month
-    fees = Payments.objects.filter(
-        teacher_id__in=[teacher.admin.username for teacher in teachers],
-        created_at__month=current_month
-    ).values('teacher_id').annotate(
-        total_fees=Sum('fee_amount'),
-        total_cash=Sum('fee_amount', filter=Q(payment_type='Cash')),
-        total_plastic=Sum('fee_amount', filter=Q(payment_type='Plastic'))
-    )
 
-    # Calculate total fees across all teachers
-    total_fees = sum([fee['total_fees'] for fee in fees])
-
-    # Calculate commission, bonus, fines, teacher_bonus, and tax for each teacher based on their total fees
+    # Calculate Total Fees
     teacher_fees = []
-    for fee in fees:
-        teacher = Staff.objects.get(admin__username=fee['teacher_id'])
-        teacher_total_fees = fee['total_fees']
-        teacher_total_cash = fee['total_cash']
-        teacher_total_plastic = fee['total_plastic']
-        teacher_commission = Decimal('0.39') * teacher_total_fees
-        administrator_bonus = Decimal('0.01') * teacher_commission  # Calculate bonus based on teacher_commission
-        teacher_fine = teacher.fines  # Get the fines for the teacher from the 'Staff' model's 'fines' column
-        teacher_bonus = teacher.bonus  # Get the teacher_bonus for the teacher from the 'Staff' model's 'bonus' column
-        teacher_tax = teacher.tax  # Get the tax for the teacher from the 'Staff' model's 'tax' column
+    for teacher in teachers:
+        # Query payments made to the teacher in the current month
+        payments = Payments.objects.filter(teacher_id=teacher,
+                                           created_at__month=current_month)
+
+        # Calculate total cash payments
+        total_cash = payments.filter(payment_type='Cash').aggregate(
+            total_cash=Sum('fee_amount'))['total_cash'] or 0
+
+        # Calculate total plastic payments
+        total_plastic = payments.filter(payment_type='Plastic').aggregate(
+            total_plastic=Sum('fee_amount'))['total_plastic'] or 0
+
+        # Calculate total fees collected
+        total_fees = total_cash + total_plastic
+
         teacher_fees.append({
-            'first_name': teacher.admin.first_name,
-            'last_name': teacher.admin.last_name,
-            'department': teacher.department,
-            'total_fees': teacher_total_fees,
-            'total_cash': teacher_total_cash,
-            'total_plastic': teacher_total_plastic,
-            'commission': teacher_commission,
-            'bonus': administrator_bonus,
-            'fines': teacher_fine,  # Include the fines in the dictionary
-            'teacher_bonus': teacher_bonus,  # Include the teacher_bonus in the dictionary
-            'tax': teacher_tax,  # Include the tax in the dictionary
+            'teacher': teacher,
+            'total_cash': total_cash,
+            'total_plastic': total_plastic,
+            'total_fees': total_fees
         })
 
-    print(teacher_fees)
+    # Calculate Total Fees Across All Teachers
+    total_fees_across_all_teachers = sum(
+        teacher['total_fees'] for teacher in teacher_fees)
 
     context = {
         'teacher_fees': teacher_fees,
-        'total_fees': total_fees,
+        'total_fees_across_all_teachers': total_fees_across_all_teachers
     }
 
     return render(request, 'Hod/view_salary.html', context)

@@ -40,7 +40,7 @@ class Staff(models.Model):
     updated_date = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"Name: {self.admin.first_name} {self.admin.last_name} | Role: {self.role} | Branch: {self.branch}"
+        return f"{self.admin.first_name} {self.admin.last_name}"
 
 
 # Stores Course by this view
