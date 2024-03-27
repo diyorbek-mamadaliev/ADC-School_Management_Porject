@@ -408,6 +408,7 @@ def ADD_STAFF(request):
         last_name = request.POST.get('last_name')
         username = f"{first_name.lower()}_{next_username_number}"
         department = request.POST.get('department')
+        email = request.POST.get('email')
         role = request.POST.get('role')
         branch_name = request.POST.get('branch_name')
         branch = Branch.objects.get(name=branch_name)
@@ -423,6 +424,7 @@ def ADD_STAFF(request):
 
         user = customUser(first_name=first_name,
                           last_name=last_name,
+                          email=email,
                           username=username,
                           user_type=1)
         user.set_password(password)
@@ -475,6 +477,7 @@ def UPDATE_STAFF(request):
         last_name = request.POST.get('last_name')
         username = request.POST.get('username')
         department = request.POST.get('department')
+        email = request.POST.get('email')
         role = request.POST.get('role')
         fines = request.POST.get('fines')
         bonus = request.POST.get('bonus')
@@ -495,6 +498,7 @@ def UPDATE_STAFF(request):
         user.username = username
         user.first_name = first_name
         user.last_name = last_name
+        user.email = email
 
         if password != None and password != "":
             user.set_password(password)
@@ -639,9 +643,11 @@ def ADD_FEE(request, id):
 @login_required(login_url='/')
 def VIEW_PAYMENT_HISTORY(request):
     payments = Payments.objects.all()
+    staff = Staff.objects.all()
 
     context = {
         'payments': payments,
+        'staff': staff
     }
     return render(request, 'Hod/payment_history.html', context)
 
@@ -849,12 +855,19 @@ def ARCHIVE_COURSE(request):
 def TEACHER_PANEL(request):
     now_month = datetime.now().month
     payments = Payments.objects.filter(
-        teacher_id=request.user.username,
+        teacher_id=request.user.get_full_name(),
         created_at__month=now_month,
         created_at__year=datetime.now().year
     )
     context = {'payments': payments}
     return render(request, 'Hod/payments_by_teacher.html', context)
+
+def TEACHER_GROUP_PANEL(request):
+    groups = Course.objects.exclude(status="Archived").exclude(username='Not_Selected_1').filter(teacher_id__admin__username=request.user.username)
+
+    context = {
+               'groups': groups}
+    return render(request, 'Hod/teacher_group_panel.html', context)
 
 
 def WELCOME(request):
@@ -953,6 +966,7 @@ def VIEW_EXISTTAX(request):
 
 
 def VIEW_BRANCH(request):
+    staff = Staff.objects.all()
     branch = Branch.objects.all()
     branch_count = Branch.objects.all().count()
     teacher_count = Staff.objects.filter(department='Teacher').count()
@@ -961,6 +975,7 @@ def VIEW_BRANCH(request):
     context = {
         'branch': branch,
         'branches_count': branch_count,
+        'staff': staff,
         'teachers_count': teacher_count,
         'managing_staff': managers_count
     }

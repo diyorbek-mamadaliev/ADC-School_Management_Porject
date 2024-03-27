@@ -21,6 +21,7 @@
 {% block content %}
 
 <div class="page-header">
+    {% if user.is_authenticated and 'director' in user.email|lower %}
                   <div class="row">
                      <div class="col-sm-12">
                          <div class="col-auto text-right float-right ml-auto">
@@ -51,7 +52,72 @@
 {% endfor %}
 
 
+{% endif %}
 
+    {% if user.is_authenticated and 'admin' in user.email|lower %}
+                  <div class="row">
+                     <div class="col-sm-12">
+                        <h3 class="page-title">Manage all Branches</h3>
+                        <ul class="breadcrumb">
+                           <li class="breadcrumb-item active">Dashboard</li>
+                        </ul>
+                     </div>
+                  </div>
+               </div>
+
+<div class="row">
+    <!-- First Card -->
+    {% for branches in branch %}
+<div class="col-xl-3 col-sm-6 col-12 d-flex">
+    <div class="card" style="width: 18rem; border-radius: 15px; overflow: hidden; transition: transform 0.3s ease-in-out;">
+        <img src="{{ branches.profile_pic.url }}" class="card-img-top" alt="{{ branch.name }}" style="width: 100%; height: 200px; object-fit: cover; border-bottom: 1px solid #dee2e6;">
+        <div class="card-body">
+            <h5 class="card-title">{{ branches.name }}</h5>
+            <p class="card-text">{{ branches.address }} <br> {{ branches.phone_number }}</p>
+            <a href="{% url 'view_branches' branches.id %}" class="btn btn-primary go-somewhere" style="width: 100%; background: linear-gradient(45deg, hsla(0, 100%, 27%, 1) 0%, hsla(333, 100%, 53%, 1) 100%); color: #ffffff; border: 1px solid #8b0000; transition: all 0.3s ease;" onmouseover="this.style.background='linear-gradient(45deg, hsla(333, 100%, 53%, 1) 0%, hsla(0, 100%, 27%, 1) 100%)'; this.style.color='white'; this.style.borderColor='#8b0000';" onmouseout="this.style.background='linear-gradient(45deg, hsla(0, 100%, 27%, 1) 0%, hsla(333, 100%, 53%, 1) 100%)'; this.style.color='white'; this.style.borderColor='#8b0000';">Open</a>
+
+        </div>
+    </div>
+</div>
+{% endfor %}
+
+
+{% endif %}
+
+    {% if user.is_authenticated and 'manager' in user.email|lower %}
+                  <div class="row">
+                     <div class="col-sm-12">
+                        <h3 class="page-title">Manage all Branches</h3>
+                        <ul class="breadcrumb">
+                           <li class="breadcrumb-item active">Dashboard</li>
+                        </ul>
+                     </div>
+                  </div>
+               </div>
+
+<div class="row">
+    <!-- First Card -->
+    {% for branches in branch %}
+    {% for staf in staff %}
+    {% if staf.admin.username == user.username %}
+    {% if staf.branch == branches %}
+<div class="col-xl-3 col-sm-6 col-12 d-flex">
+    <div class="card" style="width: 18rem; border-radius: 15px; overflow: hidden; transition: transform 0.3s ease-in-out;">
+        <img src="{{ branches.profile_pic.url }}" class="card-img-top" alt="{{ branch.name }}" style="width: 100%; height: 200px; object-fit: cover; border-bottom: 1px solid #dee2e6;">
+        <div class="card-body">
+            <h5 class="card-title">{{ branches.name }}</h5>
+            <p class="card-text">{{ branches.address }} <br> {{ branches.phone_number }}</p>
+            <a href="{% url 'view_branches' branches.id %}" class="btn btn-primary go-somewhere" style="width: 100%; background: linear-gradient(45deg, hsla(0, 100%, 27%, 1) 0%, hsla(333, 100%, 53%, 1) 100%); color: #ffffff; border: 1px solid #8b0000; transition: all 0.3s ease;" onmouseover="this.style.background='linear-gradient(45deg, hsla(333, 100%, 53%, 1) 0%, hsla(0, 100%, 27%, 1) 100%)'; this.style.color='white'; this.style.borderColor='#8b0000';" onmouseout="this.style.background='linear-gradient(45deg, hsla(0, 100%, 27%, 1) 0%, hsla(333, 100%, 53%, 1) 100%)'; this.style.color='white'; this.style.borderColor='#8b0000';">Open</a>
+
+        </div>
+    </div>
+</div>
+    {% endif %}
+{% endif %}
+{% endfor %}
+    {% endfor %}
+
+{% endif %}
     <!-- Repeat the above code block for the remaining cards -->
 
 </div>

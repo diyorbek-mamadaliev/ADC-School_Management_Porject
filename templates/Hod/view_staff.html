@@ -4,9 +4,11 @@
                <div class="page-header">
                   <div class="row align-items-center">
                      <div class="col">
+                         {% if user.is_authenticated and 'director' in user.email|lower %}
                          <div class="col-auto text-right float-right ml-auto">
                         <a href="{% url 'add_staff' %}" class="btn btn-outline-primary mr-2"><i class="fas fa-plus"></i> Add Employee</a>
                      </div>
+                         {% endif %}
                         <h3 class="page-title">Employee List</h3>
 
                      </div>
@@ -24,10 +26,11 @@
                                             <th style="color: darkred">Staff</th>
                                             <th style="color: darkred">Login</th>
                                             <th style="color: darkred">Department</th>
+                                            <th style="color: darkred">Branch</th>
                                             <th style="color: darkred">Role</th>
                                             <th style="color: darkred">Work Format</th>
                                             <th style="color: darkred">Mobile</th>
-                                            <th style="color: darkred">Date</th>
+                                            <th style="color: darkred">Joined</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -39,6 +42,7 @@
                                             </td>
                                             <td>{{ i.admin.username }}</td>
                                             <td>{{ i.department }}</td>
+                                            <td>{{ i.branch.name }}</td>
                                             <td>{{ i.role }}</td>
                                             <td>{{ i.work_format }}</td>
                                             <td>{{ i.mobile }}</td>

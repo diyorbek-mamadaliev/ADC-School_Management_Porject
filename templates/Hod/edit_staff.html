@@ -35,6 +35,12 @@
                                        <input type="text" style="color: gray" class="form-control" name="role" value="{{ staff.role }}">
                                     </div>
                                  </div>
+                                  <div class="col-12 col-sm-6">
+                                    <div class="form-group">
+                                       <label>Email</label>
+                                       <input type="text" style="color: gray" class="form-control" name="email" value="{{ staff.admin.email }}">
+                                    </div>
+                                 </div>
                               <div class="col-12 col-sm-6">
                                     <div class="form-group">
                                        <label>Salary Type</label>
@@ -106,7 +112,7 @@
                                  </div>
 {#                              <div class="col-12 col-sm-6">#}
 {#                                    <div class="form-group">#}
-{#                                       <label>Guruh</label>#}
+{#                                       <label>Group</label>#}
 {#                                       <select class="form-control" name="course_id">#}
 {#                                           {% for i in course %}#}
 {#                                          <option value="{{ i.id }}">{{ i.subject }} | {{ i.level }}</option>#}

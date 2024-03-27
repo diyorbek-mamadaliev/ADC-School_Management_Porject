@@ -68,6 +68,7 @@ urlpatterns = [
     path('Hod/Staff/Salary', Hod_Views.STAFF_SALARY, name="staff_salary"),
     path('Hod/Staff/Archived', Hod_Views.ARCHIVE_STAFF, name="archive_staff"),
     path('Hod/Staff/TeacherPanel', Hod_Views.TEACHER_PANEL, name="teacher_panel"),
+    path('Hod/Staff/TeacherGroup', Hod_Views.TEACHER_GROUP_PANEL, name="teacher_group_panel"),
     path('Hod/Staff/viewexisttax', Hod_Views.VIEW_EXISTTAX, name="view_existtax"),
     # path('Hod/edit-corporatetax/<str:id>/', Hod_Views.EDIT_CORPORATETAX, name='edit_corporatetax'),
     # path('Hod/update-corporatetax/<str:id>/', Hod_Views.UPDATE_CORPORATETAX, name='update_corporatetax'),

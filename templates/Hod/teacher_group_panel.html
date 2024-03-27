@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="content container-fluid">
+        <div class="page-header">
+            <div class="row align-items-center">
+                <div class="col">
+                    <h3 class="page-title">Groups</h3>
+                </div>
+                {% include 'includes/messages.html' %}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="card card-table">
+                    <div class="card-body">
+                        <div class="table-responsive table-bordered table-hover">
+                            <table class="data-table table">
+                                <thead class="thead-light">
+                                    <tr>
+                                        <th style="color: darkred">Subject</th>
+                                        <th style="color: darkred">Level</th>
+                                        <th style="color: darkred">ID</th>
+                                        <th style="color: darkred">Teacher</th>
+                                        <th style="color: darkred">Branch</th>
+                                        <th style="color: darkred">Days</th>
+                                        <th style="color: darkred">Hours</th>
+                                        <th style="color: darkred">Started</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for course in groups %}
+                                    <tr>
+                                        <td>
+                                            <a href="{% url 'view_students' course.id %}">{{ course.subject }}</a>
+                                        </td>
+                                        <td>{{ course.level }}</td>
+                                        <td style="color: grey">{{ course.id }}</td>
+                                        <td>{{ course.teacher_id }}</td>
+                                        <td>{{ course.branch.name }}</td>
+                                        <td>{{ course.days }}</td>
+                                        <td>{{ course.hours }}</td>
+                                        <td style="color: lightslategray">{{ course.created_at|date }}</td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -5,9 +5,16 @@
         <div class="page-header">
             <div class="row align-items-center">
                 <div class="col">
+                    {% if user.is_authenticated and 'director' in user.email|lower %}
                     <div class="col-auto text-right float-right ml-auto">
                         <a href="{% url 'download_csv' %}" class="btn btn-outline-primary mr-2"><i class="fas fa-download"></i> Download Excel</a>
                      </div>
+                    {% endif %}
+                    {% if user.is_authenticated and 'admin' in user.email|lower %}
+                    <div class="col-auto text-right float-right ml-auto">
+                        <a href="{% url 'download_csv' %}" class="btn btn-outline-primary mr-2"><i class="fas fa-download"></i> Download Excel</a>
+                     </div>
+                    {% endif %}
                     <h3 class="page-title">Payment History</h3>
                 </div>
                 {% include 'includes/messages.html' %}
