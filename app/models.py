@@ -17,6 +17,8 @@ class customUser(AbstractUser):
     )
     user_type = models.CharField(choices=USER, max_length=50, default=1)
     profile_pic = models.ImageField(upload_to='media/profile_pic',blank=True, null=True)
+    class Meta:
+        verbose_name_plural = "All Users"
 
 
 # Stores Staff by this model
@@ -38,6 +40,8 @@ class Staff(models.Model):
     mobiletwo = models.CharField(max_length=20, blank=True, null=True)
     created_date = models.DateTimeField(auto_now_add=True)
     updated_date = models.DateTimeField(auto_now_add=True)
+    class Meta:
+        verbose_name_plural = "All Staff"
 
     def __str__(self):
         return f"{self.admin.first_name} {self.admin.last_name}"
@@ -55,6 +59,8 @@ class Course(models.Model):
     hours = models.CharField(max_length=25, blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)  # Updated
+    class Meta:
+        verbose_name_plural = "All Courses"
 
     # This will display the subject info in the list within admin panel
     def __str__(self):
@@ -77,6 +83,9 @@ class Student(models.Model):
     branch = models.ForeignKey('Branch', on_delete=models.SET_NULL, blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        verbose_name_plural = "All Students"
     def __str__(self):
         return '{}'.format(self.admin.first_name + " " + self.admin.last_name)
 
@@ -94,6 +103,8 @@ class Payments(models.Model):
     # author = models.ForeignKey(User, on_delete=models.CASCADE)
     fee_amount = models.DecimalField(max_digits=10, decimal_places=2)
     created_at = models.DateTimeField(auto_now_add=True)
+    class Meta:
+        verbose_name_plural = "All Payments"
 
     def __str__(self):
         return f"{self.first_name} | {self.last_name} | {self.group_id} | {self.payment_type} | {self.student_id} | {self.teacher_id} | {self.author}"
@@ -129,6 +140,8 @@ class Branch(models.Model):
     address = models.CharField(max_length=255)
     phone_number = models.CharField(max_length=20)
     rooms = models.CharField(max_length=20, blank=True, null=True)
+    class Meta:
+        verbose_name_plural = "All Branches"
 
     def __str__(self):
         return f"{self.name} | {self.address} | {self.phone_number}"
@@ -157,6 +170,8 @@ class Book(models.Model):
     given_member_id = models.CharField(max_length=100, blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     due_date = models.DateField(blank=True, null=True)
+    class Meta:
+        verbose_name_plural = "All Books"
 
     def __str__(self):
         return self.book_name

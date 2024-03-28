@@ -101,7 +101,7 @@
                 {% for teacher in teacher_fees|dictsort:"teacher.branch.name" %}
                 <tr>
                     <td class="sticky-cell">{{ teacher.teacher.branch.name }}</td>
-                    <td class="sticky-cell">{{ teacher.teacher.admin.get_full_name }}</td>
+                    <td class="sticky-cell" style="background-color: #454d55; color: white">{{ teacher.teacher.admin.get_full_name }}</td>
                     <td>{{ teacher.total_cash }}</td>
                     <td>{{ teacher.total_plastic }}</td>
                     <td><input type="number" class="total-fees teacher-finance-input" value="{{ teacher.total_fees }}"></td>

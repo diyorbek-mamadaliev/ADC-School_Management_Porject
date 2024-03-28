@@ -63,22 +63,21 @@
                      <li class="submenu">
                         <a href="#"><i class="fas fa-user-graduate"></i> <span> Students</span> <span class="menu-arrow"></span></a>
                         <ul>
-                           <li><a href="{% url 'view_waiting' %}">Waiting</a></li>
-                           <li><a href="{% url 'view_student' %}">Student List</a></li>
+                           <li><a href="{% url 'view_waiting' %}">Waiting List</a></li>
+                           <li><a href="{% url 'view_student' %}">All Student</a></li>
                         </ul>
                      </li>
                       <li class="submenu">
                         <a href="#"><i class="fas fa-book-reader"></i> <span> Courses</span> <span class="menu-arrow"></span></a>
                         <ul>
-                           <li><a href="{% url 'view_course' %}">Groups</a></li>
+                           <li><a href="{% url 'view_course' %}">All Groups</a></li>
                         </ul>
                      </li>
                      <li class="submenu">
                         <a href="#"><i class="fas fa-chalkboard-teacher"></i> <span> HR</span> <span class="menu-arrow"></span></a>
                         <ul>
-                           <li><a href="{% url 'view_staff' %}">Employee List</a></li>
-                            <li><a href="{% url 'view_teacher' %}">Teachers</a></li>
-                            <li><a href="{% url 'add_staff' %}">Add Employee</a></li>
+                           <li><a href="{% url 'view_staff' %}">All Staff</a></li>
+                            <li><a href="{% url 'view_teacher' %}">All Teachers</a></li>
                         </ul>
                      </li>
 
@@ -113,7 +112,7 @@
                         <a style="color: red" href="#"><i class="fas fa-trash-alt"></i> <span> Archive</span> <span class="menu-arrow"></span></a>
                         <ul>
                            <li><a href="{% url 'archive_student' %}">Archived Students</a></li>
-                           <li><a href="{% url 'archive_staff' %}">Archived Employees</a></li>
+                           <li><a href="{% url 'archive_staff' %}">Archived Staff</a></li>
                            <li><a href="{% url 'archive_course' %}">Archived Groups</a></li>
                         </ul>
                      </li>
@@ -167,21 +166,21 @@
                      <li class="submenu">
                         <a href="#"><i class="fas fa-user-graduate"></i> <span> Students</span> <span class="menu-arrow"></span></a>
                         <ul>
-                           <li><a href="{% url 'view_waiting' %}">Waiting</a></li>
-                           <li><a href="{% url 'view_student' %}">Student List</a></li>
+                           <li><a href="{% url 'view_waiting' %}">Waiting List</a></li>
+                           <li><a href="{% url 'view_student' %}">All Students</a></li>
                         </ul>
                      </li>
                       <li class="submenu">
                         <a href="#"><i class="fas fa-book-reader"></i> <span> Courses</span> <span class="menu-arrow"></span></a>
                         <ul>
-                           <li><a href="{% url 'view_course' %}">Groups</a></li>
+                           <li><a href="{% url 'view_course' %}">All Groups</a></li>
                         </ul>
                      </li>
                      <li class="submenu">
                         <a href="#"><i class="fas fa-chalkboard-teacher"></i> <span> HR</span> <span class="menu-arrow"></span></a>
                         <ul>
-                           <li><a href="{% url 'view_staff' %}">Employee List</a></li>
-                            <li><a href="{% url 'view_teacher' %}">Teachers</a></li>
+                           <li><a href="{% url 'view_staff' %}">All Staff</a></li>
+                            <li><a href="{% url 'view_teacher' %}">All Teachers</a></li>
                         </ul>
                      </li>
 
@@ -215,7 +214,7 @@
                         <a style="color: red" href="#"><i class="fas fa-trash-alt"></i> <span> Archive</span> <span class="menu-arrow"></span></a>
                         <ul>
                            <li><a href="{% url 'archive_student' %}">Archived Students</a></li>
-                           <li><a href="{% url 'archive_staff' %}">Archived Employees</a></li>
+                           <li><a href="{% url 'archive_staff' %}">Archived Staff</a></li>
                            <li><a href="{% url 'archive_course' %}">Archived Groups</a></li>
                         </ul>
                      </li>
@@ -258,26 +257,26 @@
                       <li class="submenu">
                         <a href="#"><i class="fas fa-building"></i> <span>Manage Center</span> <span class="menu-arrow"></span></a>
                         <ul>
-                           <li><a href="{% url 'view_branch' %}">Manage Branches</a></li>
+                           <li><a href="{% url 'view_branch' %}">Manage Branch</a></li>
                         </ul>
                      </li>
                      <li class="submenu">
                         <a href="#"><i class="fas fa-user-graduate"></i> <span> Students</span> <span class="menu-arrow"></span></a>
                         <ul>
-                           <li><a href="{% url 'view_waiting' %}">Waiting</a></li>
-                           <li><a href="{% url 'view_student' %}">Student List</a></li>
+                           <li><a href="{% url 'view_waiting' %}">Waiting List</a></li>
+                           <li><a href="{% url 'view_student' %}">All Students</a></li>
                         </ul>
                      </li>
                       <li class="submenu">
                         <a href="#"><i class="fas fa-book-reader"></i> <span> Courses</span> <span class="menu-arrow"></span></a>
                         <ul>
-                           <li><a href="{% url 'view_course' %}">Groups</a></li>
+                           <li><a href="{% url 'view_course' %}">All Groups</a></li>
                         </ul>
                      </li>
                      <li class="submenu">
                         <a href="#"><i class="fas fa-chalkboard-teacher"></i> <span> HR</span> <span class="menu-arrow"></span></a>
                         <ul>
-                            <li><a href="{% url 'view_teacher' %}">Teachers</a></li>
+                            <li><a href="{% url 'view_teacher' %}">All Teachers</a></li>
                         </ul>
                      </li>
 
@@ -343,13 +342,13 @@
                         <span>My Groups</span>
                      </li>
                        <li>
-                        <a style="color: #1e7e34" href="{% url 'teacher_group_panel' %}"><i class="fas fa-comment-dollar"></i> <span>My Groups</span></a>
+                        <a style="color: #1e7e34" href="{% url 'teacher_group_panel' %}"><i class="fas fa-people"></i> <span>My Groups</span></a>
                      </li>
                       <li class="menu-title">
                         <span>Payments for Current Month</span>
                      </li>
                        <li>
-                        <a style="color: #1e7e34" href="{% url 'teacher_panel' %}"><i class="fas fa-comment-dollar"></i> <span>Students Payment</span></a>
+                        <a style="color: #1e7e34" href="{% url 'teacher_panel' %}"><i class="fas fa-comment-dollar"></i> <span>Students' Payments</span></a>
                      </li>
                       <li class="menu-title">
                         <span>Leave the System</span>
