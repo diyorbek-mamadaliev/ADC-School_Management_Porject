@@ -445,7 +445,7 @@ def ADD_STAFF(request):
                       mobiletwo=mobiletwo)
         staff.save()
         messages.success(request, "New Staff Created Successfully!")
-        return redirect('add_staff')
+        return redirect('view_staff')
     branch = Branch.objects.all()
     context = {'branch': branch}
 

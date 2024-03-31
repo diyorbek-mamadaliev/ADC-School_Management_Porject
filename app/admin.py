@@ -51,9 +51,6 @@ class CourseAdmin(admin.ModelAdmin):
 class CourseAdmin(admin.ModelAdmin):
     list_display = ['book_name', 'author', 'published_date']
     list_filter = ['book_name', 'author']
-@admin.register(Attendance)
-class CourseAdmin(admin.ModelAdmin):
-    list_display = ['group_id', 'group_subject', 'group_level']
 
 class ArchivedUserAdmin(admin.ModelAdmin):
     list_display = ('username', 'email', 'date_archived') # fields to display in the list
