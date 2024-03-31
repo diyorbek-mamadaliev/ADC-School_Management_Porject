@@ -70,6 +70,7 @@ urlpatterns = [
     path('Hod/Staff/Student/<str:id>', Hod_Views.VIEW_STUDENTS, name='view_students'),
     path('Hod/Staff/Edit/<str:id>', Hod_Views.EDIT_STAFF, name="edit_staff"),
     path('Hod/Staff/Update', Hod_Views.UPDATE_STAFF, name="update_staff"),
+    path('Hod/Staff/Salary/Fixed', Hod_Views.VIEW_FIXED_SALARY, name="view_fixed_salary"),
     path('Hod/Staff/Salary', Hod_Views.STAFF_SALARY, name="staff_salary"),
     path('Hod/Staff/Archived', Hod_Views.ARCHIVE_STAFF, name="archive_staff"),
     path('Hod/Staff/TeacherPanel', Hod_Views.TEACHER_PANEL, name="teacher_panel"),

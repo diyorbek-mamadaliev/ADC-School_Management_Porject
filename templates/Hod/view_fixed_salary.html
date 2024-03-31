@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+{% block content %}
+
+    <div class="content container-fluid">
+               <div class="page-header">
+                  <div class="row align-items-center">
+                     <div class="col">
+                        <h3 class="page-title"><i class="fas fa-money-bill-alt"></i> Fixed Staff Salary for {{ current_month_name }}</h3>
+                     </div>
+                      {% include 'includes/messages.html' %}
+                  </div>
+               </div>
+               <div class="row">
+                  <div class="col-sm-12">
+                     <div class="card card-table">
+                        <div class="card-body">
+                           <div class="table-responsive table-hover">
+                              <table class="data-table table" style="width: 100%; table-layout: auto;">
+  <thead class="thead-light">
+    <tr>
+      <th style="color: darkred">Branch</th>
+        <th style="color: darkred">Staff</th>
+      <th style="color: darkred">Salary Amount</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for staff in staff_fixed %}
+    <tr>
+      <td style="color: darkred">
+        {{ staff.branch.name }}
+      </td>
+        <td style="color: dark">
+        {{ staff.admin.first_name }} {{ staff.admin.last_name }}
+      </td>
+      <td style="color: dark" class="salary-amount">{{ staff.salary_amount }}</td>
+
+    </tr>
+{% endfor %}
+
+
+  </tbody>
+</table>
+
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+        <div class="row">
+    <div class="col-sm-12">
+        <div class="card">
+            <div class="card-body">
+                <h5 id="total-salary">Total: 0 SUM</h5>
+            </div>
+        </div>
+    </div>
+</div>
+            </div>
+
+<script>
+
+    document.addEventListener("DOMContentLoaded", function() {
+    var totalSalary = 0;
+    var salaryElements = document.querySelectorAll('.salary-amount');
+
+    salaryElements.forEach(function(element) {
+        totalSalary += parseFloat(element.textContent.trim());
+    });
+
+    var totalElement = document.getElementById('total-salary');
+    totalElement.textContent = "Total: " + totalSalary + " SUM";
+});
+
+</script>
+{% endblock %}

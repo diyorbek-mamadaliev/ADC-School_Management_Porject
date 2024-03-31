@@ -26,13 +26,13 @@
   <tbody>
     {% for price in prices %}
     <tr>
-      <td style="font-size: 14px">
+      <td style="color: darkred">
         {{ price.course_name }}
       </td>
-        <td style="font-size: 14px">
+        <td style="color: dark">
         {{ price.course_level }}
       </td>
-      <td style="font-size: 14px">{{ price.price }}</td>
+      <td style="color: dark">{{ price.price }}</td>
     </tr>
 {% endfor %}
 

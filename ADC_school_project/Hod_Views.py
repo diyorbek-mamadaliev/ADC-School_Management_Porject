@@ -1331,3 +1331,13 @@ def UPDATE_ATTENDANCE(request):
         return redirect('view_attendance_day', id=attendance_id)
 
     return render(request, 'Hod/edit_attendance.html')
+
+
+def VIEW_FIXED_SALARY(request):
+    staff_fixed = Staff.objects.filter(salary_type="Fixed")
+    current_month_name = datetime.now().strftime('%B')
+    context = {
+        'staff_fixed': staff_fixed,
+        'current_month_name': current_month_name
+    }
+    return render(request, 'Hod/view_fixed_salary.html', context)
