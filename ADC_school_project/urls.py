@@ -19,6 +19,7 @@ urlpatterns = [
 
     #This is HOD home panel Url
     path('Hod/Home', Hod_Views.HOME, name='hod_home'),
+    path('Hod/Finance/Pricelist', Hod_Views.PRICE_LIST, name="price_list"),
     path('Hod/Welcome', Hod_Views.WELCOME, name="welcome"),
     path('Hod/Branch/', Hod_Views.VIEW_BRANCH, name="view_branch"),
     path('Hod/Library/Books/New', Hod_Views.ADD_BOOK, name="add_book"),
@@ -29,7 +30,11 @@ urlpatterns = [
     path('Hod/Library/Book/Update', Hod_Views.UPDATE_BOOK, name="update_book"),
     path('Hod/Library/Books/Given', Hod_Views.VIEW_GIVEN_BOOKS, name="view_given_books"),
     path('Hod/Branches/<str:id>', Hod_Views.VIEW_BRANCHES, name="view_branches"),
+    path('Hod/Branch/Edit/<str:id>', Hod_Views.EDIT_BRANCH, name="edit_branch"),
+    path('Hod/Branch/Update', Hod_Views.UPDATE_BRANCH, name="update_branch"),
     path('Hod/Attendance/Day/<str:id>', Hod_Views.VIEW_ATTENDANCE_DAY, name="view_attendance_day"),
+    path('Hod/Attendance/Edit/<str:id>', Hod_Views.EDIT_ATTENDANCE, name="edit_attendance"),
+    path('Hod/Attendance/Update', Hod_Views.UPDATE_ATTENDANCE, name="update_attendance"),
     path('Hod/Attendance/View/<str:id>', Hod_Views.VIEW_ATTENDANCE, name="view_attendance"),
     path('Hod/Attendance/New/<str:id>', Hod_Views.ADD_ATTENDANCE, name="add_attendance"),
     path('Hod/Branch/Add', Hod_Views.ADD_BRANCH, name="add_branch"),

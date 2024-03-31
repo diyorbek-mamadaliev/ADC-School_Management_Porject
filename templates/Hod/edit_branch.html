@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card">
+            <div class="card-body">
+                <form method="post" action="{% url 'update_branch' %}" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="col-12">
+                            <h5 class="form-title"><span>Edit {{branch.name}}</span></h5>
+                        </div>
+
+                        <div class="col-12 col-sm-6">
+                            <div class="form-group">
+                                <label>Branch Name</label>
+                                <input type="text" style="color: gray" class="form-control" name="name" value="{{ branch.name }}">
+                                <input type="hidden" name="branch_id" value="{{ branch.id }}">
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-6">
+                                    <div class="form-group">
+                                       <label>Profile Image</label>
+                                       <input type="file" class="form-control" name="profile_pic">
+                                    </div>
+                                 </div>
+                        <div class="col-12 col-sm-6">
+                            <div class="form-group">
+                                <label>Address</label>
+                                <input type="text" style="color: gray" class="form-control" name="address" value="{{ branch.address }}">
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-6">
+                            <div class="form-group">
+                                <label>Phone Number</label>
+                                <input type="text" style="color: gray" class="form-control" name="phone_number" value="{{ branch.phone_number }}">
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-6">
+                            <div class="form-group">
+                                <label>Rooms</label>
+                                <input type="text" style="color: gray" class="form-control" name="rooms" value="{{ branch.rooms }}">
+                            </div>
+                        </div>
+
+                        <div class="col-12">
+                            <button type="submit" class="btn btn-primary" style="width: 100%">Update</button>
+                        </div>
+                        {% include 'includes/messages.html' %}
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

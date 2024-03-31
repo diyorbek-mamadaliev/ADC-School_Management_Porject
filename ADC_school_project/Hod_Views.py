@@ -1,15 +1,16 @@
 import ast
+from django.utils import timezone
 
 from django.db.models.functions import Now
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from app.models import Course, customUser, Student, Staff, Payments, ExistingStudent, CorporateTax, Branch, Attendance, \
-    Book, LibraryMembers
+    Book, LibraryMembers, PriceList
 from django.contrib import messages
 from django.shortcuts import redirect
 from django.db.models import Max, Count, Q
 import datetime
-from datetime import datetime
+from datetime import datetime, timedelta
 from decimal import Decimal
 from django.db.models import Sum
 import csv
@@ -699,14 +700,14 @@ def STAFF_SALARY(request):
     teachers = Staff.objects.filter(department='Teacher')
 
     # Get current month
-    current_month = datetime.now().month
+    thirty_days_ago = datetime.now() - timedelta(days=30)
 
     # Calculate Total Fees
     teacher_fees = []
     for teacher in teachers:
         # Query payments made to the teacher in the current month
         payments = Payments.objects.filter(teacher_id=teacher,
-                                           created_at__month=current_month)
+                                           created_at__gte=thirty_days_ago)
 
         # Calculate total cash payments
         total_cash = payments.filter(payment_type='Cash').aggregate(
@@ -1060,6 +1061,7 @@ def ADD_ATTENDANCE(request, id):
         )
         attendance.save()
 
+        messages.success(request, "Journal Created!")
         return redirect('view_attendance', id=id)
 
     context = {'student_list': student_list, 'course': course, 'existing_students': existing_students}
@@ -1236,3 +1238,96 @@ def VIEW_GIVEN_BOOKS(request):
         'members': members
     }
     return render(request, 'Hod/view_given_books.html', context)
+
+
+def EDIT_BRANCH(request, id):
+    branch = Branch.objects.get(id=id)
+    context = {
+        'branch': branch
+    }
+    return render(request, 'Hod/edit_branch.html', context)
+
+
+def UPDATE_BRANCH(request):
+    if request.method == "POST":
+        profile_pic = request.FILES.get('profile_pic')
+        name = request.POST.get('name')
+        address = request.POST.get('address')
+        phone_number = request.POST.get('phone_number')
+        rooms = request.POST.get('rooms')
+        branch_id = request.POST.get('branch_id')
+
+        branch = Branch.objects.get(id=branch_id)
+        branch.profile_pic = profile_pic
+        branch.book_name = name
+        branch.address = address
+        branch.phone_number = phone_number
+        branch.rooms = rooms
+        branch.save()
+
+        messages.success(request, "Branch Edited Successfully!")
+        return redirect('view_branch')
+
+    return render(request, 'Hod/edit_branch.html')
+
+
+def PRICE_LIST(request):
+    prices = PriceList.objects.all()
+
+    context = {
+        'prices': prices
+    }
+    return render(request, 'Hod/price_list.html', context)
+
+
+def EDIT_ATTENDANCE(request, id):
+    # Retrieve attendance object
+    attendance = Attendance.objects.get(id=id)
+
+    # Check if one hour has passed since the attendance was created
+    time_difference = timezone.now() - attendance.created_at
+    if time_difference.total_seconds() > 3600:  # 3600 seconds = 1 hour
+        messages.error(request, "Time Expired!")
+        return redirect('view_attendance_day', id=id)
+
+    # Convert the string representation of students to a list
+    students_string = attendance.students.strip('[]')  # Remove square brackets from the string
+    students_list = [student.strip().strip("'\"") for student in
+                     students_string.split(',')]  # Split the string and strip extra whitespace and quotes
+
+    # Initialize the checked list
+    checked = []
+
+    # Iterate over the students list and append each student to the checked list
+    for student in students_list:
+        checked.append(student)
+    print(checked)
+
+    # Retrieve all students (if needed)
+    students = Student.objects.filter(course_id__username=attendance.group_id)
+    existing_students = ExistingStudent.objects.filter(course_id__username=attendance.group_id)
+    print(existing_students)
+
+    context = {
+        'attendance': attendance,
+        'students': students,
+        'checked': checked,
+        'existing_students': existing_students
+    }
+
+    return render(request, 'Hod/edit_attendance.html', context)
+
+
+def UPDATE_ATTENDANCE(request):
+    if request.method == "POST":
+        students = request.POST.getlist('students')
+        attendance_id = request.POST.get('attendance_id')
+
+        attendance = Attendance.objects.get(id=attendance_id)
+        attendance.students = students
+        attendance.save()
+
+        messages.success(request, "Journal Edited Successfully!")
+        return redirect('view_attendance_day', id=attendance_id)
+
+    return render(request, 'Hod/edit_attendance.html')

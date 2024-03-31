@@ -186,3 +186,14 @@ class LibraryMembers(models.Model):
 
     def __str__(self):
         return f"{self.first_name} {self.last_name}"
+
+class PriceList(models.Model):
+    course_name = models.CharField(max_length=255)
+    course_level = models.CharField(max_length=255, blank=True, null=True)
+    price = models.CharField(max_length=255)
+    created_at = models.DateTimeField(auto_now_add=True)
+    class Meta:
+        verbose_name_plural = "Price List"
+
+    def __str__(self):
+        return self.course_name

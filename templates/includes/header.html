@@ -63,9 +63,11 @@
                         <div class="user-text">
                            <h6>{{ user.first_name }}&nbsp;</h6>
                             {% if user.is_authenticated and 'admin' in user.email|lower %}
-                           <p class="text-muted mb-0">Director</p>
+                           <p class="text-muted mb-0">Admin</p>
                             {% elif user.is_authenticated and 'manager' in user.email|lower %}
                             <p class="text-muted mb-0">Manager</p>
+                            {% elif user.is_authenticated and 'director' in user.email|lower %}
+                            <p class="text-muted mb-0">Director</p>
                             {% elif user.is_authenticated and 'reception' in user.email|lower %}
                             <p class="text-muted mb-0">Reception</p>
                                 {% elif user.is_authenticated and 'teacher' in user.email|lower %}
@@ -75,7 +77,6 @@
                         </div>
                      </div>
                      <a class="dropdown-item" href="{% url 'profile' %}">My Profile Edit</a>
-                     <a class="dropdown-item" href="inbox.html">Inbox</a>
                      <a class="dropdown-item" href="{% url 'logout' %}">Logout</a>
                   </div>
                </li>

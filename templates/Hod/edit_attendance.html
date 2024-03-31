@@ -1,0 +1,143 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<style>
+  .status-circle {
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: 5px;
+  }
+
+  .paid-circle {
+    background-color: green;
+  }
+
+  .debt-circle {
+    background-color: red;
+  }
+</style>
+
+<div class="content container-fluid">
+  <div class="page-header">
+    <div class="row align-items-center">
+      <div class="col">
+        <h3 class="page-title">{{ attendance.group_subject }} {{ attendance.group_level }} ({{attendance.group_id}})</a></h3>
+        <br>
+        <h6 style="color: gray">Created: ({{ attendance.created_at }})</h6>
+        <br>
+        <h6 style="color: black">Teacher: {{ attendance.teacher_first_name }} {{attendance.teacher_last_name}}</h6>
+        <hr>
+        <h5>Lesson Topic: </h5>
+        <h5 style="color: gray">{{ attendance.lesson_topic }}</h5>
+      </div>
+      {% include 'includes/messages.html' %}
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="card card-table">
+        <div class="card-body">
+          <form method="post" action="{% url 'update_attendance' %}" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="table-responsive table-bordered table-hover">
+              <table class="table table-bordered table-hover">
+                <thead>
+                  <tr>
+                    <th>Select</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for student in students %}
+                  <tr>
+                    <td>
+                      <div class="form-check">
+                        {% if student.admin.username in checked %}
+                          <input class="form-check-input student-checkbox" type="checkbox" id="{{ student.admin.username }}" name="students" value="{{ student.admin.username }}" checked disabled>
+                        {% else %}
+                          <input class="form-check-input student-checkbox" type="checkbox" id="{{ student.admin.username }}" name="students" value="{{ student.admin.username }}">
+                        {% endif %}
+                        <label class="form-check-label" for="{{ student.admin.username }}"></label>
+                      </div>
+                      <input type="hidden" name="attendance_id" value="{{ attendance.id }}">
+                    </td>
+                    <td>{{ student.admin.first_name }}</td>
+                    <td>{{ student.admin.last_name }}</td>
+                  </tr>
+                  {% endfor %}
+                  {% for existing_student in existing_students %}
+                  <tr>
+                    <td>
+                      <div class="form-check">
+                        {% if existing_student.student_id in checked %}
+                          <input class="form-check-input student-checkbox" type="checkbox" id="{{ existing_student.student_id }}" name="students" value="{{ existing_student.student_id }}" checked disabled>
+                        {% else %}
+                          <input class="form-check-input student-checkbox" type="checkbox" id="{{ existing_student.student_id }}" name="students" value="{{ existing_student.student_id }}">
+                        {% endif %}
+                        <label class="form-check-label" for="{{ existing_student.student_id }}"></label>
+                      </div>
+                    </td>
+                    <td>{{ existing_student.first_name }}</td>
+                    <td>{{ existing_student.last_name }}</td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+              <br>
+            <button type="submit" style="width: 100%" class="btn btn-primary">Update Attendance</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Get the form
+    const form = document.querySelector('form');
+
+    // Add an event listener for form submission
+    form.addEventListener('submit', function(event) {
+        // Get all checked checkboxes
+        const checkboxes = document.querySelectorAll('.student-checkbox:checked');
+
+        // Initialize an empty array to store checked student usernames
+        const checkedStudents = [];
+
+        // Iterate through checked checkboxes and push their values (student usernames) to the array
+        checkboxes.forEach(function(checkbox) {
+            checkedStudents.push(checkbox.value);
+        });
+
+        // Check if hidden input fields for selected students already exist in the form
+        const existingStudentsInputs = form.querySelectorAll('input[name="students"]');
+        if (existingStudentsInputs.length > 0) {
+            // Update the values of existing hidden input fields with the current list of selected students
+            existingStudentsInputs.forEach(function(input) {
+                input.remove(); // Remove existing inputs
+            });
+        }
+
+        // Create a hidden input field for each checked student and append it to the form
+        checkedStudents.forEach(function(student) {
+            const studentInput = document.createElement('input');
+            studentInput.type = 'hidden';
+            studentInput.name = 'students';
+            studentInput.value = student;
+            form.appendChild(studentInput);
+        });
+    });
+});
+
+</script>
+
+
+
+
+{% endblock %}

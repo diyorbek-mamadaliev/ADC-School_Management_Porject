@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% block content %}
+
+    <div class="content container-fluid">
+               <div class="page-header">
+                  <div class="row align-items-center">
+                     <div class="col">
+                        <h3 class="page-title"><i class="fas fa-money-bill-alt"></i> Price List for Courses</h3>
+                     </div>
+                      {% include 'includes/messages.html' %}
+                  </div>
+               </div>
+               <div class="row">
+                  <div class="col-sm-12">
+                     <div class="card card-table">
+                        <div class="card-body">
+                           <div class="table-responsive table-hover">
+                              <table class="data-table table" style="width: 100%; table-layout: auto;">
+  <thead class="thead-light">
+    <tr>
+      <th style="color: darkred">Course</th>
+        <th style="color: darkred"> Level</th>
+      <th style="color: darkred">Monthly Price</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for price in prices %}
+    <tr>
+      <td style="font-size: 14px">
+        {{ price.course_name }}
+      </td>
+        <td style="font-size: 14px">
+        {{ price.course_level }}
+      </td>
+      <td style="font-size: 14px">{{ price.price }}</td>
+    </tr>
+{% endfor %}
+
+
+  </tbody>
+</table>
+
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+{% endblock %}
