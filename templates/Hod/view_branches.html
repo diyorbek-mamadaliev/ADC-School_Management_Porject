@@ -24,7 +24,9 @@
                   <div class="row">
                      <div class="col-sm-12">
                          <div class="col-auto text-right float-right ml-auto">
+                             {% if user.is_authenticated and 'director' in user.email|lower %}
                         <a href="{% url 'add_branch' %}" class="btn btn-outline-primary mr-2"><i class="fas fa-plus"></i> Add New Branch</a>
+                             {% endif %}
                      </div>
                         <h3 class="page-title"><i class="fas fa-building"></i> Manage all Branches</h3>
                         <ul class="breadcrumb">

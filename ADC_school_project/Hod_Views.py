@@ -23,12 +23,16 @@ from django.db.models import Max, F
 
 @login_required(login_url='/')
 def HOME(request):
+    now = timezone.now()
     student_count = Student.objects.all().count()
     waiting_count = Student.objects.all()
     existing_waiting = ExistingStudent.objects.all()
     student_counted = Student.objects.filter(status='Active').exclude(course_id__username='Not_Selected_1').count()
     group_count = Course.objects.exclude(username='Not_Selected_1').filter(status='Active').count()
-    payment_count = Payments.objects.all().count()
+    payment_count = Payments.objects.filter(
+        created_at__year=now.year,
+        created_at__month=now.month
+    ).count()
     teacher_count = Staff.objects.filter(department='Teacher').count()
     staff_list = Staff.objects.filter(department='Teacher')
 
